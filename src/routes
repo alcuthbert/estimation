@@ -1,0 +1,8 @@
+const routeNames = {
+    home: 'home',
+    changeRequests: 'change-requests',
+    login: 'login',
+    notFound: 'not-found'
+}
+
+export default routeNames;
