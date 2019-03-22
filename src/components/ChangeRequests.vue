@@ -2,30 +2,22 @@
     <div class="ui container">
       <h1>CRs</h1>
       <vuetable ref="vuetable"
-        :api-url="usersApi"
-        :fields="['name', 'email', 'birthdate']"
+        :api-url="changeRequestApi"
+        :fields="changeRequestFields"
       ></vuetable>
     </div>
 </template>
 
 <script>
 import Vuetable from 'vuetable-2/src/components/Vuetable'
-// import axios from 'axios'
 
 export default {
-    // data() {
-    //   return {
-    //     users: null
-    //   }
-    // },
-    // mounted() {
-    //   axios
-    //     .get('/api/users')
-    //     .then(response => (this.users = response.data))
-    // }
     computed: {
-      usersApi() {
-        return 'http://localhost:8080/api/users'
+      changeRequestApi() {
+        return 'http://localhost:8080/api/change-requests'
+      },
+      changeRequestFields() {
+        return ['id', 'name', 'status', 'jira_link', 'owner', 'version','created', 'project'];
       }
     },
     components: {
