@@ -20,6 +20,8 @@
     "bootstrap-vue": "^2.0.0-rc.15",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
     "semantic-ui-vue": "^0.8.1",
     "vue-axios": "^2.1.4",
     "vue-jquery": "^1.0.6",
