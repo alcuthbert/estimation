@@ -1,12 +1,7 @@
-import Repo from './repository.js'
-
-// const url = '/users'
+import axios from 'axios'
 
 export default {
-    get() {
-        return Repo.get('/users')
-    },
-    getUser(userId) {
-        return Repo.get(`/users/${userId}`)
+    getUsers() {
+        return axios.get('/api/users')
     }
 }
