@@ -2,7 +2,8 @@ const routeNames = {
     home: 'home',
     changeRequests: 'change-requests',
     login: 'login',
-    notFound: 'not-found'
+    notFound: 'not-found',
+    profile: 'profile'
 }
 
 export default routeNames;
