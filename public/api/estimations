@@ -1,0 +1,14 @@
+{
+    data: [
+        {
+            "id": 1,
+            "subtask_id": 1,
+            "type": 1,
+            "estimator": 1,
+            "dvk": "dvk",
+            "imp": "imp",
+            "e_test": "e_test",
+            "e_test_tech": "e_test_tech"
+        }
+    ]
+}
