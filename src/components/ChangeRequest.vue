@@ -1,39 +1,53 @@
 <template>
-    <div>
-        <b-card no-body style="max-width: 20rem;">
-            <h4 slot="header">CR Card</h4>
+    <div class="row">
+        <div class="col-sm-3">
+            <b-card no-body style="max-width: 20rem;" v-if="cr">
+                <h4 slot="header">CR Card</h4>
 
-            <b-card-body>
-                <b-card-title>{{ '#' + cr.id + ': ' + cr.name }} </b-card-title>
-                <b-card-sub-title class="mb-2">{{cr.status}}</b-card-sub-title>
-                <b-card-text>
-                    Some quick example text to build on the card title and make up the bulk of the card's
-                    content.
-                </b-card-text>
-            </b-card-body>
+                <b-card-body>
+                    <b-card-title>{{ '#' + cr.id + ': ' + cr.name }} </b-card-title>
+                    <b-card-sub-title class="mb-2">{{cr.status}}</b-card-sub-title>
+                    <b-card-text>
+                        Some description
+                    </b-card-text>
+                </b-card-body>
 
-            <b-list-group flush>
-                <b-list-group-item>{{cr.version}}</b-list-group-item>
-                <b-list-group-item>{{cr.owner}}</b-list-group-item>
-                <b-list-group-item>{{cr.created}}</b-list-group-item>
-            </b-list-group>
+                <b-list-group flush>
+                    <b-list-group-item>{{cr.version}}</b-list-group-item>
+                    <b-list-group-item>{{cr.owner}}</b-list-group-item>
+                    <b-list-group-item>{{cr.created}}</b-list-group-item>
+                    <b-list-group-item>{{cr.project}}</b-list-group-item>
+                </b-list-group>
 
-            <b-list-group flush>
-                <b-list-group-item>Assignee 1</b-list-group-item>
-                <b-list-group-item>Assignee 2</b-list-group-item>
-            </b-list-group>
+                <b-list-group flush>
+                    <b-list-group-item>Assignee 1</b-list-group-item>
+                    <b-list-group-item>Assignee 2</b-list-group-item>
+                </b-list-group>
 
-            <b-card-body>
-                <a href="#" class="card-link">Jira Url</a>
-            </b-card-body>
-        </b-card>
+                <b-card-body>
+                    <a href="#" class="card-link">Jira Url</a>
+                </b-card-body>
+            </b-card>
 
-        <div class="ui container">
-            <h1>Tasks</h1>
-            <vuetable ref="vuetable"
-                :data="tasks"
-                :fields="['id', 'name']"
-            ></vuetable>
+            <b-card no-body style="max-width: 20rem;" v-else="">
+                <h4 slot="header">CR Card</h4>
+
+                <b-card-body>
+                    <b-card-text>
+                        There is no info
+                    </b-card-text>
+                </b-card-body>
+            </b-card>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="ui container">
+                <h1>Tasks</h1>
+                <vuetable ref="vuetable"
+                    :data="tasks"
+                    :fields="['id', 'name']"
+                ></vuetable>
+            </div>
         </div>
     </div>
 </template>
@@ -46,7 +60,7 @@ import Vuetable from 'vuetable-2/src/components/Vuetable'
 export default {
     data() {
         return {
-            cr: {},
+            cr: null,
             tasks: []
         }
     },
