@@ -10,13 +10,13 @@
     "data":[
         {
             "id": 1,
-            "name": "cr1",
-            "status": "status",
+            "name": "cr number one",
+            "status": "great status",
             "jira_link": "http:\/\/jira.com\/1",
-            "owner": "owner",
-            "version": "version",
+            "owner": "badass owner",
+            "version": "version 666",
             "created": 1553247790,
-            "project": "project"
+            "project": "project as1313"
         }
     ]
 }
