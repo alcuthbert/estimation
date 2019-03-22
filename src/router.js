@@ -6,6 +6,7 @@ import ChangeRequests from './components/ChangeRequests.vue'
 import ChangeRequest from './components/ChangeRequest.vue'
 import NotFound from './components/NotFound.vue'
 import Profile from './components/Profile.vue'
+import Login from './components/Login.vue'
 
 export default new VueRouter({
     linkExactActiveClass: 'active',
@@ -14,6 +15,11 @@ export default new VueRouter({
         path: '/',
         name: RouteNames.home,
         component: Home
+      },
+      {
+        path: '/login',
+        name: RouteNames.login,
+        component: Login
       },
       {
         path: '/change-requests',

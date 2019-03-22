@@ -1,8 +1,8 @@
 const routeNames = {
     home: 'home',
+    login: 'login',
     changeRequests: 'change-requests',
     changeRequest: 'change-request',
-    login: 'login',
     notFound: 'not-found',
     profile: 'profile'
 }
