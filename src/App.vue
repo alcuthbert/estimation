@@ -2,10 +2,7 @@
   <div id="app">
     <navi></navi>
 
-    <div class="container-fluid">
-      <router-view></router-view>
-    </div>
-
+    <router-view></router-view>
   </div>
 </template>
 

@@ -41,27 +41,20 @@
         </div>
 
         <div class="col-sm-4">
-            <div class="ui container">
-                <h1>Tasks</h1>
-                <vuetable ref="vuetable"
-                    :data="tasks"
-                    :fields="['id', 'name']"
-                ></vuetable>
-            </div>
+            <tasks :cr-id="crId"></tasks>
         </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Vuetable from 'vuetable-2/src/components/Vuetable'
+import Tasks from './Tasks'
 // import crResource from './../resources/cr.js'
 
 export default {
     data() {
         return {
-            cr: null,
-            tasks: []
+            cr: null
         }
     },
     props: {
@@ -80,17 +73,9 @@ export default {
                     return cr.id == this.crId
                 })[0]
             ))
-
-        axios
-            .get('/api/tasks')
-            .then(response => {
-                this.tasks = response.data.data.filter( task => {
-                    return task.cr_id == this.crId
-                })
-            })
     },
     components: {
-      Vuetable
+      Tasks
     },
 }
 
