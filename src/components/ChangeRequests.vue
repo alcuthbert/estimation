@@ -1,10 +1,16 @@
 <template>
-    <div class="ui container">
-      <h1>CRs</h1>
+    <div>
+      <div>
+        <button class="btn btn-primary" @click="show">Create</button>
+      </div>
       <vuetable ref="vuetable"
         :api-url="changeRequestApi"
         :fields="fields"
       ></vuetable>
+
+      <modal name="cr-editor">
+        <c-r-editor foo="bar" :cr="{name: 'ololo'}" @close="closeModal" />
+      </modal>
     </div>
 </template>
 
@@ -12,6 +18,7 @@
 import Vue from 'vue'
 import Vuetable from 'vuetable-2/src/components/Vuetable'
 import CustomActions from './helpers/CustomActions.vue'
+import CREditor from './CREditor.vue'
 
 Vue.component('custom-actions', CustomActions)
 
@@ -33,16 +40,28 @@ export default {
             // titleClass: 'center aligned',
             // dataClass: 'center aligned'
           }
-        ]
+        ],
       }
     },
     computed: {
       changeRequestApi() {
-        return 'http://localhost:8080/api/change-requests'
+        return '/api/change-requests'
       },
     },
+    methods: {
+      closeModal() {
+        console.log("close modal");
+      },
+      show() {
+        this.$modal.show('cr-editor');
+      },
+      hide() {
+        this.$modal.hide('cr-editor');
+      }
+    },
     components: {
-      Vuetable
+      Vuetable,
+      CREditor
     },
 }
 </script>
