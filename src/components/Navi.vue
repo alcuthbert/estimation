@@ -8,7 +8,6 @@
             <b-collapse is-nav id="nav_collapse">
                 <b-navbar-nav>
                     <b-nav-item href="#" :to="{name: $routeNames.home}" :exact=true >Home</b-nav-item>
-                    <b-nav-item href="#" :to="{name: $routeNames.login}" :exact=true >Login</b-nav-item>
                     <b-nav-item href="#" :to="{name: $routeNames.changeRequests}" :exact=true >Change Requests</b-nav-item>
                 </b-navbar-nav>
 

@@ -7,6 +7,7 @@ import ChangeRequest from './components/ChangeRequest.vue'
 import NotFound from './components/NotFound.vue'
 import Profile from './components/Profile.vue'
 import Login from './components/Login.vue'
+import Users from './components/Users.vue'
 
 export default new VueRouter({
     linkExactActiveClass: 'active',
@@ -47,6 +48,11 @@ export default new VueRouter({
         path: '/profile',
         name: RouteNames.profile,
         component: Profile 
+      },
+      {
+        path: '/users',
+        name: RouteNames.users,
+        component: Users 
       },
       {
         // will match everything

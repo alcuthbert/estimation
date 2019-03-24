@@ -4,7 +4,8 @@ const routeNames = {
     changeRequests: 'change-requests',
     changeRequest: 'change-request',
     notFound: 'not-found',
-    profile: 'profile'
+    profile: 'profile',
+    users: 'users'
 }
 
 export default routeNames;
