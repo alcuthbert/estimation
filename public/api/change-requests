@@ -1,5 +1,5 @@
 {
-    "total":1,
+    "total":3,
     "per_page":15,
     "current_page":1,
     "last_page":1,
@@ -11,12 +11,32 @@
         {
             "id": 1,
             "name": "cr number one",
-            "status": "great status",
+            "status": "open",
             "jira_link": "http:\/\/jira.com\/1",
-            "owner": "badass owner",
-            "version": "version 666",
+            "owner": "user 1",
+            "version": "version 0.0.1",
+            "created": 1553245590,
+            "project": "as1313"
+        },
+        {
+            "id": 2,
+            "name": "cr number two",
+            "status": "approved",
+            "jira_link": "http:\/\/jira.com\/2",
+            "owner": "user 1",
+            "version": "2.0",
             "created": 1553247790,
-            "project": "project as1313"
+            "project": "as1313"
+        },
+        {
+            "id": 3,
+            "name": "cr number three",
+            "status": "closed",
+            "jira_link": "http:\/\/jira.com\/3",
+            "owner": "admin",
+            "version": "3.3",
+            "created": 1553246690,
+            "project": "as1313"
         }
     ]
 }
