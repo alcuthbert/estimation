@@ -50,7 +50,7 @@ export default {
     data() {
         return {
             userId: 1,
-            crId: 1,
+            crId: 2,
             user: null
         }
     },
