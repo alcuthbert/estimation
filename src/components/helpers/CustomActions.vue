@@ -3,10 +3,15 @@
       <b-button-group>
         <router-link :to="{name: $routeNames.changeRequest, params: {crId: rowData.id}}">
             <button class="btn btn-primary">
+              <font-awesome-icon icon="search" />
+            </button>
+        </router-link>
+        <router-link :to="{name: $routeNames.changeRequest, params: {crId: rowData.id}}">
+            <button class="btn btn-warning">
               <font-awesome-icon icon="edit" />
             </button>
         </router-link>
-        <button class="btn btn-primary" @click="itemAction('delete-item', rowData, rowIndex)">
+        <button class="btn btn-danger" @click="itemAction('delete-item', rowData, rowIndex)">
           <font-awesome-icon icon="trash" />
         </button>
       </b-button-group>
