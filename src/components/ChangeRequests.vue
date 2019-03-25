@@ -1,17 +1,30 @@
 <template>
-    <div>
-      <div>
-        <button class="btn btn-primary" @click="show">Create</button>
-      </div>
-      <vuetable ref="vuetable"
-        :api-url="changeRequestApi"
-        :fields="fields"
-      ></vuetable>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
+      <div class="card my-4">
+        <h5 class="card-header">Change requests</h5>
+        <div class="card-body">
+         
+            <b-button-group class="mb-3">
+              <b-button variant="success" @click="show">
+                Create new
+                <font-awesome-icon icon="plus-square" />
+              </b-button>
+            </b-button-group>
+      
+          <vuetable ref="vuetable"
+            :api-url="changeRequestApi"
+            :fields="fields"
+          ></vuetable>
 
-      <modal name="cr-editor">
-        <c-r-editor foo="bar" :cr="{name: 'ololo'}" @close="closeModal" />
-      </modal>
+        </div>
+      </div>
     </div>
+
+    <modal name="cr-editor">
+      <c-r-editor foo="bar" :cr="{name: 'ololo'}" @close="closeModal" />
+    </modal>
+  </div>  
 </template>
 
 <script>

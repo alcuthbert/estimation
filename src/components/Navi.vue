@@ -1,20 +1,20 @@
 <template>
-    <div>
-        <b-navbar toggleable="lg" type="dark" variant="dark">
-            <b-navbar-brand href="#">Estimation</b-navbar-brand>
+    <b-navbar toggleable="lg" type="dark" variant="primary">
+        <b-navbar-brand href="#" :to="{name: $routeNames.home}">
+            Estimation
+            <font-awesome-icon icon="bolt" />
+        </b-navbar-brand>
 
-            <b-navbar-toggle target="nav_collapse" />
+        <b-navbar-toggle target="nav_collapse" />
 
-            <b-collapse is-nav id="nav_collapse">
-                <b-navbar-nav>
-                    <b-nav-item href="#" :to="{name: $routeNames.home}" :exact=true >Home</b-nav-item>
-                    <b-nav-item href="#" :to="{name: $routeNames.changeRequests}" :exact=true >Change Requests</b-nav-item>
-                </b-navbar-nav>
+        <b-collapse is-nav id="nav_collapse">
+            <b-navbar-nav>
+                <b-nav-item href="#" :to="{name: $routeNames.changeRequests}" :exact=true >Change Requests</b-nav-item>
+            </b-navbar-nav>
 
-                <user-actions></user-actions>
-            </b-collapse>
-        </b-navbar>
-    </div>
+            <user-actions></user-actions>
+        </b-collapse>
+    </b-navbar>
 </template>
 
 <script>

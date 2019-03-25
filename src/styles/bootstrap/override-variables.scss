@@ -1,13 +1,14 @@
 // colors:
-$darker: #27283D;
+$primary: #09c07a !default;
+$secondary: #f1f509;
 
-$body-bg: #fff;
-$body-color: #94949C;
-
-$primary: #E20074 !default;
-$secondary: $darker;
-
-$success: #BFCB44;
+$success: rgb(29, 209, 6);
 $info:#53BAF2;
 $warning:#FFD329;
 $danger:#d9534f;
+
+// Body
+//
+// Settings for the `<body>` element.
+$body-bg: #fff;
+// $body-color:#212529;

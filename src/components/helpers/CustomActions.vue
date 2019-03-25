@@ -1,15 +1,15 @@
 <template>
     <div class="custom-actions">
-        <router-link class="btn" tag="button" :to="{name: $routeNames.changeRequest, params: { crId: rowData.id }}" :exact=true>
-            <font-awesome-icon icon="search" />
+      <b-button-group>
+        <router-link :to="{name: $routeNames.changeRequest, params: {crId: rowData.id}}">
+            <button class="btn btn-primary">
+              <font-awesome-icon icon="edit" />
+            </button>
         </router-link>
-        <!-- <button class="ui basic button" :to="{name: $routeNames.changeRequest, params: { crId: rowData.id }}" @click="itemAction('view-item', rowData, rowIndex)"><i class="zoom icon"></i></button> -->
-        <button class="btn" @click="itemAction('edit-item', rowData, rowIndex)">
-          <font-awesome-icon icon="edit" />
-        </button>
-        <button class="btn" @click="itemAction('delete-item', rowData, rowIndex)">
+        <button class="btn btn-primary" @click="itemAction('delete-item', rowData, rowIndex)">
           <font-awesome-icon icon="trash" />
         </button>
+      </b-button-group>
     </div>
   </template>
 

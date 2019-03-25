@@ -1,36 +1,37 @@
 <template>
     <div class="row">
-        <div class="col-sm-3 offset-sm-4">
-            <b-form @submit="onSubmit" v-if="show">
-                <b-form-group
-                    label="Username"
-                    label-for="username">
-                    <b-form-input
-                    id="username"
-                    type="text"
-                    v-model="form.username"
-                    required
-                    placeholder="Username" />
-                </b-form-group>
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card my-3">
+            <h5 class="card-header">Sign In</h5>
 
-                <b-form-group label="Password" label-for="password">
-                    <b-form-input
-                    id="password"
-                    type="password"
-                    v-model="form.password"
-                    required
-                    placeholder="Password" />
-                </b-form-group>
+            <div class="card-body">
+              <b-form @submit="onSubmit" v-if="show">
+                  <b-form-group label="Username"
+                      label-for="username">
+                      <b-form-input id="username"
+                        type="text"
+                        v-model="form.username"
+                        required />
+                  </b-form-group>
 
-                <b-form-group id="exampleGroup4">
-                    <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
-                        <b-form-checkbox value="me">Remember me</b-form-checkbox>
-                    </b-form-checkbox-group>
-                </b-form-group>
+                  <b-form-group label="Password" label-for="password">
+                      <b-form-input id="password"
+                        type="password"
+                        v-model="form.password"
+                        required />
+                  </b-form-group>
 
-                <b-button type="submit" variant="primary">Submit</b-button>
-                <b-button type="reset" variant="default">Reset</b-button>
-            </b-form>
+                  <b-form-group id="exampleGroup4">
+                      <b-form-checkbox-group v-model="form.checked" id="exampleChecks">
+                          <b-form-checkbox value="me">Remember me</b-form-checkbox>
+                      </b-form-checkbox-group>
+                  </b-form-group>
+
+                  <b-button type="submit" variant="primary">Submit</b-button>
+                  <b-button type="button" variant="warning">Forgot password</b-button>
+              </b-form>
+            </div>
+          </div>
         </div>
     </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
     <div class="ui container">
-        <h1>Tasks {{crId}}</h1>
+        <h1>Tasks: #{{crId}}</h1>
         <vuetable ref="vuetable"
             :data="tasks"
             :fields="['id', 'name']"
