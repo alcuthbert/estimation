@@ -6,7 +6,7 @@
         <div class="card-body">
          
             <b-button-group class="mb-3">
-              <b-button variant="success" @click="show">
+              <b-button variant="success" v-b-modal.cr-editor>
                 Create new
                 <font-awesome-icon icon="plus-square" />
               </b-button>
@@ -21,9 +21,9 @@
       </div>
     </div>
 
-    <modal name="cr-editor">
-      <c-r-editor foo="bar" :cr="{name: 'ololo'}" @close="closeModal" />
-    </modal>
+    <b-modal id="cr-editor" title="CR Editor">
+      <c-r-editor foo="bar" :cr="cr" />
+    </b-modal>
   </div>  
 </template>
 
@@ -54,6 +54,7 @@ export default {
             // dataClass: 'center aligned'
           }
         ],
+        cr: {name: 'trololo'}
       }
     },
     computed: {
@@ -62,15 +63,7 @@ export default {
       },
     },
     methods: {
-      closeModal() {
-        console.log("close modal");
-      },
-      show() {
-        this.$modal.show('cr-editor');
-      },
-      hide() {
-        this.$modal.hide('cr-editor');
-      }
+
     },
     components: {
       Vuetable,

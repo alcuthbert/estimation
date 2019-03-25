@@ -1,38 +1,46 @@
 <template>
-    <div>
-        <h1>CR editor {{foo}} {{cr}}</h1>
-    </div>
-    <!-- <div class="modal-backdrop">
-      <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-describedby="modalDescription">
-        <header class="modal-header" id="modalTitle">
-          <slot name="header">
-            This is the default tile! CR editor
-            <button type="button" class="btn-close" @click="close" aria-label="Close modal">x</button>
-          </slot>
-        </header>
+  <div>
+    <b-form >
+      <b-form-group id="exampleInputGroup1" label="Email address:" label-for="email">
+        <b-form-input id="email" type="email" v-model="form.email" required placeholder="Enter email" />
+      </b-form-group>
 
-        <section class="modal-body" id="modalDescription">
-          <div>{{cr}} {{foo}}</div>
-          <slot name="body">
-            I'm the default body!
-          </slot>
-        </section>
+      <b-form-group id="exampleInputGroup2" label="Name" label-for="name">
+        <b-form-input id="name" type="text" v-model="form.name" required />
+      </b-form-group>
 
-        <footer class="modal-footer">
-          <slot name="footer">
-            I'm the default footer!
+      <b-form-group id="exampleInputGroup3" label="Nickname" label-for="nickname">
+        <b-form-input id="nickname" required v-model="form.nickname" />
+      </b-form-group>
 
-            <button type="button" class="btn-green" @click="close" aria-label="Close modal" >
-              Close me!
-            </button>
-          </slot>
-        </footer>
-      </div>
-    </div> -->
+      <b-form-group id="exampleInputGroup4" label="Sex" label-for="gender">
+        <b-form-select id="gender" :options="genders" required v-model="form.gender" />
+      </b-form-group>
+
+      <!-- <b-button type="submit" variant="primary">Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button> -->
+    </b-form>
+  </div>
 </template>
 
 <script>
 export default {
+    data() {
+      return {
+        form: {
+          email: '',
+          name: '',
+          id: null,
+          nickname: '',
+          gender: ''
+        },
+        genders: [
+          { text: 'Select One', value: null },
+          { text: 'Male', value: 'M' },
+          { text: 'Female', value: 'F' }
+        ],
+      }
+    },
     props: {
         cr: Object,
         foo: String

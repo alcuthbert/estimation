@@ -2,18 +2,18 @@
     <div class="custom-actions">
       <b-button-group>
         <router-link :to="{name: $routeNames.changeRequest, params: {crId: rowData.id}}">
-            <button class="btn btn-primary">
-              <font-awesome-icon icon="search" />
-            </button>
+         <b-button variant="primary">
+            <font-awesome-icon icon="search" />
+          </b-button>
         </router-link>
-        <router-link :to="{name: $routeNames.changeRequest, params: {crId: rowData.id}}">
-            <button class="btn btn-warning">
-              <font-awesome-icon icon="edit" />
-            </button>
-        </router-link>
-        <button class="btn btn-danger" @click="itemAction('delete-item', rowData, rowIndex)">
+
+        <b-button variant="warning" v-b-modal.cr-editor>
+          <font-awesome-icon icon="edit" />
+        </b-button>
+
+        <b-button variant="danger" @click="itemAction('delete-item', rowData, rowIndex)">
           <font-awesome-icon icon="trash" />
-        </button>
+        </b-button>
       </b-button-group>
     </div>
   </template>
@@ -31,7 +31,13 @@
     },
     methods: {
       itemAction (action, data, index) {
-        console.log('custom-actions: ' + action, data.name, index)
+        console.log('custom-actions: ' + action, data, index)
+      },
+      showModal() {
+        this.$refs.myModalRef.show()
+      },
+      hideModal() {
+        this.$refs.myModalRef.hide()
       }
     }
   }
