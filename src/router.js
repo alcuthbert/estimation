@@ -1,6 +1,8 @@
 import VueRouter from 'vue-router';
 import RouteNames from './routeNames.js'
 
+import AuthService from './common/services/AuthService.js'
+
 import Home from './components/Home.vue'
 import ChangeRequests from './components/ChangeRequests.vue'
 import ChangeRequest from './components/ChangeRequest.vue'
@@ -9,13 +11,16 @@ import Profile from './components/Profile.vue'
 import Login from './components/Login.vue'
 import Users from './components/Users.vue'
 
-export default new VueRouter({
+const router = new VueRouter({
     linkExactActiveClass: 'active',
     routes: [
       {
         path: '/',
         name: RouteNames.home,
-        component: Home
+        component: Home,
+        meta: {
+            requiresAuth: true
+        }
       },
       {
         path: '/login',
@@ -47,12 +52,18 @@ export default new VueRouter({
       {
         path: '/profile',
         name: RouteNames.profile,
-        component: Profile 
+        component: Profile,
+        meta: {
+            requiresAuth: true
+        }
       },
       {
         path: '/users',
         name: RouteNames.users,
-        component: Users 
+        component: Users,
+        meta: {
+            requiresAuth: true
+        }
       },
       {
         // will match everything
@@ -60,5 +71,17 @@ export default new VueRouter({
         redirect: {name: RouteNames.notFound}
       }
     ]
+  });
+
+  router.beforeEach((to, from, next) => {
+    const requiresAuth = to.matched.some(route => route.meta.requiresAuth);
+
+    if (requiresAuth && !AuthService.isLoggedIn()) {
+      next({name: RouteNames.login});
+    } else {
+      next();
+    }
   })
+
+  export default router;
 
