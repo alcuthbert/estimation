@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable="lg" type="dark" variant="primary" v-if="isVisible">
+    <b-navbar toggleable="lg" type="dark" variant="primary">
         <b-navbar-brand href="#" :to="{name: $routeNames.home}">
             Estimation
             <font-awesome-icon icon="bolt" />
@@ -20,16 +20,9 @@
 <script>
 
 import UserActions from './helpers/UserActions.vue'
-import AuthService from './../common/services/AuthService.js'
 
 export default {
     name: 'app',
-    computed: {
-        isVisible() {
-            console.log("computed isLoggedIn", AuthService.isLoggedIn());
-            return AuthService.isLoggedIn();
-        }
-    },
     components: {
         UserActions
     }

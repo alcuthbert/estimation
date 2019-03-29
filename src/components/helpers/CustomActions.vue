@@ -30,8 +30,11 @@
       }
     },
     methods: {
-      itemAction (action, data, index) {
-        console.log('custom-actions: ' + action, data, index)
+      // itemAction (action, data, index) {
+      // console.log('custom-actions: ' + action, data, index)
+      // }
+      itemAction () {
+        
       },
       showModal() {
         this.$refs.myModalRef.show()
