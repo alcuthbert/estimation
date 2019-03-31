@@ -3,7 +3,7 @@
         <lang></lang>
 
         <b-nav-item-dropdown right>
-            <template slot="button-content"><em>User</em></template>
+            <template slot="button-content"><em>{{getUser()}}</em></template>
             <b-dropdown-item href="#" :to="{name: $routeNames.profile}">Profile</b-dropdown-item>
             <b-dropdown-item href="#" @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -20,6 +20,9 @@ export default {
         logout() {
             AuthService.logout();
             this.$router.push({name: RouteNames.login});
+        },
+        getUser() {
+            return AuthService.getUser() || 'User';
         }
     },
     computed: {

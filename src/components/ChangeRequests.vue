@@ -12,7 +12,8 @@
             </b-button-group>
       
           <b-table bordered hover
-                  selectable select-mode="single"
+                  selectable
+                  select-mode="single"
                   selectedVariant="warning"
                   :busy="isBusy"
                   :items="getItems"

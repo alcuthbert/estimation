@@ -46,20 +46,27 @@ export default {
   },
   methods: {
     onSubmit() {
-      AuthService.login();
-      this.$router.push({name: RouteNames.home});
+      const user = {
+        username: this.form.username,
+        password: this.form.password
+      };
+
+      AuthService.login(user)
+        .then(() => this.$router.push({name: RouteNames.home}))
+        .catch(() => {});
     },
     onReset(evt) {
       evt.preventDefault();
-      /* Reset our form values */
-      this.form.password = "";
-      this.form.usernamename = "";
-      this.form.checked = [];
-      /* Trick to reset/clear native browser form validation state */
-      this.show = false;
-      this.$nextTick(() => {
-        this.show = true;
-      });
+
+      // /* Reset our form values */
+      // this.form.password = "";
+      // this.form.usernamename = "";
+      // this.form.checked = [];
+      // /* Trick to reset/clear native browser form validation state */
+      // this.show = false;
+      // this.$nextTick(() => {
+      //   this.show = true;
+      // });
     }
   }
 };
