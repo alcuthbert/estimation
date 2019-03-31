@@ -60,7 +60,7 @@ export default {
     };
   },
   props: {
-    crId: String
+    crId: Number
   },
   computed: {},
   mounted() {
