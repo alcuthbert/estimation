@@ -5,7 +5,7 @@
         <h5 class="card-header">Change requests</h5>
         <div class="card-body">
           <b-button-group class="mb-3">
-            <b-button variant="success" v-b-modal.cr-editor>
+            <b-button variant="success" v-b-modal.cr-editor @click="selectRowItem()">
               <font-awesome-icon icon="plus-square" />
               Create new
             </b-button>
@@ -70,12 +70,12 @@
             <template slot="actions" slot-scope="row">  
               <b-button-group>
                 <router-link :to="{name: $routeNames.changeRequest, params: {crId: row.item.id}}">
-                <b-button variant="primary">
+                  <b-button variant="primary">
                     <font-awesome-icon icon="search" />
                   </b-button>
                 </router-link>
 
-                <b-button variant="warning" v-b-modal.cr-editor>
+                <b-button variant="warning" v-b-modal.cr-editor @click="selectRowItem(row.item)">
                   <font-awesome-icon icon="edit" />
                 </b-button>
 
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <b-modal id="cr-editor" title="CR Editor">
+    <b-modal id="cr-editor" title="CR Editor" scrollable>
       <c-r-editor foo="bar" :cr="cr" />
     </b-modal>
   </div>  
@@ -143,7 +143,14 @@ export default {
         sortDesc: false,
         totalRows: 0,
         filter: null,
-        cr: null
+        cr: {
+          name: '',
+          status: null,
+          jira_link: '',
+          owner: null,
+          version: '',
+          project: ''
+        }
       }
     },
     mounted() {
@@ -169,6 +176,20 @@ export default {
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
         this.currentPage = 1
+      },
+      selectRowItem(item = null) {
+        if (!item) {
+          item = {
+            name: '',
+            status: null,
+            jira_link: '',
+            owner: null,
+            version: '',
+            project: ''
+          };
+        }
+
+        this.cr = item;
       }
     },
     components: {
