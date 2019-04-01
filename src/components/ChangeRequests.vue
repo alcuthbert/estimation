@@ -139,11 +139,11 @@ export default {
         perPage: 5,
         pageOptions: [1, 5, 10, 15, 20],
         sortBy: 'id',
-        sortOptions: ['id', 'name'],
-        sortDesc: true,
+        sortOptions: ['id', 'name', 'status', 'owner', 'version', 'created', 'project'],
+        sortDesc: false,
         totalRows: 0,
         filter: null,
-        cr: {name: 'trololo'}
+        cr: null
       }
     },
     mounted() {
