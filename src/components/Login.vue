@@ -53,7 +53,7 @@ export default {
 
       AuthService.login(user)
         .then(() => this.$router.push({name: RouteNames.home}))
-        .catch(() => {});
+        .catch(() => this.$router.push({name: RouteNames.login}));
     },
     onReset(evt) {
       evt.preventDefault();
