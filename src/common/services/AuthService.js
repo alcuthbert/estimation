@@ -1,8 +1,10 @@
+const token = 'user_token';
+
 export default  {
   isLoggedIn() {
     let result;
 
-    if (localStorage.getItem('user_token')) {
+    if (localStorage.getItem(token)) {
       result = true;
     } else {
       result = false;
@@ -13,12 +15,12 @@ export default  {
 
   login(user) {
     return new Promise((resolve, reject) => {
-      if (localStorage.getItem('user_token')) {
-        localStorage.removeItem('user-token');
+      if (localStorage.getItem(token)) {
+        localStorage.removeItem(token);
 
         reject();
       } else {
-        localStorage.setItem('user_token', user.username);
+        localStorage.setItem(token, user.username);
 
         resolve();
       }
@@ -26,13 +28,13 @@ export default  {
   },
 
   getUser() {
-    if (localStorage.getItem('user_token')) {
-      return localStorage.getItem('user_token');
+    if (localStorage.getItem(token)) {
+      return localStorage.getItem(token);
     }
   },
 
   logout() {
-    localStorage.removeItem('user_token');
+    localStorage.removeItem(token);
     // loggedIn = false;
   }
 }
