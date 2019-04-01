@@ -4,22 +4,55 @@
       <div class="card my-4">
         <h5 class="card-header">Change requests</h5>
         <div class="card-body">
-            <b-button-group class="mb-3">
-              <b-button variant="success" v-b-modal.cr-editor>
-                Create new
-                <font-awesome-icon icon="plus-square" />
-              </b-button>
-            </b-button-group>
+          <b-button-group class="mb-3">
+            <b-button variant="success" v-b-modal.cr-editor>
+              <font-awesome-icon icon="plus-square" />
+              Create new
+            </b-button>
+          </b-button-group>
+
+          <b-row>
+            <b-col md="4">
+              <b-form-group label="Filter">
+                <b-input-group>
+                  <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+                  <b-input-group-append>
+                    <b-button variant="success" :disabled="!filter" @click="filter = ''">Clear</b-button>
+                  </b-input-group-append>
+                </b-input-group>
+              </b-form-group>
+            </b-col>
+
+            <b-col md="4">
+              <b-form-group label="Sort">
+                <b-input-group>
+                  <b-form-select v-model="sortBy" :options="sortOptions"></b-form-select>
+                  <b-form-select v-model="sortDesc">
+                    <option :value="false">Asc</option>
+                    <option :value="true">Desc</option>
+                  </b-form-select>
+                </b-input-group>
+              </b-form-group>
+            </b-col>
+
+            <b-col md="4">
+              <b-form-group label="Per page">
+                <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
+              </b-form-group>
+            </b-col>
+          </b-row>
       
           <b-table bordered hover
                   selectable
                   select-mode="single"
                   selectedVariant="warning"
                   :busy="isBusy"
-                  :items="getItems"
+                  :items="items"
                   :fields="fields"
                   :current-page="currentPage"
                   :per-page="perPage"
+                  :sort-by.sync="sortBy"
+                  :sort-desc.sync="sortDesc"
                   :filter="filter"
                   @filtered="onFiltered">
 
@@ -27,6 +60,12 @@
               <b-spinner class="align-middle"></b-spinner>
               <strong>Loading...</strong>
             </div>
+
+            <template slot="details" slot-scope="row">
+              <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails" variant="success">
+                {{ row.detailsShowing ? 'Hide' : 'Show'}} details
+              </b-form-checkbox>
+            </template>
 
             <template slot="actions" slot-scope="row">  
               <b-button-group>
@@ -42,10 +81,6 @@
 
                 <b-button variant="danger">
                   <font-awesome-icon icon="trash" />
-                </b-button>
-
-                <b-button @click="row.toggleDetails" variant="warning">
-                  {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
                 </b-button>
               </b-button-group>
             </template>
@@ -80,12 +115,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import CustomActions from './helpers/CustomActions.vue'
 import CREditor from './CREditor.vue'
-import axios from "axios";
-
-Vue.component('custom-actions', CustomActions)
+import CRs from './../common/services/ChangeRequests.js'
 
 export default {
     data() {
@@ -93,6 +124,7 @@ export default {
         isBusy: false,
         items: [],
         fields: [
+          {key: 'details', title: 'details', sortable: false},
           {key: 'id', title: 'id', sortable: true},
           {key: 'name', title: 'name', sortable: true},
           {key: 'status', title: 'status', sortable: true},
@@ -100,44 +132,38 @@ export default {
           {key: 'owner', title: 'owner', sortable: true},
           {key: 'version', title: 'version', sortable: true},
           {key: 'created', title: 'created', sortable: true},
-          {key: 'project', title: 'project', sortable: true, _showDetails: true},
+          {key: 'project', title: 'project', sortable: true},
           {key: 'actions', title: 'actions', sortable: false},
-          // {
-          //   name: '__component:custom-actions',
-          //   title: 'Actions',
-          // }
         ],
         currentPage: 1,
-        perPage: 2,
+        perPage: 5,
+        pageOptions: [1, 5, 10, 15, 20],
+        sortBy: 'id',
+        sortOptions: ['id', 'name'],
+        sortDesc: true,
         totalRows: 0,
-        pageOptions: [5, 10, 15],
-        // sortBy: null,
-        // sortDesc: false,
-        // sortDirection: 'asc',
         filter: null,
-        // modalInfo: { title: '', content: '' },
         cr: {name: 'trololo'}
       }
     },
-    computed: {
-
+    mounted() {
+      this.getItems();
     },
     methods: {
       getItems() {
         this.isBusy = true;
-        
-        return axios.get("/api/change-requests").then((response) => {
-          this.isBusy = false;
 
-          this.items = response.data.data;
-          this.totalRows = this.items.length;
+        CRs.getItems()
+          .then((response) => {
+            this.isBusy = false;
 
-          return this.items;
-        }).catch(() => {
-          this.isBusy = false;
-
-          return [];
-        })
+            this.items = response;
+            this.totalRows = this.items.length;
+          })
+          .catch(() => {
+            this.isBusy = false;
+            this.items = [];
+          })
       },
       onFiltered(filteredItems) {
         // Trigger pagination to update the number of buttons/pages due to filtering
