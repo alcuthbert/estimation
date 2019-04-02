@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Auth from './common/services/AuthService'
+import {MUTATION_SET_IDENTITY} from './mutationTypes.js'
+import {MUTATION_REMOVE_IDENTITY} from './mutationTypes.js'
 
 Vue.use(Vuex);
 
@@ -11,10 +13,10 @@ export default new Vuex.Store({
     identity: identity
   },
   mutations: {
-    setIdentity(state, identity) {
+    [MUTATION_SET_IDENTITY] (state, identity) {
       state.identity = identity;
     },
-    removeIdentity(state) {
+    [MUTATION_REMOVE_IDENTITY] (state) {
       state.identity = null;
     }
   },

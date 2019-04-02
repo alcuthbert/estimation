@@ -14,12 +14,13 @@
 import Lang from './Lang.vue'
 import AuthService from './../../common/services/AuthService.js'
 import RouteNames from './../../routeNames.js'
+import {MUTATION_REMOVE_IDENTITY} from './../../mutationTypes.js'
 
 export default {
     methods: {
         logout() {
             AuthService.logout();
-            this.$store.commit('removeIdentity');
+            this.$store.commit(MUTATION_REMOVE_IDENTITY);
             this.$router.push({name: RouteNames.login});
         },
         getUserName() {

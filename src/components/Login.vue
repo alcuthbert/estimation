@@ -32,6 +32,7 @@
 <script>
 import AuthService from './../common/services/AuthService.js'
 import RouteNames from './../routeNames.js'
+import {MUTATION_SET_IDENTITY} from './../mutationTypes.js'
 
 export default {
   data() {
@@ -54,7 +55,7 @@ export default {
       AuthService.login(user)
         .then(() => {
           this.$router.push({name: RouteNames.home});
-          this.$store.commit('setIdentity', {name: user.username});
+          this.$store.commit(MUTATION_SET_IDENTITY, {name: user.username});
         })
         .catch(() => this.$router.push({name: RouteNames.login}));
     },
