@@ -5,9 +5,9 @@
         <h5 class="card-header">Change requests</h5>
         <div class="card-body">
           <b-button-group class="mb-3">
-            <b-button variant="success" v-b-modal.cr-editor @click="selectRowItem()">
+            <b-button variant="primary" v-b-modal.cr-editor @click="selectRowItem()">
               <font-awesome-icon icon="plus-square" />
-              Create new
+              Create
             </b-button>
           </b-button-group>
 
@@ -17,7 +17,7 @@
                 <b-input-group>
                   <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
                   <b-input-group-append>
-                    <b-button variant="success" :disabled="!filter" @click="filter = ''">Clear</b-button>
+                    <b-button variant="primary" :disabled="!filter" @click="filter = ''">Clear</b-button>
                   </b-input-group-append>
                 </b-input-group>
               </b-form-group>

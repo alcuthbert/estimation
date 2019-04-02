@@ -21,7 +21,7 @@
             </b-form-group>
 
             <b-button type="submit" variant="primary">Submit</b-button>
-            <b-button type="button" variant="warning">Forgot password</b-button>
+            <b-button type="button" variant="secondary">Forgot password</b-button>
           </b-form>
         </div>
       </div>
