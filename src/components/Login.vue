@@ -52,7 +52,10 @@ export default {
       };
 
       AuthService.login(user)
-        .then(() => this.$router.push({name: RouteNames.home}))
+        .then(() => {
+          this.$router.push({name: RouteNames.home});
+          this.$store.commit('setIdentity', {name: user.username});
+        })
         .catch(() => this.$router.push({name: RouteNames.login}));
     },
     onReset(evt) {

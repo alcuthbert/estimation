@@ -3,7 +3,7 @@
         <lang></lang>
 
         <b-nav-item-dropdown right>
-            <template slot="button-content"><em>{{getUser()}}</em></template>
+            <template slot="button-content"><em>{{getUserName()}}</em></template>
             <b-dropdown-item href="#" :to="{name: $routeNames.profile}">Profile</b-dropdown-item>
             <b-dropdown-item href="#" @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -19,15 +19,12 @@ export default {
     methods: {
         logout() {
             AuthService.logout();
+            this.$store.commit('removeIdentity');
             this.$router.push({name: RouteNames.login});
         },
-        getUser() {
-            return AuthService.getUser() || 'User';
-        }
-    },
-    computed: {
-        isLoggedIn() {
-            return AuthService.isLoggedIn();
+        getUserName() {
+            // return AuthService.getUser() || 'User';
+            return (this.$store.state.identity !== null) ? this.$store.state.identity.name : 'User';
         }
     },
     components: {

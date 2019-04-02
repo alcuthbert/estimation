@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable="lg" type="dark" variant="primary">
+    <b-navbar toggleable="lg" type="dark" variant="primary" v-show="this.$store.getters.isLoggedIn">
         <b-navbar-brand href="#" :to="{name: $routeNames.home}">
             Estimation
             <font-awesome-icon icon="bolt" />
