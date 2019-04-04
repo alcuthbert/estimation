@@ -60,8 +60,8 @@
                   :filter="filter"
                   @filtered="onFiltered">
 
-            <div slot="table-busy" class="text-center text-danger my-2">
-              <b-spinner class="align-middle"></b-spinner>
+            <div slot="table-busy" class="text-center text-primary my-2">
+              <b-spinner class="align-middle" variant="secondary"></b-spinner>
               <strong>Loading...</strong>
             </div>
 
@@ -83,7 +83,7 @@
                   <font-awesome-icon icon="edit" />
                 </b-button>
 
-                <b-button variant="danger">
+                <b-button variant="danger" v-b-modal.delete-modal @click="selectRowItem(row.item)">
                   <font-awesome-icon icon="trash" />
                 </b-button>
               </b-button-group>
@@ -116,7 +116,9 @@
       <c-r-editor :item="itemToEdit" @cr-saved="onCrSaved" />
     </b-modal>
 
-    <!-- <b-modal id="delete-modal" ref="delete-modal">Hello From My delete Modal!</b-modal> -->
+    <b-modal id="delete-modal" ref="delete-modal" @ok="onDeletionConfirmed()">
+      Are you sure?
+    </b-modal>
   </div>  
 </template>
 
@@ -129,7 +131,7 @@ export default {
     data() {
       return {
         isBusy: false,
-        item: null,
+        selectedItem: null,
         items: [],
         fields: [
           {key: 'details', title: 'details', sortable: false},
@@ -178,7 +180,7 @@ export default {
         this.currentPage = 1
       },
       selectRowItem(item = null) {
-        this.item = (item !== null) ? Vue.util.extend({}, item) : null
+        this.selectedItem = (item !== null) ? Vue.util.extend({}, item) : null
       },
       onCrSaved(item) {
         const found = this.items.find(el => el.id === item.id)
@@ -188,11 +190,27 @@ export default {
         } else {
           this.items.push(item)
         }
+      },
+      onDeletionConfirmed() {
+        CRs.delete(this.selectedItem.id)
+          .then(() => {
+            const found = this.items.find(el => el.id === this.selectedItem.id)
+
+            if (found) {
+              this.items.splice(this.items.indexOf(found), 1);
+            }
+
+            this.selectedItem = null
+          })
+          .catch(error => {
+            // eslint-disable-next-line
+            console.log("onDeletionConfirmed err", error)
+          })
       }
     },
     computed: {
       itemToEdit() {
-        if (this.item === null) {
+        if (this.selectedItem === null) {
           return {
             id: null,
             name: '',
@@ -205,7 +223,7 @@ export default {
           }
         }
 
-        return this.item
+        return this.selectedItem
       }
     },
     components: {
