@@ -9,6 +9,10 @@
               <font-awesome-icon icon="plus-square" />
               Create
             </b-button>
+            <b-button variant="secondary" @click="getItems()">
+              <font-awesome-icon icon="sync" />
+              Refresh
+            </b-button>
           </b-button-group>
 
           <b-row>
@@ -108,13 +112,16 @@
       </div>
     </div>
 
-    <b-modal id="cr-editor" title="CR Editor" scrollable>
-      <c-r-editor foo="bar" :cr="cr" />
+    <b-modal id="cr-editor" ref="cr-editor" header-bg-variant="default" title="CR Editor" scrollable hide-footer>
+      <c-r-editor :item="itemToEdit" @cr-saved="onCrSaved" />
     </b-modal>
+
+    <!-- <b-modal id="delete-modal" ref="delete-modal">Hello From My delete Modal!</b-modal> -->
   </div>  
 </template>
 
 <script>
+import Vue from 'vue'
 import CREditor from './CREditor.vue'
 import CRs from './../common/services/ChangeRequests.js'
 
@@ -122,6 +129,7 @@ export default {
     data() {
       return {
         isBusy: false,
+        item: null,
         items: [],
         fields: [
           {key: 'details', title: 'details', sortable: false},
@@ -142,34 +150,26 @@ export default {
         sortOptions: ['id', 'name', 'status', 'owner', 'version', 'created', 'project'],
         sortDesc: false,
         totalRows: 0,
-        filter: null,
-        cr: {
-          name: '',
-          status: null,
-          jira_link: '',
-          owner: null,
-          version: '',
-          project: ''
-        }
+        filter: null
       }
     },
     mounted() {
-      this.getItems();
+      this.getItems()
     },
     methods: {
       getItems() {
-        this.isBusy = true;
+        this.isBusy = true
 
         CRs.getItems()
           .then((response) => {
-            this.isBusy = false;
+            this.isBusy = false
 
-            this.items = response;
-            this.totalRows = this.items.length;
+            this.items = response.data
+            this.totalRows = this.items.length
           })
           .catch(() => {
-            this.isBusy = false;
-            this.items = [];
+            this.isBusy = false
+            this.items = []
           })
       },
       onFiltered(filteredItems) {
@@ -178,22 +178,38 @@ export default {
         this.currentPage = 1
       },
       selectRowItem(item = null) {
-        if (!item) {
-          item = {
+        this.item = (item !== null) ? Vue.util.extend({}, item) : null
+      },
+      onCrSaved(item) {
+        const found = this.items.find(el => el.id === item.id)
+
+        if (found) {
+          Vue.util.extend(found, item)
+        } else {
+          this.items.push(item)
+        }
+      }
+    },
+    computed: {
+      itemToEdit() {
+        if (this.item === null) {
+          return {
+            id: null,
             name: '',
             status: null,
             jira_link: '',
             owner: null,
             version: '',
-            project: ''
-          };
+            project: '',
+            created: null
+          }
         }
 
-        this.cr = item;
+        return this.item
       }
     },
     components: {
       CREditor
-    },
+    }
 }
 </script>
