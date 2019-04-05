@@ -85,16 +85,6 @@
       "version": "3.3",
       "created": 1553246690,
       "project": "as1313"
-    },
-    {
-      "id": 4,
-      "name": "44444444.22222",
-      "status": "open",
-      "jira_link": "http://oper.ru",
-      "owner": 1,
-      "version": "1.0",
-      "project": "rrrrrrr",
-      "created": null
     }
   ],
   "tasks": [
