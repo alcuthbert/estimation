@@ -2,16 +2,16 @@
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
       <div class="card my-4">
-        <h5 class="card-header">Change requests</h5>
+        <h5 class="card-header">{{ $t("message['change requests']") | ucfirst }}</h5>
         <div class="card-body">
           <b-button-group class="mb-3">
             <b-button variant="primary" v-b-modal.cr-editor @click="selectRowItem()">
               <font-awesome-icon icon="plus-square" />
-              Create
+              {{ $t("message.create") | ucfirst }}
             </b-button>
             <b-button variant="secondary" @click="getItems()">
               <font-awesome-icon icon="sync" />
-              Refresh
+              {{ $t("message.refresh") | ucfirst }}
             </b-button>
           </b-button-group>
 
@@ -21,14 +21,14 @@
                 <b-input-group>
                   <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
                   <b-input-group-append>
-                    <b-button variant="primary" :disabled="!filter" @click="filter = ''">Clear</b-button>
+                    <b-button variant="primary" :disabled="!filter" @click="filter = ''">{{ $t("message.clear") | ucfirst }}</b-button>
                   </b-input-group-append>
                 </b-input-group>
               </b-form-group>
             </b-col>
 
             <b-col md="4">
-              <b-form-group label="Sort">
+              <b-form-group :label="$t('message.sort') | ucfirst">
                 <b-input-group>
                   <b-form-select v-model="sortBy" :options="sortOptions"></b-form-select>
                   <b-form-select v-model="sortDesc">

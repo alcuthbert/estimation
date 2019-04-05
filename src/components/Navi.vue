@@ -9,7 +9,9 @@
 
         <b-collapse is-nav id="nav_collapse">
             <b-navbar-nav>
-                <b-nav-item href="#" :to="{name: $routeNames.changeRequests}" :exact=true >Change Requests</b-nav-item>
+                <b-nav-item href="#" :to="{name: $routeNames.changeRequests}" :exact=true >
+                    {{$t("message['change requests']") | ucfirst}}
+                </b-nav-item>
             </b-navbar-nav>
 
             <user-actions></user-actions>

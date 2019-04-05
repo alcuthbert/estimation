@@ -1,19 +1,19 @@
 <template>
   <div>
     <b-form @submit="onSubmit" @reset="onReset">
-      <b-form-group label="Name" label-for="name">
+      <b-form-group :label="$t('message.name') | ucfirst" label-for="name">
         <b-form-input id="name" type="text" v-model="item.name" required />
       </b-form-group>
 
-      <b-form-group label="Status" label-for="status">
+      <b-form-group :label="$t('message.status') | ucfirst" label-for="status">
         <b-form-select id="status" required v-model="item.status" :options="statuses" />
       </b-form-group>
 
-      <b-form-group label="Owner" label-for="owner">
+      <b-form-group :label="$t('message.owner') | ucfirst" label-for="owner">
         <b-form-select id="owner" required v-model="item.owner" :options="owners" />
       </b-form-group>
 
-      <b-form-group label="Version" label-for="version">
+      <b-form-group :label="$t('message.version') | ucfirst" label-for="version">
         <b-form-input id="version" type="text" v-model="item.version" />
       </b-form-group>
 
@@ -21,12 +21,12 @@
         <b-form-input id="jira_link" type="text" v-model="item.jira_link" />
       </b-form-group>
 
-      <b-form-group label="Project" label-for="project">
+      <b-form-group :label="$t('message.project') | ucfirst" label-for="project">
         <b-form-input id="project" type="text" v-model="item.project" />
       </b-form-group>
 
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="secondary">Cancel</b-button>
+      <b-button type="submit" variant="primary">{{ $t("message.submit") | ucfirst }}</b-button>
+      <b-button type="reset" variant="secondary">{{ $t("message.cancel") | ucfirst }}</b-button>
     </b-form>
   </div>
 </template>

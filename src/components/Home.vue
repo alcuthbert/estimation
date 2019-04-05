@@ -1,19 +1,18 @@
 <template>
-  <div>
-    <b-jumbotron bg-variant="light" text-variant="black" border-variant="light">
-      <template slot="header">Estimation Tool</template>
+	<div>
+		<b-jumbotron bg-variant="light" text-variant="black" border-variant="light">
+		<template slot="header">Estimation Tool</template>
 
-      <template slot="lead">
-        This is a simple application for the load estimation of tasks
-      </template>
+		<template slot="lead">
+			{{ $t("message.hello_message") }}
+		</template>
 
-      <hr class="my-4" />
+		<hr class="my-4" />
 
-      <p>
-        To start working you can go to:
-      </p>
+		<p>{{ $t("message.start_work") | ucfirst}}</p>
 
-      <b-button variant="primary" href="#" :to="{name: $routeNames.changeRequests}">Change Requests</b-button>
-    </b-jumbotron>
-  </div>
+		<b-button variant="primary" href="#" :to="{name: $routeNames.changeRequests}">
+			{{ $t("message['change requests']") | ucfirst }}</b-button>
+		</b-jumbotron>
+	</div>
 </template>

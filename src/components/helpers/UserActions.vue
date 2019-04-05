@@ -4,8 +4,8 @@
 
         <b-nav-item-dropdown right>
             <template slot="button-content"><em>{{getUserName()}}</em></template>
-            <b-dropdown-item href="#" :to="{name: $routeNames.profile}">Profile</b-dropdown-item>
-            <b-dropdown-item href="#" @click="logout">Logout</b-dropdown-item>
+            <b-dropdown-item href="#" :to="{name: $routeNames.profile}">{{$t("message.profile") | ucfirst}}</b-dropdown-item>
+            <b-dropdown-item href="#" @click="logout">{{$t("message.logout") | ucfirst}}</b-dropdown-item>
         </b-nav-item-dropdown>
     </b-navbar-nav>
 </template>
