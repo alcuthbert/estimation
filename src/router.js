@@ -3,13 +3,13 @@ import RouteNames from './routeNames.js'
 
 import AuthService from './common/services/AuthService.js'
 
-import Home from './components/Home.vue'
-import ChangeRequests from './components/ChangeRequests.vue'
-import ChangeRequest from './components/ChangeRequest.vue'
-import NotFound from './components/NotFound.vue'
-import Profile from './components/Profile.vue'
-import Login from './components/Login.vue'
-import Users from './components/Users.vue'
+import Home from './components/pages/Home.vue'
+import ChangeRequests from './components/pages/ChangeRequests.vue'
+import ChangeRequest from './components/pages/ChangeRequest.vue'
+import NotFound from './components/pages/NotFound.vue'
+import Profile from './components/pages/Profile.vue'
+import Login from './components/pages/Login.vue'
+import Users from './components/pages/Users.vue'
 
 const router = new VueRouter({
     linkExactActiveClass: 'active',

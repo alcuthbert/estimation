@@ -50,7 +50,7 @@
 
 <script>
 import axios from "axios";
-import Tasks from "./Tasks";
+import Tasks from "./../Tasks";
 // import crResource from './../resources/cr.js'
 
 export default {

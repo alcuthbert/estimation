@@ -44,7 +44,7 @@
 
 <script>
 import axios from 'axios'
-import Tasks from './Tasks.vue'
+import Tasks from './../Tasks.vue'
 
 export default {
     data() {

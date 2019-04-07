@@ -124,8 +124,8 @@
 
 <script>
 import Vue from 'vue'
-import CREditor from './CREditor.vue'
-import CRs from './../common/services/ChangeRequests.js'
+import CREditor from './../CREditor.vue'
+import CRs from './../../common/services/ChangeRequests.js'
 
 export default {
     data() {

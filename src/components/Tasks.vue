@@ -32,15 +32,15 @@ export default {
       fields: [
         { name: "id", title: "id" },
         { name: "name", title: "name" },
-        {
-          name: "__component:custom-actions",
-          title: "Actions"
-        }
+        // {
+        //   name: "__component:custom-actions",
+        //   title: "Actions"
+        // }
       ]
     };
   },
   props: {
-    crId: String
+    crId: Number
   },
   mounted() {
     axios.get("/api/tasks").then(response => {
