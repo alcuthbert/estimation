@@ -1,4 +1,9 @@
-const token = 'user_token';
+import axios from 'axios';
+import {API_URL} from './../../appConfig.js'
+
+const url = `${API_URL}/users`;
+
+export const token = 'user_token';
 
 export default  {
   isLoggedIn() {
@@ -9,14 +14,29 @@ export default  {
   },
   login(user) {
     return new Promise((resolve, reject) => {
-      if (localStorage.getItem(token)) {
-        reject();
-      } else {
-        localStorage.setItem(token, user.username);
-
-        resolve();
-      }
-    });
+      axios
+        .get(url, {
+          params: {
+            name: user.username,
+            password: user.password
+          }
+        })
+        .then((response) => {
+          if (response.data.length === 0) {
+            reject({
+              data: {},
+              status: 401,
+              statusText: "Not Authorized"
+            })
+          } else {
+            // localStorage.setItem(token, response.data[0].username)
+            resolve(response)
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        })
+      })
   },
 
   logout() {
