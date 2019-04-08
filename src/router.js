@@ -10,6 +10,7 @@ import NotFound from './components/pages/NotFound.vue'
 import Profile from './components/pages/Profile.vue'
 import Login from './components/pages/Login.vue'
 import Users from './components/pages/Users.vue'
+import Signup from './components/pages/Signup'
 
 const router = new VueRouter({
     linkExactActiveClass: 'active',
@@ -26,6 +27,11 @@ const router = new VueRouter({
         path: '/login',
         name: RouteNames.login,
         component: Login
+      },
+      {
+        path: '/signup',
+        name: RouteNames.signup,
+        component: Signup
       },
       {
         path: '/change-requests',

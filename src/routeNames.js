@@ -5,7 +5,8 @@ const routeNames = {
     changeRequest: 'change-request',
     notFound: 'not-found',
     profile: 'profile',
-    users: 'users'
+    users: 'users',
+    signup: 'signup'
 }
 
 export default routeNames;

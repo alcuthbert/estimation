@@ -4,58 +4,23 @@
       "id": 1,
       "name": "aleksey",
       "password": "f8d07a83fff06d61529d83cf7d3fc6c6",
-      "nickname": "aleksey",
       "email": "aleksey@example.com",
       "birthdate": "1988-06-28 00:00:00",
-      "gender": "M",
-      "salary": "13098.00",
-      "group_id": 2,
-      "created_at": "2017-01-01 07:21:10",
-      "updated_at": "2017-01-01 07:21:10",
-      "age": 32,
-      "group": {
-        "id": 2,
-        "name": "Exec",
-        "description": "Executives"
-      }
-    },
-    {
-      "id": 2,
-      "name": "Edwin Beier",
-      "password": "e10adc3949ba59abbe56e057f20f883e",
-      "nickname": "eos",
-      "email": "janis71@example.org",
-      "birthdate": "1978-10-13 00:00:00",
-      "gender": "M",
-      "salary": "11902.00",
+      "gender": "m",
       "group_id": 1,
       "created_at": "2017-01-01 07:21:10",
-      "updated_at": "2017-01-01 07:21:10",
-      "age": 40,
-      "group": {
-        "id": 1,
-        "name": "Admin",
-        "description": "Administrators"
-      }
+      "updated_at": "2017-01-01 07:21:10"
     },
     {
-      "id": 3,
-      "name": "Beulah Huels",
-      "password": "e10adc3949ba59abbe56e057f20f883e",
-      "nickname": "non",
-      "email": "stefan99@example.com",
-      "birthdate": "1963-09-04 00:00:00",
-      "gender": "F",
-      "salary": "36920.00",
-      "group_id": 5,
-      "created_at": "2017-01-01 07:21:10",
-      "updated_at": "2017-01-01 07:21:10",
-      "age": 55,
-      "group": {
-        "id": 5,
-        "name": "Emp",
-        "description": "Employees"
-      }
+      "name": "trololo",
+      "password": "37f62f1363b04df4370753037853fe88",
+      "email": "trololo@mail.ru",
+      "birthdate": null,
+      "gender": null,
+      "group_id": null,
+      "created_at": "",
+      "updated_at": "",
+      "id": 2
     }
   ],
   "change-requests": [

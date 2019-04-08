@@ -1,10 +1,10 @@
 <template>
     <b-navbar-nav class="ml-auto">
-        <lang></lang>
+        <lang-nav></lang-nav>
 
         <b-nav-item-dropdown right>
             <template slot="button-content">
-                <em>{{getUserName()}}</em>
+                <em>{{getUserName() | ucfirst}}</em>
             </template>
             <b-dropdown-item href="#" :to="{name: $routeNames.profile}">
                 {{$t("message.profile") | ucfirst}}
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Lang from './Lang.vue'
+import LangNav from './LangNav'
 import AuthService from './../../common/services/AuthService.js'
 import RouteNames from './../../routeNames.js'
 import {MUTATION_REMOVE_IDENTITY} from './../../mutationTypes.js'
@@ -35,7 +35,7 @@ export default {
         },
     },
     components: {
-        Lang
+        LangNav
     }
 }
 </script>
