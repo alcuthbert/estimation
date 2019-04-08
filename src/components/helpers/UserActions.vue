@@ -1,11 +1,18 @@
 <template>
     <b-navbar-nav class="ml-auto">
+        <flag :iso="$i18n.locale === 'ru' ? 'ru' : 'gb'" />
         <lang></lang>
 
         <b-nav-item-dropdown right>
-            <template slot="button-content"><em>{{getUserName()}}</em></template>
-            <b-dropdown-item href="#" :to="{name: $routeNames.profile}">{{$t("message.profile") | ucfirst}}</b-dropdown-item>
-            <b-dropdown-item href="#" @click="logout">{{$t("message.logout") | ucfirst}}</b-dropdown-item>
+            <template slot="button-content">
+                <em>{{getUserName()}}</em>
+            </template>
+            <b-dropdown-item href="#" :to="{name: $routeNames.profile}">
+                {{$t("message.profile") | ucfirst}}
+            </b-dropdown-item>
+            <b-dropdown-item href="#" @click="logout">
+                {{$t("message.logout") | ucfirst}}
+            </b-dropdown-item>
         </b-nav-item-dropdown>
     </b-navbar-nav>
 </template>
@@ -19,14 +26,14 @@ import {MUTATION_REMOVE_IDENTITY} from './../../mutationTypes.js'
 export default {
     methods: {
         logout() {
-            AuthService.logout();
-            this.$store.commit(MUTATION_REMOVE_IDENTITY);
-            this.$router.push({name: RouteNames.login});
+            AuthService.logout()
+            this.$store.commit(MUTATION_REMOVE_IDENTITY)
+            this.$router.push({name: RouteNames.login})
         },
         getUserName() {
             // return AuthService.getUser() || 'User';
-            return (this.$store.state.identity !== null) ? this.$store.state.identity.name : 'User';
-        }
+            return (this.$store.state.identity !== null) ? this.$store.state.identity.name : 'User'
+        },
     },
     components: {
         Lang
