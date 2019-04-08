@@ -1,6 +1,5 @@
 <template>
     <b-navbar-nav class="ml-auto">
-        <flag :iso="$i18n.locale === 'ru' ? 'ru' : 'gb'" />
         <lang></lang>
 
         <b-nav-item-dropdown right>

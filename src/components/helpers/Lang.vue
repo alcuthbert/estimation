@@ -1,5 +1,9 @@
 <template>
-    <b-nav-item-dropdown :text="$t('message.language') | ucfirst" right>
+    <b-nav-item-dropdown right>
+        <template slot="button-content">
+            <flag :iso="$i18n.locale === 'ru' ? 'ru' : 'gb'" />
+            {{$t('message.language') | ucfirst}}
+        </template>
         <b-dropdown-item href="#" @click="$i18n.locale = 'en'">
             <flag iso="gb" />
             English
