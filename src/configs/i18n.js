@@ -24,7 +24,7 @@ const messages = {
 			password: 'password',
 			forgot_password: 'forgot password',
 			remember_me: 'remember me',
-			signin: 'Sign In',
+			signin: 'sign In',
 			name: 'name',
 			status: 'status',
 			owner: 'owner',

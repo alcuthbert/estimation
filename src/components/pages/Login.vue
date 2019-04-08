@@ -65,7 +65,6 @@
 import AuthService from './../../common/services/AuthService.js'
 import RouteNames from './../../routeNames.js'
 import {MUTATION_SET_IDENTITY} from './../../mutationTypes.js'
-import {token} from './../../common/services/AuthService.js'
 
 export default {
 	data() {
@@ -91,7 +90,6 @@ export default {
 			AuthService
 				.login(user)
 				.then(() => {
-					localStorage.setItem(token, user.username)
 					this.$router.push({name: RouteNames.home})
 					this.$store.commit(MUTATION_SET_IDENTITY, {name: user.username})
 				})

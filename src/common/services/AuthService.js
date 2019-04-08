@@ -3,6 +3,8 @@ import {API_URL} from './../../appConfig.js'
 
 const url = `${API_URL}/users`;
 
+const md5 = require('js-md5');
+
 export const token = 'user_token';
 
 export default  {
@@ -18,7 +20,7 @@ export default  {
         .get(url, {
           params: {
             name: user.username,
-            password: user.password
+            password: md5(user.password)
           }
         })
         .then((response) => {
@@ -29,7 +31,7 @@ export default  {
               statusText: "Not Authorized"
             })
           } else {
-            // localStorage.setItem(token, response.data[0].username)
+            localStorage.setItem(token, response.data[0].name)
             resolve(response)
           }
         })
