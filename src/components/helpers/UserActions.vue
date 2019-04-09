@@ -31,7 +31,7 @@ export default {
         },
         getUserName() {
             // return AuthService.getUser() || 'User';
-            return (this.$store.state.identity !== null) ? this.$store.state.identity.name : 'User'
+            return (this.$store.getters.getIdentity !== null) ? this.$store.getters.getIdentity.name : 'User'
         },
     },
     components: {

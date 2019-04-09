@@ -26,6 +26,9 @@ export default new Vuex.Store({
   getters: {
     isLoggedIn(state) {
       return state.identity !== null;
+    },
+    getIdentity(state) {
+      return state.identity
     }
   }
 });
