@@ -63,10 +63,10 @@
 </template>
 
 <script>
-import AuthService from './../../common/services/AuthService.js'
-import RouteNames from './../../routeNames.js'
+import AuthService from '@/common/services/AuthService.js'
+import RouteNames from '@/routeNames.js'
 import {MUTATION_SET_IDENTITY} from './../../mutationTypes.js'
-import Lang from './../helpers/Lang'
+import Lang from '@/components/helpers/Lang'
 
 const md5 = require('js-md5');
 
@@ -91,13 +91,20 @@ export default {
 
 			AuthService
 				.login(user)
-				.then(() => {
+				.then((response) => {
+					const identity = response.data[0];
+
+					this.$store.commit(MUTATION_SET_IDENTITY, identity)
+
 					this.$router.push({name: RouteNames.home})
-					this.$store.commit(MUTATION_SET_IDENTITY, {name: user.username})
+
+					this.$toaster.success('Welcome!')
 				})
 				.catch((error) => {
 					// eslint-disable-next-line
 					console.log('error', error)
+
+					this.$toaster.error('Something went wrong')
 
 					this.serverError = true
 					this.$router.push({name: RouteNames.login})

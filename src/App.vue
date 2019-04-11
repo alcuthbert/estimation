@@ -1,10 +1,11 @@
 <template>
-  <div id="app">
-    <navi></navi>
-    <div class="container">
-      <router-view></router-view>
-    </div>
-  </div>
+	<div id="app">
+		<navi></navi>
+
+		<div class="container">
+			<router-view></router-view>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -12,21 +13,26 @@
 import Navi from './components/Navi.vue'
 
 export default {
-  name: 'app',
-  components: {
-    Navi
-  }
+	name: 'app',
+	created() {
+		if (this.$store.state.identity === null) {
+			this.$store.dispatch('getIdentity')
+		}
+	},
+	components: {
+		Navi
+	}
 }
 
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center;
-  color: #2c3e50; */
-  /* margin-top: 60px; */
+	font-family: 'Avenir', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	/* text-align: center;
+	color: #2c3e50; */
+	/* margin-top: 60px; */
 }
 </style>
