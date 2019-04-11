@@ -20,7 +20,10 @@ export default  {
 							statusText: "Not Authorized"
 						})
 					} else {
-						localStorage.setItem(token, response.data[0].name)
+						const identity = response.data[0];
+
+						localStorage.setItem(token, identity.id)
+
 						resolve(response)
 					}
 				})

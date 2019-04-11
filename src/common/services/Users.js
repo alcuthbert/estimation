@@ -14,5 +14,8 @@ export default {
 	},
 	save(user) {
 		return axios.post(url, user)
+	},
+	findById(id) {
+		return axios.get(`${url}/${id}`)
 	}
 }
