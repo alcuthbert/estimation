@@ -1,7 +1,4 @@
-import axios from 'axios';
-import {API_URL} from './../../appConfig.js'
-
-const url = `${API_URL}/users`;
+import Users from '@/common/services/Users'
 
 export const token = 'user_token';
 
@@ -14,13 +11,7 @@ export default  {
 	},
 	login(user) {
 		return new Promise((resolve, reject) => {
-			axios
-				.get(url, {
-					params: {
-						name: user.username,
-						password: user.password
-					}
-				})
+			Users.findByCredentials(user.username, user.password)
 				.then((response) => {
 					if (response.data.length === 0) {
 						reject({
@@ -40,8 +31,7 @@ export default  {
 	},
 	signup(user) {
 		return new Promise((resolve, reject) => {
-			axios
-				.post(url, user)
+			Users.save(user)
 				.then((response) => {
 					resolve(response)
 				})
