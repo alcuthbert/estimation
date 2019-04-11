@@ -68,10 +68,10 @@
 </template>
 
 <script>
-import Lang from './../helpers/Lang'
-import AuthService from './../../common/services/AuthService.js'
-import RouteNames from './../../routeNames.js'
-import {ROLE_ESTIMATOR} from './../../resources/roles'
+import Lang from '@/components/helpers/Lang'
+import AuthService from '@/common/services/AuthService.js'
+import RouteNames from '@/routeNames.js'
+import {ROLE_ESTIMATOR} from '@/resources/roles'
 
 const md5 = require('js-md5');
 
@@ -101,10 +101,7 @@ export default {
 
 			AuthService
 				.signup(user)
-				.then((response) => {
-                    // eslint-disable-next-line
-                    console.log('response', response)
-
+				.then(() => {
                     this.$toaster.success('You have been successfully registered!', {timeout: 8000})
                     
 					this.$router.push({name: RouteNames.login})

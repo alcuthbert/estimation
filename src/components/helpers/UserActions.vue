@@ -18,9 +18,9 @@
 
 <script>
 import LangNav from './LangNav'
-import AuthService from './../../common/services/AuthService.js'
-import RouteNames from './../../routeNames.js'
-import {MUTATION_REMOVE_IDENTITY} from './../../mutationTypes.js'
+import AuthService from '@/common/services/AuthService.js'
+import RouteNames from '@/routeNames.js'
+import {MUTATION_REMOVE_IDENTITY} from '@/mutationTypes.js'
 
 export default {
     methods: {
@@ -30,7 +30,6 @@ export default {
             this.$router.push({name: RouteNames.login})
         },
         getUserName() {
-            // return AuthService.getUser() || 'User';
             return (this.$store.getters.getIdentity !== null) ? this.$store.getters.getIdentity.name : 'User'
         },
     },
