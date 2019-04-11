@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
 			<div class="card my-4">
-				<h5 class="card-header">{{ $t("message['change requests']") | ucfirst }} {{identity}}</h5>
+				<h5 class="card-header">{{ $t("message['change requests']") | ucfirst }}</h5>
 				<div class="card-body">
 					<b-button-group class="mb-3">
 						<b-button variant="primary" v-b-modal.cr-editor @click="selectRowItem()">
