@@ -71,6 +71,7 @@
 import Lang from './../helpers/Lang'
 import AuthService from './../../common/services/AuthService.js'
 import RouteNames from './../../routeNames.js'
+import {ROLE_ESTIMATOR} from './../../resources/roles'
 
 const md5 = require('js-md5');
 
@@ -94,7 +95,8 @@ export default {
                 gender: null,
                 group_id: null,
                 created_at: "",
-                updated_at: ""
+                updated_at: "",
+                role: ROLE_ESTIMATOR
 			}
 
 			AuthService
