@@ -9,17 +9,19 @@
       "gender": "m",
       "group_id": 1,
       "created_at": "2017-01-01 07:21:10",
-      "updated_at": "2017-01-01 07:21:10"
+      "updated_at": "2017-01-01 07:21:10",
+      "role": 1
     },
     {
-      "name": "trololo",
-      "password": "37f62f1363b04df4370753037853fe88",
-      "email": "trololo@mail.ru",
+      "name": "estimator",
+      "password": "cd1235fc9b090edba051d73dbc6f66bf",
+      "email": "est@mail.ru",
       "birthdate": null,
       "gender": null,
       "group_id": null,
       "created_at": "",
       "updated_at": "",
+      "role": 4,
       "id": 2
     }
   ],
@@ -29,7 +31,7 @@
       "name": "cr number one one",
       "status": "open",
       "jira_link": "http://jira.com/1",
-      "owner": "user 1",
+      "owner": 1,
       "version": "version 0.0.1",
       "created": 1553245590,
       "project": "as1313"
@@ -39,7 +41,7 @@
       "name": "cr number two",
       "status": "approved",
       "jira_link": "http://jira.com/2",
-      "owner": "user 1",
+      "owner": 1,
       "version": "2.0",
       "created": 1553247790,
       "project": "as1313"
@@ -53,6 +55,26 @@
       "version": "3.3",
       "created": 1553246690,
       "project": "as1313"
+    },
+    {
+      "id": 4,
+      "name": "444",
+      "status": 1,
+      "jira_link": "",
+      "owner": 1,
+      "version": "444",
+      "project": "as1313",
+      "created": null
+    },
+    {
+      "id": 5,
+      "name": "555",
+      "status": 1,
+      "jira_link": "http://oper.ru",
+      "owner": 1,
+      "version": "1.0",
+      "project": "as1313",
+      "created": null
     }
   ],
   "tasks": [
