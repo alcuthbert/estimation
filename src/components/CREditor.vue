@@ -10,7 +10,7 @@
 					id="name"
 					name="name"
 					type="text"
-					v-model="item.name"
+					v-model="form.name"
 					required
 					v-validate="'required|alpha_spaces|min:6'"
 					:state="validateState('name')"
@@ -25,7 +25,7 @@
 					id="number"
 					name="number"
 					type="text"
-					v-model="item.number"
+					v-model="form.number"
 					v-validate="'required|alpha_num'"
 					:state="validateState('number')"
 					aria-describedby="number-error" />
@@ -39,7 +39,7 @@
 					id="version"
 					name="version"
 					type="text"
-					v-model="item.version"
+					v-model="form.version"
 					v-validate=""
 					:state="validateState('version')"
 					aria-describedby="version-error" />
@@ -53,7 +53,7 @@
 					id="jira-link"
 					name="jira-link"
 					type="text"
-					v-model="item.jira_link"
+					v-model="form.jira_link"
 					v-validate="{url: {require_protocol: true }}"
 					:state="validateState('jira-link')"
 					aria-describedby="jira-link-error" />
@@ -67,7 +67,7 @@
 					id="project"
 					name="project"
 					type="text"
-					v-model="item.project"
+					v-model="form.project"
 					v-validate="'alpha_num'"
 					:state="validateState('project')"
 					aria-describedby="project-error" />
@@ -87,22 +87,37 @@
 </template>
 
 <script>
+import Vue from "vue"
 import CRService from '@/common/services/ChangeRequests.js'
 import { mapGetters } from "vuex";
 import { GET_IDENTITY } from '@/store/getter-types'
+import { STATUS_WAITING_FOR_APPROVE } from "@/resources/statuses"
 
 export default {
 	data() {
 		return {
-
+			form: {
+				id: null,
+				name: "",
+				number: "",
+				status: STATUS_WAITING_FOR_APPROVE,
+				jira_link: "",
+				owner: this.myId,
+				version: "",
+				project: "",
+				created: ""
+			}
 		}
 	},
 	props: {
-		item: Object
+		inputItem: Object
 	},
 	computed: {
 		validationFailed() {
 			return this.errors.any()
+		},
+		myId() {
+			return (this.identity !== null && this.identity !== undefined) ? this.identity.id : null
 		},
 		...mapGetters({
 			identity: GET_IDENTITY
@@ -110,13 +125,15 @@ export default {
 	},
 	methods: {
 		onReset() {
+			this.formToDefaults()
+
 			this.$root.$emit('bv::hide::modal', 'cr-editor')
 		},
 		onSubmit(e) {
 			e.preventDefault();
 
 			CRService
-				.save(this.item)
+				.save(this.form)
 				.then((response) => {
 					this.$emit('cr-saved', response.data)
 				})
@@ -124,6 +141,8 @@ export default {
 					// eslint-disable-next-line
 					console.log('cr save error', error)
 				})
+
+			this.formToDefaults()
 
 			this.$root.$emit('bv::hide::modal', 'cr-editor')
 		},
@@ -134,6 +153,30 @@ export default {
 
 			return null
 		},
+		formToDefaults() {
+			this.form = {
+				id: null,
+				name: "",
+				number: "",
+				status: STATUS_WAITING_FOR_APPROVE,
+				jira_link: "",
+				owner: this.myId,
+				version: "",
+				project: "",
+				created: ""
+			}
+		}
+	},
+	mounted() {
+		this.formToDefaults()
+
+		this.$root.$on('bv::modal::show', () => {
+			if (this.inputItem !== null) {
+				Vue.util.extend(this.form, this.inputItem)
+			} else {
+				this.formToDefaults()
+			}
+		})
 	}
 }
 </script>

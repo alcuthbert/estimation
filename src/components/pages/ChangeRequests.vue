@@ -128,7 +128,7 @@
 			scrollable
 			hide-footer
 		>
-			<c-r-editor :item="itemToEdit" @cr-saved="onCrSaved"/>
+			<c-r-editor :inputItem="selectedItem" @cr-saved="onCrSaved"/>
 		</b-modal>
 
 		<b-modal id="delete-modal" ref="delete-modal" @ok="onDeletionConfirmed()">Are you sure?</b-modal>
@@ -140,7 +140,6 @@ import Vue from "vue"
 import { mapGetters } from "vuex"
 import CREditor from "@/components/CREditor.vue"
 import CRs from "@/common/services/ChangeRequests.js"
-import { STATUS_WAITING_FOR_APPROVE } from "@/resources/statuses"
 import { GET_IDENTITY } from '@/store/getter-types'
 
 export default {
@@ -153,6 +152,7 @@ export default {
 				{ key: "details", title: "details", sortable: false },
 				{ key: "id", title: "id", sortable: true },
 				{ key: "name", title: "name", sortable: true },
+				{ key: "number", title: "number", sortable: true },
 				{ key: "status", title: "status", sortable: true },
 				{ key: "jira_link", title: "jira_link", sortable: false },
 				{ key: "owner", title: "owner", sortable: true },
@@ -168,6 +168,7 @@ export default {
 			sortOptions: [
 				"id",
 				"name",
+				"number",
 				"status",
 				"owner",
 				"version",
@@ -204,7 +205,7 @@ export default {
 			this.currentPage = 1
 		},
 		selectRowItem(item = null) {
-			this.selectedItem = item !== null ? Vue.util.extend({}, item) : null
+			this.selectedItem = (item !== null) ? Vue.util.extend({}, item) : null
 		},
 		onCrSaved(item) {
 			const found = this.items.find(el => el.id === item.id)
@@ -226,33 +227,17 @@ export default {
 						this.items.splice(this.items.indexOf(found), 1)
 					}
 
-					this.selectedItem = null;
+					this.selectedItem = null
 				})
 				.catch(error => {
 					// eslint-disable-next-line
 					console.log("onDeletionConfirmed err", error)
+
+					this.selectedItem = null
 				});
 		},
 	},
 	computed: {
-		itemToEdit() {
-			if (this.selectedItem === null) {
-				return {
-					id: null,
-					name: "",
-					number: "",
-					status: STATUS_WAITING_FOR_APPROVE,
-					jira_link: "",
-					owner: (this.identity !== null) ? this.identity.id : null,
-					// owner: 1,
-					version: "",
-					project: "",
-					created: ""
-				}
-			}
-
-			return this.selectedItem
-		},
 		...mapGetters({
 			identity: GET_IDENTITY
 		})
