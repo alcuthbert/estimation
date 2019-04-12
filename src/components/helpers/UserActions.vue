@@ -20,18 +20,27 @@
 import LangNav from './LangNav'
 import AuthService from '@/common/services/AuthService.js'
 import RouteNames from '@/routeNames.js'
-import {MUTATION_REMOVE_IDENTITY} from '@/mutationTypes.js'
+import {MUTATION_REMOVE_IDENTITY} from '@/store/mutation-types.js'
+import { mapMutations, mapGetters } from 'vuex';
 
 export default {
     methods: {
         logout() {
             AuthService.logout()
-            this.$store.commit(MUTATION_REMOVE_IDENTITY)
+            this.removeIdentity()
             this.$router.push({name: RouteNames.login})
         },
         getUserName() {
-            return (this.$store.getters.getIdentity !== null) ? this.$store.getters.getIdentity.name : 'User'
+            return (this.identity !== null) ? this.identity.name : 'User'
         },
+        ...mapMutations({
+            removeIdentity: MUTATION_REMOVE_IDENTITY
+        })
+    },
+    computed: {
+        ...mapGetters({
+            identity: 'getIdentity'
+        })
     },
     components: {
         LangNav

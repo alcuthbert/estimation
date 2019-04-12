@@ -2,27 +2,48 @@
   "users": [
     {
       "id": 1,
+      "name": "admin",
+      "password": "21232f297a57a5a743894a0e4a801fc3",
+      "email": "admin@example.com",
+      "created_at": "2017-01-01 07:21:10",
+      "updated_at": "2017-01-01 07:21:10",
+      "role": "admin"
+    },
+    {
+      "id": 2,
       "name": "aleksey",
       "password": "f8d07a83fff06d61529d83cf7d3fc6c6",
       "email": "aleksey@example.com",
-      "birthdate": "1988-06-28 00:00:00",
-      "gender": "m",
-      "group_id": 1,
       "created_at": "2017-01-01 07:21:10",
       "updated_at": "2017-01-01 07:21:10",
-      "role": 1
+      "role": "manager"
     },
     {
       "name": "estimator",
       "password": "cd1235fc9b090edba051d73dbc6f66bf",
       "email": "est@mail.ru",
-      "birthdate": null,
-      "gender": null,
-      "group_id": null,
       "created_at": "",
       "updated_at": "",
-      "role": 4,
-      "id": 2
+      "role": "estimator",
+      "id": 3
+    },
+    {
+      "name": "architect",
+      "password": "618f65b39a51680bbdd74cc4907526f6",
+      "email": "",
+      "created_at": "",
+      "updated_at": "",
+      "role": "estimator",
+      "id": 4
+    },
+    {
+      "name": "trollface",
+      "password": "d46351ba333607e13db33ff954c06925",
+      "email": "",
+      "created_at": "",
+      "updated_at": "",
+      "role": "estimator",
+      "id": 5
     }
   ],
   "change-requests": [
@@ -55,26 +76,6 @@
       "version": "3.3",
       "created": 1553246690,
       "project": "as1313"
-    },
-    {
-      "id": 4,
-      "name": "444",
-      "status": 1,
-      "jira_link": "",
-      "owner": 1,
-      "version": "444",
-      "project": "as1313",
-      "created": null
-    },
-    {
-      "id": 5,
-      "name": "555",
-      "status": 1,
-      "jira_link": "http://oper.ru",
-      "owner": 1,
-      "version": "1.0",
-      "project": "as1313",
-      "created": null
     }
   ],
   "tasks": [

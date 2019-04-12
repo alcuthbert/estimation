@@ -6,7 +6,7 @@ import VeeValidate from 'vee-validate';
 
 import App from './App.vue'
 import RouteNames from './routeNames.js'
-import store from './store.js'
+import store from './store/store.js'
 import router from './router.js'
 import i18n from './configs/i18n/index.js'
 import FlagIcon from 'vue-flag-icon'
@@ -19,7 +19,6 @@ Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
 Vue.use(VeeValidate, {
 	inject: true,
-	// Important to name this something other than 'fields'
 	fieldsBagName: 'veeFields'
 })
 Vue.use(FlagIcon)

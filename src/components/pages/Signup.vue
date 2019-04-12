@@ -48,8 +48,7 @@
                                 name="email"
                                 type="email"
                                 v-model="email"
-                                required
-                                v-validate="'required|email'"
+                                v-validate="'email'"
                                 :state="validateState('email')"
                                 aria-describedby="email-error" />
                             <b-form-invalid-feedback id="email-error">
@@ -91,9 +90,6 @@ export default {
 				name: this.username,
                 password: md5(this.password),
                 email: this.email,
-                birthdate: null,
-                gender: null,
-                group_id: null,
                 created_at: "",
                 updated_at: "",
                 role: ROLE_ESTIMATOR

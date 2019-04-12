@@ -1,9 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import AuthService from './common/services/AuthService'
-import { MUTATION_SET_IDENTITY } from './mutationTypes.js'
-import { MUTATION_REMOVE_IDENTITY } from './mutationTypes.js'
+import AuthService from '@/common/services/AuthService'
 import Users from '@/common/services/Users'
+import {MUTATION_SET_IDENTITY} from './mutation-types'
+import {MUTATION_REMOVE_IDENTITY} from './mutation-types'
+import {IS_LOGGED_IN} from './getter-types'
+import {GET_IDENTITY} from './getter-types'
+import {ACTION_GET_IDENTITY} from './action-types'
 
 Vue.use(Vuex)
 
@@ -20,7 +23,7 @@ export default new Vuex.Store({
 		}
 	},
 	actions: {
-		getIdentity({commit}) {
+		[ACTION_GET_IDENTITY]({commit}) {
 			const id = AuthService.getToken()
 
 			if (id !== null) {
@@ -30,10 +33,10 @@ export default new Vuex.Store({
 		},
 	},
 	getters: {
-		isLoggedIn(state) {
+		[IS_LOGGED_IN](state) {
 			return state.identity !== null
 		},
-		getIdentity(state) {
+		[GET_IDENTITY](state) {
 			return state.identity
 		}
 	}

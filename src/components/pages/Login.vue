@@ -65,8 +65,9 @@
 <script>
 import AuthService from '@/common/services/AuthService.js'
 import RouteNames from '@/routeNames.js'
-import {MUTATION_SET_IDENTITY} from './../../mutationTypes.js'
+import {MUTATION_SET_IDENTITY} from '@/store/mutation-types.js'
 import Lang from '@/components/helpers/Lang'
+import { mapMutations } from 'vuex';
 
 const md5 = require('js-md5');
 
@@ -94,7 +95,7 @@ export default {
 				.then((response) => {
 					const identity = response.data[0];
 
-					this.$store.commit(MUTATION_SET_IDENTITY, identity)
+					this.setIdentity(identity)
 
 					this.$router.push({name: RouteNames.home})
 
@@ -119,7 +120,10 @@ export default {
 		},
 		onReset() {
 			// evt.preventDefault();
-		}
+		},
+		...mapMutations({
+			setIdentity: MUTATION_SET_IDENTITY
+		})
 	},
 	computed: {
 		validationFailed() {

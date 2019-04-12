@@ -44,7 +44,7 @@
 						</b-col>
 
 						<b-col md="4">
-							<b-form-group label="Per page">
+							<b-form-group :label="$t('message.per_page') | ucfirst">
 								<b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
 							</b-form-group>
 						</b-col>

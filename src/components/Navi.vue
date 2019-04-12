@@ -1,5 +1,5 @@
 <template>
-    <b-navbar toggleable="lg" type="dark" variant="primary" v-show="this.$store.getters.isLoggedIn">
+    <b-navbar toggleable="lg" type="dark" variant="primary" v-show="this.isLoggedIn">
         <b-navbar-brand href="#" :to="{name: $routeNames.home}">
             Estimation
             <font-awesome-icon icon="bolt" />
@@ -22,9 +22,16 @@
 <script>
 
 import UserActions from './helpers/UserActions.vue'
+import {IS_LOGGED_IN} from '@/store/getter-types'
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'app',
+    computed: {
+        ...mapGetters({
+            isLoggedIn: IS_LOGGED_IN
+        })
+    },
     components: {
         UserActions
     }
