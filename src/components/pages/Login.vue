@@ -99,7 +99,7 @@ export default {
 
 					this.$router.push({name: RouteNames.home})
 
-					this.$toaster.success('Welcome!')
+					this.$toaster.success(`Welcome, ${identity.name}!`)
 				})
 				.catch((error) => {
 					// eslint-disable-next-line

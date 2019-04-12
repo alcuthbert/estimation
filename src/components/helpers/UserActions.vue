@@ -1,19 +1,19 @@
 <template>
-    <b-navbar-nav class="ml-auto">
-        <lang-nav></lang-nav>
+	<b-navbar-nav class="ml-auto">
+		<lang-nav></lang-nav>
 
-        <b-nav-item-dropdown right>
-            <template slot="button-content">
-                <em>{{getUserName() | ucfirst}}</em>
-            </template>
-            <b-dropdown-item href="#" :to="{name: $routeNames.profile}">
-                {{$t("message.profile") | ucfirst}}
-            </b-dropdown-item>
-            <b-dropdown-item href="#" @click="logout">
-                {{$t("message.logout") | ucfirst}}
-            </b-dropdown-item>
-        </b-nav-item-dropdown>
-    </b-navbar-nav>
+		<b-nav-item-dropdown right>
+			<template slot="button-content">
+				<em>{{getUserName() | ucfirst}}</em>
+			</template>
+			<b-dropdown-item href="#" :to="{name: $routeNames.profile}">
+				{{$t("message.profile") | ucfirst}}
+			</b-dropdown-item>
+			<b-dropdown-item href="#" @click="logout">
+				{{$t("message.logout") | ucfirst}}
+			</b-dropdown-item>
+		</b-nav-item-dropdown>
+	</b-navbar-nav>
 </template>
 
 <script>
@@ -24,26 +24,26 @@ import {MUTATION_REMOVE_IDENTITY} from '@/store/mutation-types.js'
 import { mapMutations, mapGetters } from 'vuex';
 
 export default {
-    methods: {
-        logout() {
-            AuthService.logout()
-            this.removeIdentity()
-            this.$router.push({name: RouteNames.login})
-        },
-        getUserName() {
-            return (this.identity !== null) ? this.identity.name : 'User'
-        },
-        ...mapMutations({
-            removeIdentity: MUTATION_REMOVE_IDENTITY
-        })
-    },
-    computed: {
-        ...mapGetters({
-            identity: 'getIdentity'
-        })
-    },
-    components: {
-        LangNav
-    }
+	methods: {
+		logout() {
+			AuthService.logout()
+			this.removeIdentity()
+			this.$router.push({name: RouteNames.login})
+		},
+		getUserName() {
+			return (this.identity !== null) ? this.identity.name : 'User'
+		},
+		...mapMutations({
+			removeIdentity: MUTATION_REMOVE_IDENTITY
+		})
+	},
+	computed: {
+		...mapGetters({
+			identity: 'getIdentity'
+		})
+	},
+	components: {
+		LangNav
+	}
 }
 </script>
