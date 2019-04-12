@@ -213,6 +213,8 @@ export default {
 			} else {
 				this.items.push(item);
 			}
+
+			this.selectedItem = null
 		},
 		onDeletionConfirmed() {
 			CRs.delete(this.selectedItem.id)
@@ -237,12 +239,14 @@ export default {
 				return {
 					id: null,
 					name: "",
+					number: "",
 					status: STATUS_WAITING_FOR_APPROVE,
 					jira_link: "",
 					owner: (this.identity !== null) ? this.identity.id : null,
+					// owner: 1,
 					version: "",
 					project: "",
-					created: null
+					created: ""
 				};
 			}
 

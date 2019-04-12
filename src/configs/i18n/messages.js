@@ -31,6 +31,7 @@ export default {
 			open: 'open',
 			closed: 'closed',
 			approved: 'approved',
+			number: 'number',
 		}
 	},
 	ru: {
@@ -64,7 +65,8 @@ export default {
 			select_one: 'выберите',
 			open: 'открыто',
 			closed: 'закрыто',
-			approved: 'подтверждено'
+			approved: 'подтверждено',
+			number: 'номер'
 		}
 	}
 }
