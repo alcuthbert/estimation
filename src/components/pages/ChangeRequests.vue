@@ -136,11 +136,12 @@
 </template>
 
 <script>
-import Vue from "vue";
-import { mapGetters } from "vuex";
-import CREditor from "@/components/CREditor.vue";
-import CRs from "@/common/services/ChangeRequests.js";
-import { STATUS_WAITING_FOR_APPROVE } from "@/resources/statuses";
+import Vue from "vue"
+import { mapGetters } from "vuex"
+import CREditor from "@/components/CREditor.vue"
+import CRs from "@/common/services/ChangeRequests.js"
+import { STATUS_WAITING_FOR_APPROVE } from "@/resources/statuses"
+import { GET_IDENTITY } from '@/store/getter-types'
 
 export default {
 	data() {
@@ -179,39 +180,39 @@ export default {
 		};
 	},
 	mounted() {
-		this.getItems();
+		this.getItems()
 	},
 	methods: {
 		getItems() {
-			this.isBusy = true;
+			this.isBusy = true
 
 			CRs.getItems()
 				.then(response => {
-					this.isBusy = false;
+					this.isBusy = false
 
-					this.items = response.data;
-					this.totalRows = this.items.length;
+					this.items = response.data
+					this.totalRows = this.items.length
 				})
 				.catch(() => {
-					this.isBusy = false;
-					this.items = [];
+					this.isBusy = false
+					this.items = []
 				});
 		},
 		onFiltered(filteredItems) {
 			// Trigger pagination to update the number of buttons/pages due to filtering
-			this.totalRows = filteredItems.length;
-			this.currentPage = 1;
+			this.totalRows = filteredItems.length
+			this.currentPage = 1
 		},
 		selectRowItem(item = null) {
-			this.selectedItem = item !== null ? Vue.util.extend({}, item) : null;
+			this.selectedItem = item !== null ? Vue.util.extend({}, item) : null
 		},
 		onCrSaved(item) {
-			const found = this.items.find(el => el.id === item.id);
+			const found = this.items.find(el => el.id === item.id)
 
 			if (found) {
-				Vue.util.extend(found, item);
+				Vue.util.extend(found, item)
 			} else {
-				this.items.push(item);
+				this.items.push(item)
 			}
 
 			this.selectedItem = null
@@ -219,17 +220,17 @@ export default {
 		onDeletionConfirmed() {
 			CRs.delete(this.selectedItem.id)
 				.then(() => {
-					const found = this.items.find(el => el.id === this.selectedItem.id);
+					const found = this.items.find(el => el.id === this.selectedItem.id)
 
 					if (found) {
-						this.items.splice(this.items.indexOf(found), 1);
+						this.items.splice(this.items.indexOf(found), 1)
 					}
 
 					this.selectedItem = null;
 				})
 				.catch(error => {
 					// eslint-disable-next-line
-					console.log("onDeletionConfirmed err", error);
+					console.log("onDeletionConfirmed err", error)
 				});
 		},
 	},
@@ -247,13 +248,13 @@ export default {
 					version: "",
 					project: "",
 					created: ""
-				};
+				}
 			}
 
-			return this.selectedItem;
+			return this.selectedItem
 		},
 		...mapGetters({
-			identity: "getIdentity"
+			identity: GET_IDENTITY
 		})
 	},
 	components: {

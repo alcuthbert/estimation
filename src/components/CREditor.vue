@@ -12,7 +12,7 @@
 					type="text"
 					v-model="item.name"
 					required
-					v-validate="'required|alpha_num|min:6'"
+					v-validate="'required|alpha_spaces|min:6'"
 					:state="validateState('name')"
 					aria-describedby="name-error" />
 				<b-form-invalid-feedback id="name-error">
@@ -40,7 +40,7 @@
 					name="version"
 					type="text"
 					v-model="item.version"
-					v-validate="'alpha_num'"
+					v-validate=""
 					:state="validateState('version')"
 					aria-describedby="version-error" />
 				<b-form-invalid-feedback id="version-error">
@@ -89,21 +89,12 @@
 <script>
 import CRService from '@/common/services/ChangeRequests.js'
 import { mapGetters } from "vuex";
+import { GET_IDENTITY } from '@/store/getter-types'
 
 export default {
 	data() {
 		return {
-			statuses: [
-				{text: 'Select One', value: null},
-				{text: 'Open', value: 'open'},
-				{text: 'Closed', value: 'closed'},
-				{text: 'Approved', value: 'approved'},
-			],
-			owners: [
-				{text: 'Select One', value: null},
-				{text: 'Noelia O\'Kon', value: 1},
-				{text: 'Edwin Beier', value: 2},
-			]
+
 		}
 	},
 	props: {
@@ -114,7 +105,7 @@ export default {
 			return this.errors.any()
 		},
 		...mapGetters({
-			identity: "getIdentity"
+			identity: GET_IDENTITY
 		})
 	},
 	methods: {

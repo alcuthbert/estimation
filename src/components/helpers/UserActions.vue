@@ -22,6 +22,7 @@ import AuthService from '@/common/services/AuthService.js'
 import RouteNames from '@/routeNames.js'
 import {MUTATION_REMOVE_IDENTITY} from '@/store/mutation-types.js'
 import { mapMutations, mapGetters } from 'vuex';
+import { GET_IDENTITY } from '@/store/getter-types'
 
 export default {
 	methods: {
@@ -39,7 +40,7 @@ export default {
 	},
 	computed: {
 		...mapGetters({
-			identity: 'getIdentity'
+			identity: GET_IDENTITY
 		})
 	},
 	components: {
