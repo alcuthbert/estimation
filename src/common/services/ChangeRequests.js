@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {API_URL} from '@/appConfig.js'
 
-const url = `${API_URL}/change-requests`
+const url = `${API_URL}/changeRequests`
 
 export default {
 	getApiUrl() {
@@ -11,7 +11,7 @@ export default {
 		return axios.get(`${url}/${id}`)
 	},
 	getItems() {
-		return axios.get(url)
+		return axios.get(url + '?_embed=tasks')
 	},
 	save(obj) {
 		if (Object.keys(obj).includes('id') && obj.id) {

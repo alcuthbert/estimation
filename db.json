@@ -46,16 +46,17 @@
       "id": 5
     }
   ],
-  "change-requests": [
+  "changeRequests": [
     {
       "id": 1,
       "name": "cr number one one",
+      "number": "CR1001",
       "status": "open",
       "jira_link": "http://jira.com/1",
       "owner": 1,
       "version": "version 0.0.1",
-      "created": 1553245590,
-      "project": "as1313"
+      "project": "as1313",
+      "created": 1553245590
     },
     {
       "id": 2,
@@ -81,28 +82,18 @@
   "tasks": [
     {
       "id": 1,
-      "cr_id": 1,
+      "changeRequestId": 1,
       "name": "task 1"
     },
     {
       "id": 2,
-      "cr_id": 1,
+      "changeRequestId": 1,
       "name": "task 2"
     },
     {
       "id": 3,
-      "cr_id": 2,
+      "changeRequestId": 1,
       "name": "task 3"
-    },
-    {
-      "id": 4,
-      "cr_id": 2,
-      "name": "task 4"
-    },
-    {
-      "id": 5,
-      "cr_id": 3,
-      "name": "task 5"
     }
   ],
   "subtasks": [
