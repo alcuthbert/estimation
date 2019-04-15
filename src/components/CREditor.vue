@@ -12,7 +12,7 @@
 					type="text"
 					v-model="form.name"
 					required
-					v-validate="'required|alpha_spaces|min:6'"
+					v-validate="'required|min:4'"
 					:state="validateState('name')"
 					aria-describedby="name-error" />
 				<b-form-invalid-feedback id="name-error">
@@ -83,12 +83,8 @@
 					Add
 				</b-button>
 
-				<b-form-group v-for="task in form.tasks" :key="task.id">
+				<b-form-group v-for="task in tasks" :key="task.id">
 					<b-form-input v-model="task.name" />
-
-					<b-button variant="danger" @click="deleteTask(task)">
-						Delete
-					</b-button>
 				</b-form-group>
 			</b-form-fieldset>
 
@@ -106,8 +102,7 @@
 
 <script>
 import Vue from "vue"
-import CRService from '@/common/services/ChangeRequests.js'
-import TasksService from '@/common/services/Tasks'
+import CRService from '@/common/services/ChangeRequests'
 import { mapGetters } from "vuex";
 import { GET_IDENTITY } from '@/store/getter-types'
 import { STATUS_WAITING_FOR_APPROVE } from "@/resources/statuses"
@@ -124,10 +119,9 @@ export default {
 				owner: this.myId,
 				version: "",
 				project: "",
-				created: "",
-				tasks: []
+				created: ""
 			},
-			// tasks: []
+			tasks: []
 		}
 	},
 	props: {
@@ -153,31 +147,21 @@ export default {
 		onSubmit(e) {
 			e.preventDefault();
 
-			const objToSave = {
-				id: this.form.id,
-				name: this.form.name,
-				number: this.form.number,
-				status: this.form.status,
-				jira_link: this.form.jira_link,
-				owner: this.form.owner,
-				version: this.form.version,
-				project: this.form.project,
-				created: this.form.created,
-			}
-			const tasksToSave = this.form.tasks
-
 			CRService
-				.save(objToSave)
+				.save(this.form)
 				.then((response) => {
-					tasksToSave.forEach(task => {
-						task.changeRequestId = response.data.id
-						TasksService.save(task)
+					this.form.id = response.data.id
+
+					this.tasks.forEach(task => {
+						task.changeRequestId = this.form.id
 					})
+					
+					return CRService.saveTasks(this.form.id, this.tasks)
 				})
 				.then(() => {
-					this.$emit('cr-saved', Vue.util.extend({}, this.form))
+					this.$emit('cr-saved', this.form)
 
-					this.$toaster.success(`Record saved successfully`)
+					this.$toaster.success(`Record(s) saved successfully`)
 
 					this.formToDefaults()
 				})
@@ -193,19 +177,11 @@ export default {
 			this.$root.$emit('bv::hide::modal', 'cr-editor')
 		},
 		addTask() {
-			this.form.tasks.push({
+			this.tasks.push({
 				id: null,
 				changeRequestId: this.form.id,
 				name: ""
 			})
-		},
-		deleteTask(task) {
-			const found = this.form.tasks.find(el => el === task)
-
-			if (found) {
-				this.form.tasks.splice(this.form.tasks.indexOf(found), 1)
-			}
-			
 		},
 		validateState(ref) {
 			if (this.veeFields[ref] && (this.veeFields[ref].dirty || this.veeFields[ref].validated)) {
@@ -224,9 +200,10 @@ export default {
 				owner: this.myId,
 				version: "",
 				project: "",
-				created: "",
-				tasks: []
+				created: ""
 			}
+
+			this.tasks = []
 		}
 	},
 	mounted() {
@@ -235,6 +212,12 @@ export default {
 		this.$root.$on('bv::modal::show', () => {
 			if (this.inputItem !== null) {
 				Vue.util.extend(this.form, this.inputItem)
+
+				if (this.inputItem.id !== null) {
+					CRService
+						.getTasks(this.inputItem.id)
+						.then(res => this.tasks = res.data)
+				}
 			} else {
 				this.formToDefaults()
 			}

@@ -27,9 +27,6 @@ export default {
 	getTasks(id) {
 		return axios.get(`${url}/${id}/tasks`)
 	},
-	deleteTasks(id) {
-		return axios.delete(`${url}/${id}/tasks`)
-	},
 	saveTasks(id, tasks) {
 		const promises = []
 
@@ -39,8 +36,6 @@ export default {
 			promises.push(promise)
 		});
 
-		return axios.all(promises).then(axios.spread(function () {
-			// Both requests are now complete
-		}))
+		return axios.all(promises)
 	}
 }

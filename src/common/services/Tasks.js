@@ -7,9 +7,15 @@ export default {
     findByCrId(id) {
         return axios.get(url, {
 			params: {
-				cr_id: id
+				changeRequestId: id
 			}
 		})
+	},
+	findById(id) {
+		return axios.get(`${url}/${id}`)
+	},
+	delete(id) {
+		return axios.delete(`${url}/${id}`)
 	},
     save(obj) {
 		if (Object.keys(obj).includes('id') && obj.id) {
@@ -17,8 +23,5 @@ export default {
 		} else {
 			return axios.post(url, obj)
 		}
-	},
-	findById(id) {
-		return axios.get(`${url}/${id}`)
 	}
 }
