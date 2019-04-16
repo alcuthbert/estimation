@@ -17,5 +17,8 @@ export default {
 	},
 	findById(id) {
 		return axios.get(`${url}/${id}`)
+	},
+	find() {
+		return axios.get(url)
 	}
 }
