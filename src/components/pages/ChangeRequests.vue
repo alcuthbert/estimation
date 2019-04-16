@@ -9,7 +9,7 @@
 								variant="primary"
 								v-b-modal.cr-editor
 								@click="selectRowItem()"
-								v-if="checkAccess('create')">
+								v-if="hasCreateAccess">
 							<font-awesome-icon icon="plus-square"/>
 							{{ $t("message.create") | ucfirst }}
 						</b-button>
@@ -99,20 +99,22 @@
 							<b-button-group>
 								<b-button size="sm"
 										variant="success"
-										v-if="checkAccess('approve') && waitingForApprove(row.item)"
+										v-if="hasApproveAccess && waitingForApprove(row.item)"
 										@click="approve(row.item)">
 									Approve
 								</b-button>
 
 								<b-button size="sm"
 										variant="secondary"
-										v-if="checkAccess('assign') && approved(row.item)">
+										v-if="hasAssignAccess && approved(row.item)"
+										@click="assign(row.item)">
 									Assign1
 								</b-button>
 
 								<b-button size="sm"
 										variant="secondary"
-										v-if="checkAccess('assign') && approved(row.item)">
+										v-if="hasAssignAccess && approved(row.item)"
+										@click="assign(row.item)">
 									Assign2
 								</b-button>
 
@@ -120,7 +122,7 @@
 										variant="warning"
 										v-b-modal.cr-editor
 										@click="selectRowItem(row.item)"
-										v-if="checkAccess('edit')">
+										v-if="hasEditAccess">
 									<font-awesome-icon icon="edit"/>
 								</b-button>
 
@@ -128,7 +130,7 @@
 										variant="danger"
 										v-b-modal.delete-modal
 										@click="selectRowItem(row.item)"
-										v-if="checkAccess('delete')">
+										v-if="hasDeleteAccess">
 									<font-awesome-icon icon="trash"/>
 								</b-button>
 							</b-button-group>
@@ -187,6 +189,11 @@ import { GET_IDENTITY } from '@/store/getter-types'
 import Rights from "@/common/services/Rights"
 import {STATUS_WAITING_FOR_APPROVE} from '@/resources/statuses'
 import {STATUS_APPROVED} from '@/resources/statuses'
+import {RIGHTS_CR_CREATE} from '@/common/resources/rights.js'
+import {RIGHTS_CR_EDIT} from '@/common/resources/rights.js'
+import {RIGHTS_CR_DELETE} from '@/common/resources/rights.js'
+import {RIGHTS_CR_APPROVE} from '@/common/resources/rights.js'
+import {RIGHTS_CR_ASSIGN} from '@/common/resources/rights.js'
 
 export default {
 	data() {
@@ -283,26 +290,6 @@ export default {
 					this.selectedItem = null
 				})
 		},
-		checkAccess(right) {
-			if (this.identity === null || this.identity === undefined) {
-				return false
-			}
-
-			switch(right) {
-				case 'create':
-					return Rights.changeRequestCreate(this.identity.role)
-				case 'edit':
-					return Rights.changeRequestEdit(this.identity.role)
-				case 'delete':
-					return Rights.changeRequestDelete(this.identity.role)
-				case 'approve':
-					return Rights.changeRequestApprove(this.identity.role)
-				case 'assign':
-					return Rights.changeRequestAssign(this.identity.role)
-				default:
-					return false;
-			}
-		},
 		waitingForApprove(item) {
 			return item.status === STATUS_WAITING_FOR_APPROVE
 		},
@@ -320,9 +307,34 @@ export default {
 				.catch(() => {
 					this.$toaster.error('Error on approve')
 				})
+		},
+		assign() {
+			
 		}
 	},
 	computed: {
+		myRole() {
+			if (this.identity === null || this.identity === undefined) {
+				return null
+			}
+
+			return this.identity.role
+		},
+		hasCreateAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_CREATE)
+		},
+		hasEditAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_EDIT)
+		},
+		hasDeleteAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_DELETE)
+		},
+		hasApproveAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_APPROVE)
+		},
+		hasAssignAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_ASSIGN)
+		},
 		...mapGetters({
 			identity: GET_IDENTITY
 		})

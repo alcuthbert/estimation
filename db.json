@@ -82,7 +82,7 @@
       "id": 4,
       "name": "forth",
       "number": "CR1004",
-      "status": "approved",
+      "status": "waiting_for_approve",
       "jira_link": "",
       "owner": 2,
       "version": "",
