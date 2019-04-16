@@ -70,7 +70,7 @@
 import Lang from '@/components/helpers/Lang'
 import AuthService from '@/common/services/AuthService.js'
 import RouteNames from '@/routeNames.js'
-import {ROLE_ESTIMATOR} from '@/resources/roles'
+import {ROLE_USER} from '@/resources/roles'
 
 const md5 = require('js-md5');
 
@@ -92,7 +92,7 @@ export default {
 				email: this.email,
 				created_at: "",
 				updated_at: "",
-				role: ROLE_ESTIMATOR
+				role: ROLE_USER
 			}
 
 			AuthService
