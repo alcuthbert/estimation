@@ -1,6 +1,6 @@
-import {ROLE_ADMIN} from '@/resources/roles'
-import {ROLE_ARCHITECT} from '@/resources/roles'
-import {ROLE_MANAGER} from '@/resources/roles'
+import {ROLE_ADMIN} from '@/common/resources/roles'
+import {ROLE_ARCHITECT} from '@/common/resources/roles'
+import {ROLE_MANAGER} from '@/common/resources/roles'
 
 import {RIGHTS_CR_CREATE} from '@/common/resources/rights.js'
 import {RIGHTS_CR_EDIT} from '@/common/resources/rights.js'

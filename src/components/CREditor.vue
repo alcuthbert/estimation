@@ -105,7 +105,7 @@ import Vue from "vue"
 import CRService from '@/common/services/ChangeRequests'
 import { mapGetters } from "vuex";
 import { GET_IDENTITY } from '@/store/getter-types'
-import { STATUS_WAITING_FOR_APPROVE } from "@/resources/statuses"
+import { STATUS_WAITING_FOR_APPROVE } from "@/common/resources/statuses"
 
 export default {
 	data() {

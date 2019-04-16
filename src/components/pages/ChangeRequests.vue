@@ -187,8 +187,8 @@ import CREditor from "@/components/CREditor"
 import CRs from "@/common/services/ChangeRequests"
 import { GET_IDENTITY } from '@/store/getter-types'
 import Rights from "@/common/services/Rights"
-import {STATUS_WAITING_FOR_APPROVE} from '@/resources/statuses'
-import {STATUS_APPROVED} from '@/resources/statuses'
+import {STATUS_WAITING_FOR_APPROVE} from '@/common/resources/statuses'
+import {STATUS_APPROVED} from '@/common/resources/statuses'
 import {RIGHTS_CR_CREATE} from '@/common/resources/rights.js'
 import {RIGHTS_CR_EDIT} from '@/common/resources/rights.js'
 import {RIGHTS_CR_DELETE} from '@/common/resources/rights.js'

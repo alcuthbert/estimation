@@ -70,7 +70,7 @@
 import Lang from '@/components/helpers/Lang'
 import AuthService from '@/common/services/AuthService.js'
 import RouteNames from '@/routeNames.js'
-import {ROLE_USER} from '@/resources/roles'
+import {ROLE_USER} from '@/common/resources/roles'
 
 const md5 = require('js-md5');
 
