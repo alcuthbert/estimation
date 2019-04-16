@@ -1,6 +1,6 @@
-export const STATUS_WAITING_FOR_APPROVE = 1
-export const STATUS_APPROVED = 2
-export const STATUS_ASSIGNED = 3
-export const STATUS_WAITING_FOR_MERGE = 4
-export const STATUS_MERGED = 5
-export const STATUS_CLOSED = 6
+export const STATUS_WAITING_FOR_APPROVE = "waiting_for_approve"
+export const STATUS_APPROVED = "approved"
+export const STATUS_ASSIGNED = "assigned"
+export const STATUS_WAITING_FOR_MERGE = "waiting_for_merge"
+export const STATUS_MERGED = "merged"
+export const STATUS_CLOSED = "closed"

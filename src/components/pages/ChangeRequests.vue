@@ -5,11 +5,17 @@
 				<h5 class="card-header">{{ $t("message['change requests']") | ucfirst }}</h5>
 				<div class="card-body">
 					<b-button-group class="mb-3">
-						<b-button variant="primary" v-b-modal.cr-editor @click="selectRowItem()">
+						<b-button
+								variant="primary"
+								v-b-modal.cr-editor
+								@click="selectRowItem()"
+								v-if="checkAccess('create')">
 							<font-awesome-icon icon="plus-square"/>
 							{{ $t("message.create") | ucfirst }}
 						</b-button>
-						<b-button variant="secondary" @click="getItems()">
+						<b-button
+								variant="secondary"
+								@click="getItems()">
 							<font-awesome-icon icon="sync"/>
 							{{ $t("message.refresh") | ucfirst }}
 						</b-button>
@@ -79,19 +85,50 @@
 								>{{ row.detailsShowing ? 'Hide' : 'Show'}} details</b-form-checkbox>
 						</template>
 
-						<template slot="actions" slot-scope="row">
+						<template slot="show" slot-scope="row">
 							<b-button-group>
 								<router-link :to="{name: $routeNames.changeRequest, params: {crId: row.item.id}}">
-									<b-button variant="primary">
+									<b-button size="sm" variant="primary">
 										<font-awesome-icon icon="search"/>
 									</b-button>
 								</router-link>
+							</b-button-group>
+						</template>
 
-								<b-button variant="warning" v-b-modal.cr-editor @click="selectRowItem(row.item)">
+						<template slot="actions" slot-scope="row">
+							<b-button-group>
+								<b-button size="sm"
+										variant="success"
+										v-if="checkAccess('approve') && waitingForApprove(row.item)"
+										@click="approve(row.item)">
+									Approve
+								</b-button>
+
+								<b-button size="sm"
+										variant="secondary"
+										v-if="checkAccess('assign') && approved(row.item)">
+									Assign1
+								</b-button>
+
+								<b-button size="sm"
+										variant="secondary"
+										v-if="checkAccess('assign') && approved(row.item)">
+									Assign2
+								</b-button>
+
+								<b-button size="sm"
+										variant="warning"
+										v-b-modal.cr-editor
+										@click="selectRowItem(row.item)"
+										v-if="checkAccess('edit')">
 									<font-awesome-icon icon="edit"/>
 								</b-button>
 
-								<b-button variant="danger" v-b-modal.delete-modal @click="selectRowItem(row.item)">
+								<b-button size="sm"
+										variant="danger"
+										v-b-modal.delete-modal
+										@click="selectRowItem(row.item)"
+										v-if="checkAccess('delete')">
 									<font-awesome-icon icon="trash"/>
 								</b-button>
 							</b-button-group>
@@ -131,16 +168,25 @@
 			<c-r-editor :inputItem="selectedItem" @cr-saved="onCrSaved"/>
 		</b-modal>
 
-		<b-modal id="delete-modal" ref="delete-modal" @ok="onDeletionConfirmed()">Are you sure?</b-modal>
+		<b-modal
+				id="delete-modal"
+				ref="delete-modal"
+				title="Delete"
+				@ok="onDeletionConfirmed()">
+			<h3>Are you sure?</h3>
+		</b-modal>
 	</div>
 </template>
 
 <script>
 import Vue from "vue"
 import { mapGetters } from "vuex"
-import CREditor from "@/components/CREditor.vue"
-import CRs from "@/common/services/ChangeRequests.js"
+import CREditor from "@/components/CREditor"
+import CRs from "@/common/services/ChangeRequests"
 import { GET_IDENTITY } from '@/store/getter-types'
+import Rights from "@/common/services/Rights"
+import {STATUS_WAITING_FOR_APPROVE} from '@/resources/statuses'
+import {STATUS_APPROVED} from '@/resources/statuses'
 
 export default {
 	data() {
@@ -149,7 +195,8 @@ export default {
 			selectedItem: null,
 			items: [],
 			fields: [
-				{ key: "details", title: "details", sortable: false },
+				// { key: "details", title: "details", sortable: false },
+				{ key: "show", title: "show", sortable: false },
 				{ key: "id", title: "id", sortable: true },
 				{ key: "name", title: "name", sortable: true },
 				{ key: "number", title: "number", sortable: true },
@@ -178,7 +225,7 @@ export default {
 			sortDesc: false,
 			totalRows: 0,
 			filter: null
-		};
+		}
 	},
 	mounted() {
 		this.getItems()
@@ -197,7 +244,7 @@ export default {
 				.catch(() => {
 					this.isBusy = false
 					this.items = []
-				});
+				})
 		},
 		onFiltered(filteredItems) {
 			// Trigger pagination to update the number of buttons/pages due to filtering
@@ -234,8 +281,46 @@ export default {
 					console.log("onDeletionConfirmed err", error)
 
 					this.selectedItem = null
-				});
+				})
 		},
+		checkAccess(right) {
+			if (this.identity === null || this.identity === undefined) {
+				return false
+			}
+
+			switch(right) {
+				case 'create':
+					return Rights.changeRequestCreate(this.identity.role)
+				case 'edit':
+					return Rights.changeRequestEdit(this.identity.role)
+				case 'delete':
+					return Rights.changeRequestDelete(this.identity.role)
+				case 'approve':
+					return Rights.changeRequestApprove(this.identity.role)
+				case 'assign':
+					return Rights.changeRequestAssign(this.identity.role)
+				default:
+					return false;
+			}
+		},
+		waitingForApprove(item) {
+			return item.status === STATUS_WAITING_FOR_APPROVE
+		},
+		approved(item) {
+			return item.status === STATUS_APPROVED
+		},
+		approve(item) {
+			item.status = STATUS_APPROVED
+
+			CRs
+				.save(item)
+				.then(() => {
+					this.$toaster.success('Change-request has successfully approved')
+				})
+				.catch(() => {
+					this.$toaster.error('Error on approve')
+				})
+		}
 	},
 	computed: {
 		...mapGetters({
@@ -245,5 +330,5 @@ export default {
 	components: {
 		CREditor
 	}
-};
+}
 </script>
