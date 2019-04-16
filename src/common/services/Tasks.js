@@ -4,6 +4,9 @@ import {API_URL} from './../../appConfig.js'
 const url = `${API_URL}/tasks`;
 
 export default {
+	find() {
+		return axios.get(url)
+	},
     findByCrId(id) {
         return axios.get(url, {
 			params: {
