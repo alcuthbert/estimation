@@ -189,11 +189,12 @@ import { GET_IDENTITY } from '@/store/getter-types'
 import Rights from "@/common/services/Rights"
 import {STATUS_WAITING_FOR_APPROVE} from '@/common/resources/statuses'
 import {STATUS_APPROVED} from '@/common/resources/statuses'
-import {RIGHTS_CR_CREATE} from '@/common/resources/rights.js'
-import {RIGHTS_CR_EDIT} from '@/common/resources/rights.js'
-import {RIGHTS_CR_DELETE} from '@/common/resources/rights.js'
-import {RIGHTS_CR_APPROVE} from '@/common/resources/rights.js'
-import {RIGHTS_CR_ASSIGN} from '@/common/resources/rights.js'
+import {RIGHTS_CR_CREATE} from '@/common/resources/rights'
+import {RIGHTS_CR_EDIT} from '@/common/resources/rights'
+import {RIGHTS_CR_DELETE} from '@/common/resources/rights'
+import {RIGHTS_CR_APPROVE} from '@/common/resources/rights'
+import {RIGHTS_CR_ASSIGN} from '@/common/resources/rights'
+import {ROLE_USER} from '@/common/resources/roles'
 
 export default {
 	data() {
@@ -315,7 +316,7 @@ export default {
 	computed: {
 		myRole() {
 			if (this.identity === null || this.identity === undefined) {
-				return null
+				return ROLE_USER
 			}
 
 			return this.identity.role
