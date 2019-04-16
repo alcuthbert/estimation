@@ -16,7 +16,7 @@
       "email": "aleksey@example.com",
       "created_at": "2017-01-01 07:21:10",
       "updated_at": "2017-01-01 07:21:10",
-      "role": "manager"
+      "role": "admin"
     },
     {
       "name": "estimator",
@@ -33,16 +33,16 @@
       "email": "",
       "created_at": "",
       "updated_at": "",
-      "role": "estimator",
+      "role": "architect",
       "id": 4
     },
     {
-      "name": "trollface",
-      "password": "d46351ba333607e13db33ff954c06925",
+      "name": "manager",
+      "password": "1d0258c2440a8d19e716292b231e3190",
       "email": "",
       "created_at": "",
       "updated_at": "",
-      "role": "estimator",
+      "role": "manager",
       "id": 5
     }
   ],
