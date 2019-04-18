@@ -13,17 +13,17 @@
 					<font-awesome-icon icon="object-ungroup"/>
 				</b-button>
 			</b-button-group>
+		</div>
 
-			<b-table
-				:items="tasks"
-				:fields="fields">
-			</b-table>
+		<div class="col-lg-12" v-for="task in tasks" :key="task.id" >
+			<task :id="task.id"></task>
 		</div>
 	</div>
 </template>
 
 <script>
-import Tasks from '@/common/services/Tasks'
+import TasksService from '@/common/services/Tasks'
+import Task from "@/components/tasks/Task"
 
 export default {
 	data() {
@@ -39,12 +39,15 @@ export default {
 		crId: Number
 	},
 	mounted() {
-		Tasks
+		TasksService
 			.findByCrId(this.crId)
 			.then(response => {
 				this.tasks = response.data
 			})
 			.catch(() => this.$toaster.error('Error'))
+	},
+	components: {
+		Task
 	}
 };
 </script>
