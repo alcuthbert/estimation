@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import Tasks from "@/components/Tasks";
+import Tasks from "@/components/tasks/Tasks";
 import ChangeRequests from '@/common/services/ChangeRequests'
 
 export default {

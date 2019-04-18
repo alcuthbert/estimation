@@ -39,8 +39,8 @@ export default {
 		crId: Number
 	},
 	mounted() {
-		Tasks.
-			findByCrId(this.crId)
+		Tasks
+			.findByCrId(this.crId)
 			.then(response => {
 				this.tasks = response.data
 			})
