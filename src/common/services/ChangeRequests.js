@@ -9,7 +9,7 @@ export default {
 		return url;
 	},
 	getById(id) {
-		return axios.get(`${url}/${id}`)
+		return axios.get(`${url}/${id}?_embed=tasks`)
 	},
 	getItems() {
 		return axios.get(url)

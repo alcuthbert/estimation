@@ -1,10 +1,13 @@
 <template>
-    <div>
-        <h3>Subtask {{model.id}}</h3>
-        <div v-for="estimation in model.estimations" :key="estimation.id">
-            <estimation :model="estimation"></estimation>
-        </div>
-    </div>
+    <b-card no-body>
+        <h4 slot="header">Subtask {{model.id}}</h4>
+
+        <b-card-body>
+            <div v-for="estimation in model.estimations" :key="estimation.id">
+                <estimation :model="estimation"></estimation>
+            </div>
+        </b-card-body>
+    </b-card>
 </template>
 
 

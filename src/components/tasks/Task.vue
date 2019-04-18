@@ -1,10 +1,13 @@
 <template>
-    <div>
-        <h1>Task {{id}}</h1>
-        <div v-for="subtask in subtasks" :key="subtask.id">
-            <subtask :model="subtask"></subtask>
-        </div>
-    </div>
+	<div>
+		<h1>Task {{id}}</h1>
+
+		<b-row>
+			<b-col md="4" v-for="subtask in subtasks" :key="subtask.id">
+				<subtask :model="subtask"></subtask>
+			</b-col>
+		</b-row>
+	</div>
 </template>
 
 <script>

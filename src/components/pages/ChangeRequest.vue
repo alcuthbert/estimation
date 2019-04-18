@@ -33,7 +33,7 @@
 				</b-card-body>
 
 				<b-card-body>
-					<tasks :cr-id="crId"></tasks>
+					<task :id="task.id" v-for="task in cr.tasks" :key="task.id"></task>
 				</b-card-body>
 			</b-card>
 
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import Tasks from "@/components/tasks/Tasks";
+import Task from "@/components/tasks/Task";
 import ChangeRequests from '@/common/services/ChangeRequests'
 
 export default {
@@ -72,7 +72,7 @@ export default {
 			})
 	},
 	components: {
-		Tasks
+		Task
 	}
 };
 </script>
