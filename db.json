@@ -115,42 +115,42 @@
   "subtasks": [
     {
       "id": 1,
-      "task_id": 1,
+      "taskId": 1,
       "name": "subtask 1",
       "description": "st 1 descr",
       "technology": "ARS"
     },
     {
       "id": 2,
-      "task_id": 1,
+      "taskId": 1,
       "name": "subtask 2",
       "description": "st 2 descr",
       "technology": "PHP"
     },
     {
       "id": 3,
-      "task_id": 2,
+      "taskId": 2,
       "name": "subtask 3",
       "description": "st 3 descr",
       "technology": "JAVA"
     },
     {
       "id": 4,
-      "task_id": 2,
+      "taskId": 2,
       "name": "subtask 4",
       "description": "st 4 descr",
       "technology": "JS"
     },
     {
       "id": 5,
-      "task_id": 3,
+      "taskId": 3,
       "name": "subtask 5",
       "description": "st 5 descr",
       "technology": "JS"
     },
     {
       "id": 6,
-      "task_id": 3,
+      "taskId": 3,
       "name": "subtask 6",
       "description": "st 6 descr",
       "technology": "JS"
@@ -159,7 +159,7 @@
   "estimations": [
     {
       "id": 1,
-      "subtask_id": 1,
+      "subtaskId": 1,
       "type": 1,
       "estimator": 1,
       "dvk": "dvk",
@@ -169,7 +169,7 @@
     },
     {
       "id": 2,
-      "subtask_id": 1,
+      "subtaskId": 1,
       "type": 1,
       "estimator": 2,
       "dvk": "dvk 2",
@@ -179,7 +179,7 @@
     },
     {
       "id": 3,
-      "subtask_id": 2,
+      "subtaskId": 2,
       "type": 1,
       "estimator": 3,
       "dvk": "dvk 3",
