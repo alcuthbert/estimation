@@ -1,7 +1,7 @@
 <template>
-	<div class="row">
-		<div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
-			<b-card no-body class="my-4" v-if="cr">
+	<b-row>
+		<b-col sm="12" md="12" lg="12" mx=auto>
+			<b-card no-body my="4" v-if="cr">
 				<h4 slot="header">{{ '#' + cr.id + ': ' + cr.name }}</h4>
 				<b-card-body>
 					<b-card-title>Status: {{cr.status}}</b-card-title>
@@ -10,26 +10,26 @@
 						<a href="#" class="card-link">{{cr.jira_link}}</a>
 					</b-card-sub-title>
 
-					<div class="row">
-						<div class="col-sm-4">
+					<b-row>
+						<b-col sm="4">
 							<b-list-group flush>
 								<b-list-group-item>Version: {{cr.version}}</b-list-group-item>
 								<b-list-group-item>Owner: {{cr.owner}}</b-list-group-item>
 							</b-list-group>
-						</div>
-						<div class="col-sm-4">
+						</b-col>
+						<b-col sm="4">
 							<b-list-group flush>
 								<b-list-group-item>Created: {{cr.created}}</b-list-group-item>
 								<b-list-group-item>Project: {{cr.project}}</b-list-group-item>
 							</b-list-group>
-						</div>
-						<div class="col-sm-4">
+						</b-col>
+						<b-col sm="4">
 							<b-list-group flush>
 								<b-list-group-item>Assignee: Assigniee1</b-list-group-item>
 								<b-list-group-item>Assignee: Assignee2</b-list-group-item>
 							</b-list-group>
-						</div>
-					</div>
+						</b-col>
+					</b-row>
 				</b-card-body>
 
 				<b-card-body>
@@ -44,8 +44,8 @@
 					<b-card-text>There is no info</b-card-text>
 				</b-card-body>
 			</b-card>
-		</div>
-	</div>
+		</b-col>
+	</b-row>
 </template>
 
 <script>
@@ -58,9 +58,7 @@ export default {
 			cr: null
 		};
 	},
-	props: {
-		crId: Number
-	},
+	props: ['crId'],
 	computed: {
 
 	},

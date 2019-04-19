@@ -2,9 +2,9 @@
 	<div id="app">
 		<navi></navi>
 
-		<div class="container">
+		<b-container>
 			<router-view></router-view>
-		</div>
+		</b-container>
 	</div>
 </template>
 
