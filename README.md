@@ -25,5 +25,19 @@ npm run test
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Fake backend server setup
+
+### Install JSON Server
+
+```
+npm install -g json-server
+```
+
+### Start JSON Server
+
+By default port 3001 is used. 
+You can change this setting in /src/appConfig.js
+
+```
+json-server -p 3001 -w db.json
+```
