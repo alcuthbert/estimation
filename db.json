@@ -160,7 +160,7 @@
     {
       "id": 1,
       "subtaskId": 1,
-      "type": 1,
+      "type": "first",
       "estimator": 1,
       "dvk": "dvk",
       "imp": "imp",
@@ -170,7 +170,7 @@
     {
       "id": 2,
       "subtaskId": 1,
-      "type": 1,
+      "type": "second",
       "estimator": 2,
       "dvk": "dvk 2",
       "imp": "imp 2",
@@ -180,7 +180,7 @@
     {
       "id": 3,
       "subtaskId": 2,
-      "type": 1,
+      "type": "final",
       "estimator": 3,
       "dvk": "dvk 3",
       "imp": "imp 3",
