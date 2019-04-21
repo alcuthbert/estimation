@@ -57,49 +57,21 @@
       "version": "version 0.0.1",
       "project": "as1313",
       "created": 1553245590,
-      "tasks": [
-        {
-          "id": 1,
-          "changeRequestId": 1,
-          "name": "task 1"
-        },
-        {
-          "id": 2,
-          "changeRequestId": 1,
-          "name": "task 2"
-        }
-      ]
+      "assignee_1": null,
+      "assignee_2": null
     },
     {
       "id": 2,
-      "name": "cr number two",
-      "status": "approved",
-      "jira_link": "http://jira.com/2",
-      "owner": 1,
-      "version": "2.0",
-      "created": 1553247790,
-      "project": "as1313"
-    },
-    {
-      "id": 3,
-      "name": "cr number threee",
-      "status": "approved",
-      "jira_link": "http://jira.com/3",
-      "owner": 1,
-      "version": "3.3",
-      "created": 1553246690,
-      "project": "as1313"
-    },
-    {
-      "id": 4,
-      "name": "forth",
-      "number": "CR1004",
+      "name": "CR 1002",
+      "number": "CR1002",
       "status": "waiting_for_approve",
       "jira_link": "",
       "owner": 2,
-      "version": "",
+      "version": "3.3",
       "project": "AS1313",
-      "created": ""
+      "created": "",
+      "assignee_1": null,
+      "assignee_2": null
     }
   ],
   "tasks": [
@@ -114,14 +86,9 @@
       "name": "task 2"
     },
     {
-      "id": 4,
-      "changeRequestId": 4,
-      "name": "task 4.1.1"
-    },
-    {
-      "id": 5,
-      "changeRequestId": 4,
-      "name": "task 4.2"
+      "id": 3,
+      "changeRequestId": 2,
+      "name": "ololo"
     }
   ],
   "subtasks": [
@@ -151,20 +118,6 @@
       "taskId": 2,
       "name": "subtask 4",
       "description": "st 4 descr",
-      "technology": "JS"
-    },
-    {
-      "id": 5,
-      "taskId": 3,
-      "name": "subtask 5",
-      "description": "st 5 descr",
-      "technology": "JS"
-    },
-    {
-      "id": 6,
-      "taskId": 3,
-      "name": "subtask 6",
-      "description": "st 6 descr",
       "technology": "JS"
     }
   ],

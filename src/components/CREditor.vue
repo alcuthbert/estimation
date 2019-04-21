@@ -1,10 +1,6 @@
 <template>
 	<div>
 		<b-form @submit="onSubmit" @reset="onReset">
-			<b-alert variant="danger" show>
-				{{errors.all()}}
-			</b-alert>
-
 			<b-form-group :label="$t('message.name') | ucfirst" label-for="name">
 				<b-form-input 
 					id="name"
@@ -119,7 +115,9 @@ export default {
 				owner: this.myId,
 				version: "",
 				project: "",
-				created: ""
+				created: "",
+				assignee_1: null,
+				assignee_2: null
 			},
 			tasks: []
 		}
@@ -200,7 +198,9 @@ export default {
 				owner: this.myId,
 				version: "",
 				project: "",
-				created: ""
+				created: "",
+				assignee_1: null,
+				assignee_2: null
 			}
 
 			this.tasks = []
