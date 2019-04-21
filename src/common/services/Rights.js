@@ -7,6 +7,7 @@ import {RIGHTS_CR_EDIT} from '@/common/resources/rights.js'
 import {RIGHTS_CR_DELETE} from '@/common/resources/rights.js'
 import {RIGHTS_CR_APPROVE} from '@/common/resources/rights.js'
 import {RIGHTS_CR_ASSIGN} from '@/common/resources/rights.js'
+import {RIGHTS_CR_CLOSE} from '@/common/resources/rights'
 
 export default {
     check(role, right) {
@@ -25,6 +26,8 @@ export default {
                 return this.changeRequestApprove(role)
             case RIGHTS_CR_ASSIGN:
                 return this.changeRequestAssign(role)
+            case RIGHTS_CR_CLOSE:
+                return this.changeRequestClose(role)
             default:
                 return false
         }
@@ -42,6 +45,9 @@ export default {
         return (role === ROLE_ADMIN || role === ROLE_MANAGER) ? true : false
     },
     changeRequestAssign(role) {
+        return (role === ROLE_ADMIN || role === ROLE_MANAGER) ? true : false
+    },
+    changeRequestClose(role) {
         return (role === ROLE_ADMIN || role === ROLE_MANAGER) ? true : false
     }
 }
