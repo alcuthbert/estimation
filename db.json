@@ -49,14 +49,26 @@
   "changeRequests": [
     {
       "id": 1,
-      "name": "cr number one one",
+      "name": "CR 1001",
       "number": "CR1001",
-      "status": "open",
+      "status": "approved",
       "jira_link": "http://jira.com/1",
       "owner": 1,
       "version": "version 0.0.1",
       "project": "as1313",
-      "created": 1553245590
+      "created": 1553245590,
+      "tasks": [
+        {
+          "id": 1,
+          "changeRequestId": 1,
+          "name": "task 1"
+        },
+        {
+          "id": 2,
+          "changeRequestId": 1,
+          "name": "task 2"
+        }
+      ]
     },
     {
       "id": 2,

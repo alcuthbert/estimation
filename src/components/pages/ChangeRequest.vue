@@ -6,6 +6,12 @@
 					<h4 slot="header">{{ '#' + cr.id + ': ' + cr.name }}</h4>
 					<b-button
 							variant="primary"
+							@click="approve()"
+							v-if="hasApproveAccess && isWaitingForApprove">
+						Approve
+					</b-button>
+					<b-button
+							variant="primary"
 							@click="close()"
 							v-if="hasCloseAccess && isMerged">
 						Close
@@ -65,8 +71,11 @@ import { mapGetters } from 'vuex';
 import { GET_IDENTITY } from '@/store/getter-types'
 import { ROLE_USER } from '@/common/resources/roles'
 import { RIGHTS_CR_CLOSE } from '@/common/resources/rights'
+import { RIGHTS_CR_APPROVE } from '@/common/resources/rights'
 import { STATUS_MERGED } from '@/common/resources/statuses'
 import { STATUS_CLOSED } from '@/common/resources/statuses'
+import { STATUS_APPROVED } from '@/common/resources/statuses'
+import { STATUS_WAITING_FOR_APPROVE } from '@/common/resources/statuses'
 
 export default {
 	data() {
@@ -87,6 +96,18 @@ export default {
 				.catch(() => {
 					this.$toaster.error('Error on close')
 				})
+		},
+		approve() {
+			this.cr.status = STATUS_APPROVED
+
+			ChangeRequests
+				.save(this.cr)
+				.then(() => {
+					this.$toaster.success('Change-request has successfully approved')
+				})
+				.catch(() => {
+					this.$toaster.error('Error on approve')
+				})
 		}
 	},
 	computed: {
@@ -100,8 +121,14 @@ export default {
 		isMerged() {
 			return this.cr.status === STATUS_MERGED
 		},
+		isWaitingForApprove() {
+			return this.cr.status === STATUS_WAITING_FOR_APPROVE
+		},
 		hasCloseAccess() {
 			return Rights.check(this.myRole, RIGHTS_CR_CLOSE)
+		},
+		hasApproveAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_APPROVE)
 		},
 		...mapGetters({
 			identity: GET_IDENTITY
