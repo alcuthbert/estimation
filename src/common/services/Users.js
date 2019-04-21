@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {API_URL} from './../../appConfig.js'
+import {API_URL} from '@/appConfig.js'
+import { ROLE_ESTIMATOR } from '@/common/resources/roles'
 
 const url = `${API_URL}/users`;
 
@@ -9,6 +10,13 @@ export default {
 			params: {
 				name: name,
 				password: password
+			}
+		})
+	},
+	findEstimators() {
+		return axios.get(url, {
+			params: {
+				role: ROLE_ESTIMATOR
 			}
 		})
 	},
