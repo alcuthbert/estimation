@@ -3,7 +3,7 @@
 		<h1>Task {{id}}</h1>
 
 		<b-row>
-			<b-col md="4" v-for="subtask in subtasks" :key="subtask.id">
+			<b-col md="12" v-for="subtask in subtasks" :key="subtask.id">
 				<subtask :model="subtask"></subtask>
 			</b-col>
 		</b-row>
