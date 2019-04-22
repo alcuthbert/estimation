@@ -1,9 +1,10 @@
 <template>
-	<div class="row">
-		<div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
-			<div class="card my-4">
-				<h5 class="card-header">{{ $t("message['change requests']") | ucfirst }}</h5>
-				<div class="card-body">
+	<b-row>
+		<b-col sm="12" md="12" lg="12" mx="auto">
+			<b-card my="4" no-body>
+				<h5 slot="header">{{ $t("message['change requests']") | ucfirst }}</h5>
+
+				<b-card-body>
 					<b-button-group class="mb-3">
 						<b-button
 								variant="primary"
@@ -155,9 +156,9 @@
 								></b-pagination>
 						</b-col>
 					</b-row>
-				</div>
-			</div>
-		</div>
+				</b-card-body>
+			</b-card>
+		</b-col>
 
 		<b-modal
 			id="cr-editor"
@@ -177,23 +178,22 @@
 				@ok="onDeletionConfirmed()">
 			<h3>Are you sure?</h3>
 		</b-modal>
-	</div>
+	</b-row>
 </template>
 
 <script>
 import Vue from "vue"
 import { mapGetters } from "vuex"
 import CREditor from "@/components/CREditor"
-import AssignEstimator from '@/components/AssignModal'
 import CRs from "@/common/services/ChangeRequests"
 import Rights from "@/common/services/Rights"
-import {STATUS_WAITING_FOR_APPROVE} from '@/common/resources/statuses'
-import {STATUS_APPROVED} from '@/common/resources/statuses'
-import {RIGHTS_CR_CREATE} from '@/common/resources/rights'
-import {RIGHTS_CR_EDIT} from '@/common/resources/rights'
-import {RIGHTS_CR_DELETE} from '@/common/resources/rights'
-import {RIGHTS_CR_APPROVE} from '@/common/resources/rights'
-import {RIGHTS_CR_ASSIGN} from '@/common/resources/rights'
+import { STATUS_WAITING_FOR_APPROVE } from '@/common/resources/statuses'
+import { STATUS_APPROVED } from '@/common/resources/statuses'
+import { RIGHTS_CR_CREATE } from '@/common/resources/rights'
+import { RIGHTS_CR_EDIT } from '@/common/resources/rights'
+import { RIGHTS_CR_DELETE } from '@/common/resources/rights'
+import { RIGHTS_CR_APPROVE } from '@/common/resources/rights'
+import { RIGHTS_CR_ASSIGN } from '@/common/resources/rights'
 import { GET_MY_ROLE } from '@/store/getter-types'
 
 export default {
@@ -334,8 +334,7 @@ export default {
 		})
 	},
 	components: {
-		CREditor,
-		AssignEstimator
+		CREditor
 	}
 }
 </script>
