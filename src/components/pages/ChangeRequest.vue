@@ -65,10 +65,6 @@
 						</b-col>
 					</b-row>
 				</b-card-body>
-
-				<b-card-body>
-					<task :id="task.id" v-for="task in cr.tasks" :key="task.id"></task>
-				</b-card-body>
 			</b-card>
 
 			<b-card no-body style="max-width: 20rem;" v-else>
@@ -78,6 +74,10 @@
 					<b-card-text>There is no info</b-card-text>
 				</b-card-body>
 			</b-card>
+		</b-col>
+
+		<b-col sm="12" md="12" lg="12" mx=auto>
+			<task :id="task.id" v-for="task in tasks" :key="task.id"></task>
 		</b-col>
 
 		<b-modal
@@ -224,6 +224,9 @@ export default {
 		},
 		hasAssignAccess() {
 			return Rights.check(this.myRole, RIGHTS_CR_ASSIGN)
+		},
+		tasks() {
+			return this.cr === null ? [] : this.cr.tasks
 		},
 		...mapGetters({
 			myRole: GET_MY_ROLE

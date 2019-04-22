@@ -1,18 +1,30 @@
 <template>
-    <b-card no-body>
-        <h4 slot="header">Subtask {{model.id}}</h4>
+    <b-card-body>
+        <b-card-title>
+            {{ '#' + model.id + ': ' + model.name }}
+        </b-card-title>
 
-        <b-card-body>
-            <div v-for="estimation in model.estimations" :key="estimation.id">
-                <estimation :model="estimation"></estimation>
-            </div>
-        </b-card-body>
-    </b-card>
+        <b-card-sub-title mb="2">
+            Technology: {{model.technology}}
+        </b-card-sub-title>
+
+        <b-card-text>
+            {{model.description}}
+        </b-card-text>
+
+        <!-- <div v-for="estimation in model.estimations" :key="estimation.id">
+            <estimation :model="estimation"></estimation>
+        </div> -->
+
+        <estimations-table :items="model.estimations"></estimations-table>
+    </b-card-body>
 </template>
 
 
 <script>
-import Estimation from "@/components/tasks/Estimation"
+// import Estimation from "@/components/tasks/Estimation"
+import EstimationsTable from "@/components/tasks/EstimationsTable"
+
 export default {
 	data() {
 		return {
@@ -22,7 +34,8 @@ export default {
 		model: Object
     },
     components: {
-        Estimation
+        // Estimation,
+        EstimationsTable
     }
 }
 </script>
