@@ -2,11 +2,13 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import AuthService from '@/common/services/AuthService'
 import Users from '@/common/services/Users'
-import {MUTATION_SET_IDENTITY} from './mutation-types'
-import {MUTATION_REMOVE_IDENTITY} from './mutation-types'
-import {IS_LOGGED_IN} from './getter-types'
-import {GET_IDENTITY} from './getter-types'
-import {ACTION_GET_IDENTITY} from './action-types'
+import { MUTATION_SET_IDENTITY } from './mutation-types'
+import { MUTATION_REMOVE_IDENTITY } from './mutation-types'
+import { IS_LOGGED_IN } from './getter-types'
+import { GET_IDENTITY } from './getter-types'
+import { GET_MY_ROLE } from './getter-types'
+import { ACTION_GET_IDENTITY } from './action-types'
+import { ROLE_USER } from '@/common/resources/roles'
 
 Vue.use(Vuex)
 
@@ -38,6 +40,13 @@ export default new Vuex.Store({
 		},
 		[GET_IDENTITY](state) {
 			return state.identity
+		},
+		[GET_MY_ROLE](state) {
+			if (state.identity === null || state.identity === undefined) {
+				return ROLE_USER
+			}
+
+			return state.identity.role
 		}
 	}
 });

@@ -121,13 +121,12 @@
 </template>
 
 <script>
-import Task from "@/components/tasks/Task";
+import Task from "@/components/tasks/Task"
 import ChangeRequests from '@/common/services/ChangeRequests'
 import Rights from "@/common/services/Rights"
 import Users from "@/common/services/Users"
-import { mapGetters } from 'vuex';
-import { GET_IDENTITY } from '@/store/getter-types'
-import { ROLE_USER } from '@/common/resources/roles'
+import { mapGetters } from 'vuex'
+import { GET_MY_ROLE } from '@/store/getter-types'
 
 import { RIGHTS_CR_CLOSE } from '@/common/resources/rights'
 import { RIGHTS_CR_APPROVE } from '@/common/resources/rights'
@@ -208,13 +207,6 @@ export default {
 		}
 	},
 	computed: {
-		myRole() {
-			if (this.identity === null || this.identity === undefined) {
-				return ROLE_USER
-			}
-
-			return this.identity.role
-		},
 		isMerged() {
 			return this.cr.status === STATUS_MERGED
 		},
@@ -234,7 +226,7 @@ export default {
 			return Rights.check(this.myRole, RIGHTS_CR_ASSIGN)
 		},
 		...mapGetters({
-			identity: GET_IDENTITY
+			myRole: GET_MY_ROLE
 		})
 	},
 	mounted() {
