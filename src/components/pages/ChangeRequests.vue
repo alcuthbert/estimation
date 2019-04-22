@@ -104,7 +104,7 @@
 									Approve
 								</b-button>
 
-								<b-button size="sm"
+								<!-- <b-button size="sm"
 										variant="secondary"
 										v-if="hasAssignAccess && approved(row.item)"
 										@click="assign(row.item)">
@@ -116,7 +116,7 @@
 										v-if="hasAssignAccess && approved(row.item)"
 										@click="assign(row.item)">
 									Assign2
-								</b-button>
+								</b-button> -->
 
 								<b-button size="sm"
 										variant="warning"
@@ -184,6 +184,7 @@
 import Vue from "vue"
 import { mapGetters } from "vuex"
 import CREditor from "@/components/CREditor"
+import AssignEstimator from '@/components/AssignModal'
 import CRs from "@/common/services/ChangeRequests"
 import Rights from "@/common/services/Rights"
 import {STATUS_WAITING_FOR_APPROVE} from '@/common/resources/statuses'
@@ -333,7 +334,8 @@ export default {
 		})
 	},
 	components: {
-		CREditor
+		CREditor,
+		AssignEstimator
 	}
 }
 </script>
