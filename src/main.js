@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VeeValidate from 'vee-validate';
+import VueMoment from 'vue-moment';
 
 import App from './App.vue'
 import RouteNames from './routeNames.js'
@@ -23,6 +24,7 @@ Vue.use(VeeValidate, {
 })
 Vue.use(FlagIcon)
 Vue.use(Toaster)
+Vue.use(VueMoment)
 
 Vue.prototype.$routeNames = RouteNames;
 
