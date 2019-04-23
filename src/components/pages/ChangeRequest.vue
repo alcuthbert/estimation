@@ -41,7 +41,7 @@
 						<b-col sm="4">
 							<b-list-group flush>
 								<b-list-group-item>
-									Assignee 1: {{cr.assignee_1 ? cr.assignee_1 : ''}}
+									Assignee 1: {{cr.assignee_1 ? getAssigneeName(cr.assignee_1) : 'none'}}
 									<b-button
 										size="sm"
 										variant="secondary"
@@ -52,7 +52,7 @@
 								</b-list-group-item>
 
 								<b-list-group-item>
-									Assignee 2: {{cr.assignee_2 ? cr.assignee_2 : ''}}
+									Assignee 2: {{cr.assignee_2 ? getAssigneeName(cr.assignee_2) : 'none'}}
 									<b-button
 										size="sm"
 										variant="secondary"
@@ -93,7 +93,7 @@
 						id="assignee-1"
 						name="assignee-1"
 						v-model="assignee_1"
-						:options="estimators">
+						:options="estimatorsFiltered">
 					</b-form-select>
 				</b-form-group>
 			</b-form>
@@ -112,7 +112,7 @@
 						id="assignee-2"
 						name="assignee-2"
 						v-model="assignee_2"
-						:options="estimators">
+						:options="estimatorsFiltered">
 					</b-form-select>
 				</b-form-group>
 			</b-form>
@@ -204,6 +204,11 @@ export default {
 				.catch(() => {
 					this.$toaster.error('Error on assign')
 				})
+		},
+		getAssigneeName(id) {
+			const found = this.estimators.find(estimator => estimator.value === id)
+
+			return found ? found.text : 'none'
 		}
 	},
 	computed: {
@@ -227,6 +232,15 @@ export default {
 		},
 		tasks() {
 			return this.cr === null ? [] : this.cr.tasks
+		},
+		estimatorsFiltered() {
+			return this.estimators.filter(estimator => {
+				if ((estimator.value === this.cr.assignee_1) || (estimator.value === this.cr.assignee_2)) {
+					return false
+				}
+
+				return estimator
+			})
 		},
 		...mapGetters({
 			myRole: GET_MY_ROLE

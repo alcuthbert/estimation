@@ -145,6 +145,8 @@ export default {
 		onSubmit(e) {
 			e.preventDefault();
 
+			// this.form.created = Vue.moment("YYYY-MM-DD HH:mm:ss")
+
 			CRService
 				.save(this.form)
 				.then((response) => {

@@ -212,7 +212,7 @@ export default {
 				{ key: "jira_link", title: "jira_link", sortable: false },
 				{ key: "owner", title: "owner", sortable: true },
 				{ key: "version", title: "version", sortable: true },
-				{ key: "created", title: "created", sortable: true },
+				// { key: "created", title: "created", sortable: true },
 				{ key: "project", title: "project", sortable: true },
 				{ key: "actions", title: "actions", sortable: false }
 			],
