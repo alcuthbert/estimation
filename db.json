@@ -84,11 +84,6 @@
       "id": 2,
       "changeRequestId": 1,
       "name": "task 2"
-    },
-    {
-      "id": 3,
-      "changeRequestId": 2,
-      "name": "ololo"
     }
   ],
   "subtasks": [
