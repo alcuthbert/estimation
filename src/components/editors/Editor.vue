@@ -1,11 +1,11 @@
 <template>
-    <b-modal
+    <!-- <b-modal
 			:id="options.id"
 			:ref="options.id"
 			:title="options.title | ucfirst"
 			@ok="onOk" 
 			@cancel="onCancel"
-			scrollable>
+			scrollable> -->
         <b-form>
             <b-form-group
 					v-for="field in options.fields"
@@ -27,7 +27,7 @@
 				</b-form-invalid-feedback>
             </b-form-group>
         </b-form>
-    </b-modal>
+    <!-- </b-modal> -->
 </template>
 
 <script>

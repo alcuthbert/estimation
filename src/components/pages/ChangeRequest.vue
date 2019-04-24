@@ -132,11 +132,19 @@
 			</b-form>
 		</b-modal>
 
-		<editor
-			:options="taskEditorOptions"
-			:data="taskEditorData"
-			@task-saved="onTaskSaved">
-		</editor>
+		<b-modal
+			id="task-editor"
+			ref="task-editor"
+			title="Task Editor"
+			@ok="onOk" 
+			@cancel="onCancel"
+			scrollable>
+			<editor
+				:options="taskEditorOptions"
+				:data="taskEditorData"
+				@task-saved="onTaskSaved">
+			</editor>
+		</b-modal>
 	</b-row>
 </template>
 
@@ -168,8 +176,8 @@ export default {
 			assignee_1: null,
 			assignee_2: null,
 			taskEditorOptions: {
-				id: 'task-editor',
-				title: 'Task Editor',
+				// id: 'task-editor',
+				// title: 'Task Editor',
 				emitName: 'task-saved',
 				service: require('@/common/services/Tasks').default,
 				fields: [
