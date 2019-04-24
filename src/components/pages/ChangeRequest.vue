@@ -71,8 +71,7 @@
 								size="lg"
 								variant="secondary"
 								v-if="hasCreateTaskAccess"
-								@click="selectTask()"
-								v-b-modal.task-editor>
+								@click="selectTask()">
 								<font-awesome-icon icon="plus-square"/>
 								Create task
 							</b-button>
@@ -132,25 +131,24 @@
 			</b-form>
 		</b-modal>
 
-		<b-modal
+		<!-- <b-modal
 			id="task-editor"
 			ref="task-editor"
 			title="Task Editor"
-			@ok="onOk" 
-			@cancel="onCancel"
-			scrollable>
+			scrollable
+			hide-footer> -->
 			<editor
 				:options="taskEditorOptions"
 				:data="taskEditorData"
 				@task-saved="onTaskSaved">
 			</editor>
-		</b-modal>
+		<!-- </b-modal> -->
 	</b-row>
 </template>
 
 <script>
 import Task from "@/components/tasks/Task"
-import Editor from "@/components/editors/Editor"
+import Editor from "@/components/editors/EditorModal"
 import ChangeRequests from '@/common/services/ChangeRequests'
 import Rights from "@/common/services/Rights"
 import Users from "@/common/services/Users"
@@ -176,16 +174,14 @@ export default {
 			assignee_1: null,
 			assignee_2: null,
 			taskEditorOptions: {
-				// id: 'task-editor',
-				// title: 'Task Editor',
+				id: 'task-editor',
+				title: 'Task Editor',
 				emitName: 'task-saved',
 				service: require('@/common/services/Tasks').default,
 				fields: [
 					{
 						id: 'name',
-						validator: 'required|min:5',
-						disabled: false,
-						visible: true
+						validator: 'required|min:5'
 					},
 					{
 						id: 'changeRequestId',
@@ -262,12 +258,12 @@ export default {
 			return found ? found.text : 'none'
 		},
 		onTaskSaved(task) {
-			this.$root.$emit('bv::hide::modal', 'task-editor')
+			// this.$root.$emit('bv::hide::modal', 'task-editor')
 
 			// this.cr.tasks.push(task)
 
 			// eslint-disable-next-line
-			console.log("task", task)
+			console.log("CR.onTaskSaved. task", task)
 
 			ChangeRequests
 				.getById(this.crId)
@@ -284,7 +280,9 @@ export default {
 				}
 			}
 
-			return this.taskEditorData
+			this.$bvModal.show('task-editor')
+
+			// return this.taskEditorData
 			// this.selectedItem = (item !== null) ? Vue.util.extend({}, item) : null
 		},
 	},

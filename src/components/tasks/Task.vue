@@ -4,9 +4,11 @@
 			{{ title }}
 			<b-button
 				size="md"
-				variant="secondary"
-				v-b-modal.task-editor>
-				Edit task
+				variant="warning"
+				@click="selectTask(task)"
+				v-b-modal="`task-editor-${id}`">
+				<font-awesome-icon icon="edit"/>
+				Edit
 			</b-button>
 		</h4>
 
@@ -20,15 +22,30 @@
 			:key="subtask.id">
 		</subtask>
 
+		<!-- <b-modal @shown="focusMyElement"
+			:id="`task-editor-${id}`"
+			:ref="`task-editor-${id}`"
+			title="Task Editor"
+			scrollable
+			hide-footer>
+			<editor
+				:options="taskEditorOptions"
+				:data="taskEditorData"
+				@task-saved="onTaskSaved">
+			</editor>
+		</b-modal> -->
+
 		<editor
 			:options="taskEditorOptions"
+			:data="taskEditorData"
 			@task-saved="onTaskSaved">
 		</editor>
     </b-card>
 </template>
 
 <script>
-import Editor from "@/components/editors/Editor"
+import Vue from "vue"
+import Editor from "@/components/editors/EditorModal"
 import Subtask from "@/components/tasks/Subtask"
 import SubtasksService from "@/common/services/Subtasks"
 import TasksService from "@/common/services/Tasks"
@@ -39,16 +56,20 @@ export default {
 			task: null,
 			subtasks: [],
 			taskEditorOptions: {
-				id: 'task-editor',
+				id: `task-editor-${this.id}`,
 				title: 'Task Editor',
 				emitName: 'task-saved',
 				service: require('@/common/services/Tasks').default,
 				fields: [
 					{
+						id: 'id',
+						validator: '',
+						disabled: true,
+						visible: false
+					},
+					{
 						id: 'name',
-						validator: 'required|min:5',
-						disabled: false,
-						visible: true
+						validator: 'required|min:5'
 					},
 					{
 						id: 'changeRequestId',
@@ -57,7 +78,8 @@ export default {
 						visible: false
 					}
 				]
-			}
+			},
+			taskEditorData: null
 		};
 	},
 	props: {
@@ -65,19 +87,31 @@ export default {
 	},
 	methods: {
 		onTaskSaved(task) {
-			this.$root.$emit('bv::hide::modal', 'task-editor')
+			// this.$root.$emit('bv::hide::modal', `task-editor-${id}`)
 
 			// eslint-disable-next-line
-			console.log("task", task)
+			console.log("Task.onTaskSaved", task)
 
 			TasksService
 				.findById(this.id)
 				.then(response => {
 					this.task = response.data
-
-					this.$toaster.success('Task is loaded')
 				})
 				.catch(() => this.$toaster.error('Error'))
+		},
+		selectTask(item = null) {
+			if (item === null) {
+				this.taskEditorData = {
+					changeRequestId: this.changeRequestId
+				}
+			} else {
+				this.taskEditorData = Vue.util.extend({}, item)
+			}
+
+			// eslint-disable-next-line
+			console.log("selectTask. task", this.taskEditorData)
+
+			return this.taskEditorData
 		}
 	},
 	mounted() {
@@ -85,8 +119,6 @@ export default {
 			.findById(this.id)
 			.then(response => {
 				this.task = response.data
-
-				this.$toaster.success('Task is loaded')
 			})
 			.catch(() => this.$toaster.error('Error'))
 

@@ -1,12 +1,13 @@
 <template>
-    <!-- <b-modal
+    <b-modal
 			:id="options.id"
 			:ref="options.id"
 			:title="options.title | ucfirst"
-			@ok="onOk" 
-			@cancel="onCancel"
-			scrollable> -->
-        <b-form @submit="onSubmit" @reset="onReset">
+			@ok="onSubmit"
+			@cancel="onReset"
+			@shown="onShown"
+			scrollable>
+        <b-form>
             <b-form-group
 					v-for="field in options.fields"
 					:key="field.id"
@@ -27,16 +28,16 @@
 				</b-form-invalid-feedback>
             </b-form-group>
 
-			<b-button-group>
+			<!-- <b-button-group>
 				<b-button type="submit" variant="primary" :disabled="validationFailed">
 					{{ $t("message.submit") | ucfirst }}
 					</b-button>
 				<b-button type="reset" variant="secondary">
 					{{ $t("message.cancel") | ucfirst }}
 				</b-button>
-			</b-button-group>
+			</b-button-group> -->
         </b-form>
-    <!-- </b-modal> -->
+    </b-modal>
 </template>
 
 <script>
@@ -53,7 +54,7 @@ export default {
     methods: {
         onReset() {
 			// eslint-disable-next-line
-			console.log("onReset")
+			console.log("onReset", this.options.id)
 
 			this.form = {}
 
@@ -69,14 +70,6 @@ export default {
 
 				// eslint-disable-next-line
 				console.log("valid: data", this.data)
-
-				// this.form[this.modelId.field] = this.modelId.value
-				// this.data.forEach((value) => {
-				// 	this.form[prop] = value
-				// })
-				// $$.each(this.data, function(key, value) {
-				// 	this.form[key] = value
-				// });
 
 				this.options.service
 					.save(this.form)
@@ -102,40 +95,31 @@ export default {
 			}
 
 			return null
-		}
-	},
-	computed: {
-		validationFailed() {
-			return this.errors.any()
-		}
-	},
-	mounted() {
-		// this.form = {}
+		},
+		onShown(e) {
+			// eslint-disable-next-line
+			console.log("onShown. e", e)
 
-		// eslint-disable-next-line
-		console.log("mounted. data", this.data)
+			// eslint-disable-next-line
+			console.log("onShown. data", this.data)
 
-		// this.options.fields.forEach(field => {
-		// 	this.form[field.id] = null
-		// })
-
-		this.$root.$on('bv::modal::show', () => {
-			if (this.data !== null && this.data !== undefined) {
+			if (this.data !== null && this.data !== undefined && e.modalId === this.options.id) {
 				this.options.fields.forEach(field => {
 					this.form[field.id] = this.data[field.id]
 				})
 
 				// eslint-disable-next-line
-				console.log("bv::modal::show. form", this.form)
+				console.log("this.data !== null. form", this.form)
 			} else {
 				// eslint-disable-next-line
-				console.log("bv::modal::show. null")
-				
-				// this.options.fields.forEach(field => {
-				// 	this.form[field.id] = null
-				// })
+				console.log("this.data === null", this.form)
 			}
-		})
+		},
+	},
+	computed: {
+		validationFailed() {
+			return this.errors.any()
+		}
 	}
 }
 </script>
