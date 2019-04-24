@@ -32,12 +32,14 @@
 								<b-list-group-item>Owner: {{cr.owner}}</b-list-group-item>
 							</b-list-group>
 						</b-col>
+
 						<b-col sm="4">
 							<b-list-group flush>
 								<b-list-group-item>Created: {{cr.created}}</b-list-group-item>
 								<b-list-group-item>Project: {{cr.project}}</b-list-group-item>
 							</b-list-group>
 						</b-col>
+
 						<b-col sm="4">
 							<b-list-group flush>
 								<b-list-group-item>
@@ -62,6 +64,18 @@
 									</b-button>
 								</b-list-group-item>
 							</b-list-group>
+						</b-col>
+
+						<b-col sm="4">
+							<b-button
+								size="lg"
+								variant="secondary"
+								v-if="hasCreateTaskAccess"
+								@click="selectTask()"
+								v-b-modal.task-editor>
+								<font-awesome-icon icon="plus-square"/>
+								Create task
+							</b-button>
 						</b-col>
 					</b-row>
 				</b-card-body>
@@ -117,11 +131,18 @@
 				</b-form-group>
 			</b-form>
 		</b-modal>
+
+		<editor
+			:options="taskEditorOptions"
+			:data="taskEditorData"
+			@task-saved="onTaskSaved">
+		</editor>
 	</b-row>
 </template>
 
 <script>
 import Task from "@/components/tasks/Task"
+import Editor from "@/components/editors/Editor"
 import ChangeRequests from '@/common/services/ChangeRequests'
 import Rights from "@/common/services/Rights"
 import Users from "@/common/services/Users"
@@ -131,6 +152,7 @@ import { GET_MY_ROLE } from '@/store/getter-types'
 import { RIGHTS_CR_CLOSE } from '@/common/resources/rights'
 import { RIGHTS_CR_APPROVE } from '@/common/resources/rights'
 import { RIGHTS_CR_ASSIGN } from '@/common/resources/rights'
+import { RIGHTS_CR_CREATE } from '@/common/resources/rights'
 
 import { STATUS_MERGED } from '@/common/resources/statuses'
 import { STATUS_CLOSED } from '@/common/resources/statuses'
@@ -144,7 +166,28 @@ export default {
 			cr: null,
 			estimators: [],
 			assignee_1: null,
-			assignee_2: null
+			assignee_2: null,
+			taskEditorOptions: {
+				id: 'task-editor',
+				title: 'Task Editor',
+				emitName: 'task-saved',
+				service: require('@/common/services/Tasks').default,
+				fields: [
+					{
+						id: 'name',
+						validator: 'required|min:5',
+						disabled: false,
+						visible: true
+					},
+					{
+						id: 'changeRequestId',
+						validator: '',
+						disabled: true,
+						visible: false
+					}
+				]
+			},
+			taskEditorData: null
 		};
 	},
 	props: ['crId'],
@@ -209,9 +252,47 @@ export default {
 			const found = this.estimators.find(estimator => estimator.value === id)
 
 			return found ? found.text : 'none'
-		}
+		},
+		onTaskSaved(task) {
+			this.$root.$emit('bv::hide::modal', 'task-editor')
+
+			// this.cr.tasks.push(task)
+
+			// eslint-disable-next-line
+			console.log("task", task)
+
+			ChangeRequests
+				.getById(this.crId)
+				.then(response => {
+					this.cr = response.data
+
+					this.$toaster.success('Change-request info updated')
+				})
+		},
+		selectTask(item = null) {
+			if (item === null) {
+				this.taskEditorData = {
+					changeRequestId: this.changeRequestId
+				}
+			}
+
+			return this.taskEditorData
+			// this.selectedItem = (item !== null) ? Vue.util.extend({}, item) : null
+		},
 	},
 	computed: {
+		changeRequestId() {
+			return this.cr === null ? null : this.cr.id
+		},
+		changeRequestName() {
+			return this.cr === null ? null : this.cr.name
+		},
+		// taskEditorData() {
+		// 	return {
+		// 		name: this.cr === null ? '' : this.cr.name,
+		// 		changeRequestId: this.cr === null ? '' : this.cr.id
+		// 	}
+		// },
 		isMerged() {
 			return this.cr.status === STATUS_MERGED
 		},
@@ -230,11 +311,18 @@ export default {
 		hasAssignAccess() {
 			return Rights.check(this.myRole, RIGHTS_CR_ASSIGN)
 		},
+		hasCreateTaskAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_CREATE)
+		},
 		tasks() {
 			return this.cr === null ? [] : this.cr.tasks
 		},
 		estimatorsFiltered() {
 			return this.estimators.filter(estimator => {
+				if (this.cr === null) {
+					return estimator
+				}
+
 				if ((estimator.value === this.cr.assignee_1) || (estimator.value === this.cr.assignee_2)) {
 					return false
 				}
@@ -265,7 +353,8 @@ export default {
 		
 	},
 	components: {
-		Task
+		Task,
+		Editor
 	}
 };
 </script>

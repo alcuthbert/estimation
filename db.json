@@ -44,6 +44,15 @@
       "updated_at": "",
       "role": "manager",
       "id": 5
+    },
+    {
+      "name": "estimator2",
+      "password": "40c5fff598d681cd4fa0bafbbdf3f89e",
+      "email": "",
+      "created_at": "",
+      "updated_at": "",
+      "role": "estimator",
+      "id": 6
     }
   ],
   "changeRequests": [
@@ -64,14 +73,14 @@
       "id": 2,
       "name": "CR 1002",
       "number": "CR1002",
-      "status": "waiting_for_approve",
+      "status": "assigned",
       "jira_link": "",
       "owner": 2,
       "version": "3.3",
       "project": "AS1313",
       "created": "",
-      "assignee_1": null,
-      "assignee_2": null
+      "assignee_1": 3,
+      "assignee_2": 6
     }
   ],
   "tasks": [
