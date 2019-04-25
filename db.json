@@ -98,6 +98,11 @@
       "id": 3,
       "name": "task 3",
       "changeRequestId": 1
+    },
+    {
+      "name": "Task 2.1",
+      "changeRequestId": 2,
+      "id": 4
     }
   ],
   "subtasks": [

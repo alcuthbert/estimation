@@ -25,16 +25,34 @@
             <subtask :model="subtask"></subtask>
         </b-card-body> -->
 
+		<b-button-group>
+			<b-button
+				size="md"
+				variant="secondary"
+				v-b-modal="`subtask-editor`">
+				<font-awesome-icon icon="plus-square"/>
+				Create subtask
+			</b-button>
+		</b-button-group>
+
 		<subtask
 			:model="subtask"
 			v-for="subtask in subtasks"
-			:key="subtask.id">
+			:key="subtask.id"
+			@subtask-deleted="onSubtaskDeleted"
+			@subtask-saved="onSubtaskSaved">
 		</subtask>
 
 		<editor
 			:options="taskEditorOptions"
 			:data="taskEditorData"
 			@task-saved="onTaskSaved">
+		</editor>
+
+		<editor
+			:options="subtaskEditorOptions"
+			:data="{taskId: taskId}"
+			@subtask-saved="onSubtaskSaved">
 		</editor>
 
 		<deleter
@@ -82,6 +100,38 @@ export default {
 					}
 				]
 			},
+			subtaskEditorOptions: {
+				modalId: `subtask-editor`,
+				title: 'Subask Editor',
+				emitName: 'subtask-saved',
+				service: require('@/common/services/Subtasks').default,
+				fields: [
+					{
+						id: 'id',
+						validator: '',
+						disabled: true,
+						visible: false
+					},
+					{
+						id: 'name',
+						validator: 'required|min:5'
+					},
+					{
+						id: 'taskId',
+						validator: '',
+						disabled: true,
+						visible: false
+					},
+					{
+						id: 'description',
+						validator: ''
+					},
+					{
+						id: 'technology',
+						validator: ''
+					}
+				]
+			},
 			taskDeleteOptions: {
 				modalId: `task-delete-${this.id}`,
 				title: 'Delete Task',
@@ -105,6 +155,22 @@ export default {
 		},
 		onTaskDeleted(task) {
 			this.$emit('task-deleted', task)
+		},
+		onSubtaskSaved() {
+			SubtasksService
+				.getByTaskId(this.id)
+				.then(response => {
+					this.subtasks = response.data
+				})
+				.catch(() => this.$toaster.error('Error'))
+		},
+		onSubtaskDeleted() {
+			SubtasksService
+				.getByTaskId(this.id)
+				.then(response => {
+					this.subtasks = response.data
+				})
+				.catch(() => this.$toaster.error('Error'))
 		},
 		selectTask(item = null) {
 			if (item === null) {
@@ -134,6 +200,9 @@ export default {
 	computed: {
 		title() {
 			return this.task !== null ? '#' + this.task.id + ': ' + this.task.name : ''
+		},
+		taskId() {
+			return this.task !== null ? this.task.id : null
 		}
 	},
 	components: {

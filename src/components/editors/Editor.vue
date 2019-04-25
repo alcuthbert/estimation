@@ -67,17 +67,6 @@ export default {
 					return false;
 				}
 
-				// eslint-disable-next-line
-				console.log("valid: data", this.data)
-
-				// this.form[this.modelId.field] = this.modelId.value
-				// this.data.forEach((value) => {
-				// 	this.form[prop] = value
-				// })
-				// $$.each(this.data, function(key, value) {
-				// 	this.form[key] = value
-				// });
-
 				this.options.service
 					.save(this.form)
 					.then(() => {
