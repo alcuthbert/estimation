@@ -31,19 +31,6 @@
 			:key="subtask.id">
 		</subtask>
 
-		<!-- <b-modal @shown="focusMyElement"
-			:id="`task-editor-${id}`"
-			:ref="`task-editor-${id}`"
-			title="Task Editor"
-			scrollable
-			hide-footer>
-			<editor
-				:options="taskEditorOptions"
-				:data="taskEditorData"
-				@task-saved="onTaskSaved">
-			</editor>
-		</b-modal> -->
-
 		<editor
 			:options="taskEditorOptions"
 			:data="taskEditorData"
@@ -72,7 +59,7 @@ export default {
 			task: null,
 			subtasks: [],
 			taskEditorOptions: {
-				id: `task-editor-${this.id}`,
+				modalId: `task-editor-${this.id}`,
 				title: 'Task Editor',
 				emitName: 'task-saved',
 				service: require('@/common/services/Tasks').default,
@@ -108,12 +95,7 @@ export default {
 		id: Number
 	},
 	methods: {
-		onTaskSaved(task) {
-			// this.$root.$emit('bv::hide::modal', `task-editor-${id}`)
-
-			// eslint-disable-next-line
-			console.log("Task.onTaskSaved", task)
-
+		onTaskSaved() {
 			TasksService
 				.findById(this.id)
 				.then(response => {
@@ -132,11 +114,6 @@ export default {
 			} else {
 				this.taskEditorData = Vue.util.extend({}, item)
 			}
-
-			// eslint-disable-next-line
-			console.log("selectTask. task", this.taskEditorData)
-
-			// return this.taskEditorData
 		}
 	},
 	mounted() {

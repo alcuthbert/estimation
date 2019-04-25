@@ -1,7 +1,7 @@
 <template>
     <b-modal
-			:id="options.id"
-			:ref="options.id"
+			:id="options.modalId"
+			:ref="options.modalId"
 			:title="options.title | ucfirst"
 			@ok="onSubmit"
 			@cancel="onReset"
@@ -27,15 +27,6 @@
 					{{ errors.first(field.id) }}
 				</b-form-invalid-feedback>
             </b-form-group>
-
-			<!-- <b-button-group>
-				<b-button type="submit" variant="primary" :disabled="validationFailed">
-					{{ $t("message.submit") | ucfirst }}
-					</b-button>
-				<b-button type="reset" variant="secondary">
-					{{ $t("message.cancel") | ucfirst }}
-				</b-button>
-			</b-button-group> -->
         </b-form>
     </b-modal>
 </template>
@@ -53,12 +44,9 @@ export default {
 	},
     methods: {
         onReset() {
-			// eslint-disable-next-line
-			console.log("onReset", this.options.id)
-
 			this.form = {}
 
-			this.$root.$emit('bv::hide::modal', this.options.id)
+			this.$root.$emit('bv::hide::modal', this.options.modalId)
 		},
 		onSubmit(e) {
 			e.preventDefault();
@@ -67,9 +55,6 @@ export default {
 				if (!valid) {
 					return false;
 				}
-
-				// eslint-disable-next-line
-				console.log("valid: data", this.data)
 
 				this.options.service
 					.save(this.form)
@@ -86,7 +71,7 @@ export default {
 						this.form = {}
 					})
 
-				this.$root.$emit('bv::hide::modal', this.options.id)
+				this.$root.$emit('bv::hide::modal', this.options.modalId)
 			})
 		},
 		validateState(ref) {
@@ -97,24 +82,12 @@ export default {
 			return null
 		},
 		onShown(e) {
-			// eslint-disable-next-line
-			console.log("onShown. e", e)
-
-			// eslint-disable-next-line
-			console.log("onShown. data", this.data)
-
-			if (this.data !== null && this.data !== undefined && e.modalId === this.options.id) {
+			if (this.data !== null && this.data !== undefined && e.modalId === this.options.modalId) {
 				this.options.fields.forEach(field => {
 					this.form[field.id] = this.data[field.id]
 				})
 
 				this.$validator.validate()
-
-				// eslint-disable-next-line
-				console.log("this.data !== null. form", this.form)
-			} else {
-				// eslint-disable-next-line
-				console.log("this.data === null", this.form)
 			}
 		},
 	},

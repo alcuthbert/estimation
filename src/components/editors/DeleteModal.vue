@@ -16,10 +16,7 @@ export default {
 	},
     methods: {
         onDeletionConfirmed() {
-            // eslint-disable-next-line
-            // console.log("onDeletionConfirmed ", this.objectId)
-
-			this.options.service
+            this.options.service
                 .delete(this.object.id)
 				.then(() => {
 					this.$emit(this.options.emitName, this.object)

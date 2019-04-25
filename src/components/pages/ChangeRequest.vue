@@ -71,7 +71,8 @@
 								size="lg"
 								variant="secondary"
 								v-if="hasCreateTaskAccess"
-								@click="selectTask()">
+								@click="selectTask()"
+								v-b-modal.task-editor>
 								<font-awesome-icon icon="plus-square"/>
 								Create task
 							</b-button>
@@ -131,18 +132,11 @@
 			</b-form>
 		</b-modal>
 
-		<!-- <b-modal
-			id="task-editor"
-			ref="task-editor"
-			title="Task Editor"
-			scrollable
-			hide-footer> -->
-			<editor
-				:options="taskEditorOptions"
-				:data="taskEditorData"
-				@task-saved="onTaskSaved">
-			</editor>
-		<!-- </b-modal> -->
+		<editor
+			:options="taskEditorOptions"
+			:data="taskEditorData"
+			@task-saved="onTaskSaved">
+		</editor>
 	</b-row>
 </template>
 
@@ -174,7 +168,7 @@ export default {
 			assignee_1: null,
 			assignee_2: null,
 			taskEditorOptions: {
-				id: 'task-editor',
+				modalId: 'task-editor',
 				title: 'Task Editor',
 				emitName: 'task-saved',
 				service: require('@/common/services/Tasks').default,
@@ -257,14 +251,7 @@ export default {
 
 			return found ? found.text : 'none'
 		},
-		onTaskSaved(task) {
-			// this.$root.$emit('bv::hide::modal', 'task-editor')
-
-			// this.cr.tasks.push(task)
-
-			// eslint-disable-next-line
-			console.log("CR.onTaskSaved. task", task)
-
+		onTaskSaved() {
 			ChangeRequests
 				.getById(this.crId)
 				.then(response => {
@@ -274,9 +261,6 @@ export default {
 				})
 		},
 		onTaskDeleted(task) {
-			// eslint-disable-next-line
-			console.log("CR.onTaskDeleted. task", task)
-
 			const found = this.cr.tasks.find(el => el.id === task.id)
 
 			if (found) {
@@ -289,11 +273,6 @@ export default {
 					changeRequestId: this.changeRequestId
 				}
 			}
-
-			this.$bvModal.show('task-editor')
-
-			// return this.taskEditorData
-			// this.selectedItem = (item !== null) ? Vue.util.extend({}, item) : null
 		},
 	},
 	computed: {
