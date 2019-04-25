@@ -40,7 +40,8 @@
 			v-for="subtask in subtasks"
 			:key="subtask.id"
 			@subtask-deleted="onSubtaskDeleted"
-			@subtask-saved="onSubtaskSaved">
+			@subtask-saved="onSubtaskSaved"
+			@estimation-saved="onEstimationSaved">
 		</subtask>
 
 		<editor
@@ -165,6 +166,17 @@ export default {
 				.catch(() => this.$toaster.error('Error'))
 		},
 		onSubtaskDeleted() {
+			SubtasksService
+				.getByTaskId(this.id)
+				.then(response => {
+					this.subtasks = response.data
+				})
+				.catch(() => this.$toaster.error('Error'))
+		},
+		onEstimationSaved(obj) {
+			// eslint-disable-next-line
+			console.log("Task. onEstimationSaved", obj)
+
 			SubtasksService
 				.getByTaskId(this.id)
 				.then(response => {

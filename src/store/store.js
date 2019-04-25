@@ -7,6 +7,7 @@ import { MUTATION_REMOVE_IDENTITY } from './mutation-types'
 import { IS_LOGGED_IN } from './getter-types'
 import { GET_IDENTITY } from './getter-types'
 import { GET_MY_ROLE } from './getter-types'
+import { GET_MY_ID } from './getter-types'
 import { ACTION_GET_IDENTITY } from './action-types'
 import { ROLE_USER } from '@/common/resources/roles'
 
@@ -47,6 +48,13 @@ export default new Vuex.Store({
 			}
 
 			return state.identity.role
+		},
+		[GET_MY_ID](state) {
+			if (state.identity === null || state.identity === undefined) {
+				return null
+			}
+
+			return state.identity.id
 		}
 	}
 });

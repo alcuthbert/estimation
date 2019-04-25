@@ -36,6 +36,22 @@
 
         <estimations-table :items="model.estimations"></estimations-table>
 
+		<b-button-group>
+            <b-button
+				size="md"
+				variant="secondary"
+				@click="selectEstimation()"
+				v-b-modal="`estimation-editor`">
+				Estimate
+			</b-button>
+        </b-button-group>
+
+		<editor
+			:options="estimationEditorOptions"
+			:data="estimationEditorData"
+			@estimation-saved="onEstimationSaved">
+		</editor>
+
         <editor
 			:options="subtaskEditorOptions"
 			:data="model"
@@ -52,13 +68,23 @@
 
 
 <script>
+import { mapGetters } from 'vuex'
+
 // import Estimation from "@/components/tasks/Estimation"
 import EstimationsTable from "@/components/tasks/EstimationsTable"
 
 import Editor from "@/components/editors/EditorModal"
 import Deleter from "@/components/editors/DeleteModal"
 
+import { GET_IDENTITY } from '@/store/getter-types'
+import { GET_MY_ID } from '@/store/getter-types'
+
+import { ESTIMATION_FIRST } from '@/common/resources/estimation-types'
+
 export default {
+	props: {
+		model: Object
+    },
 	data() {
 		return {
 			subtaskEditorOptions: {
@@ -89,10 +115,59 @@ export default {
 					},
 					{
 						id: 'technology',
-						validator: ''
+						validator: 'required'
 					}
 				]
 			},
+			estimationEditorOptions: {
+				modalId: `estimation-editor`,
+				title: 'Estimation Editor',
+				emitName: 'estimation-saved',
+				service: require('@/common/services/Estimations').default,
+				fields: [
+					{
+						id: 'id',
+						validator: '',
+						disabled: true,
+						visible: false
+					},
+					{
+						id: 'subtaskId',
+						validator: '',
+						disabled: true,
+						visible: false
+					},
+					{
+						id: 'type',
+						validator: '',
+						disabled: true,
+						visible: false
+					},
+					{
+						id: 'estimator',
+						validator: '',
+						disabled: true,
+						visible: false
+					},
+					{
+						id: 'dvk',
+						validator: 'required'
+					},
+					{
+						id: 'imp',
+						validator: 'required'
+					},
+					{
+						id: 'e_test',
+						validator: 'required'
+					},
+					{
+						id: 'e_test_tech',
+						validator: 'required'
+					}
+				]
+			},
+			estimationEditorData: null,
 			subtaskDeleteOptions: {
 				modalId: `subtask-delete-${this.model.id}`,
 				title: 'Delete Subtask',
@@ -101,27 +176,43 @@ export default {
 			}
 		};
 	},
-	props: {
-		model: Object
-    },
     methods: {
         onSubtaskSaved(obj) {
             this.$emit('subtask-saved', obj)
         },
         onSubtaskDeleted(obj) {
             this.$emit('subtask-deleted', obj)
-        }
+		},
+		onEstimationSaved(obj) {
+			this.$emit('estimation-saved', obj)
+
+			// eslint-disable-next-line
+			console.log("Subtask. onEstimationSaved", obj)
+		},
+		selectEstimation(item = null) {
+			if (item === null) {
+				this.estimationEditorData = {
+					subtaskId: this.model.id,
+					estimator: this.estimator,
+					type: this.estimationType
+				}
+			}
+		},
     },
     components: {
         // Estimation,
         EstimationsTable,
         Deleter,
         Editor
-    },
-    computed: {
-        id() {
-            return this.model !== null ? this.model.id : null
-        }
-    }
+	},
+	computed: {
+		estimationType() {
+			return ESTIMATION_FIRST
+		},
+		...mapGetters({
+			identity: GET_IDENTITY,
+			estimator: GET_MY_ID
+		})
+	}
 }
 </script>

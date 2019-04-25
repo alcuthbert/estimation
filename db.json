@@ -133,6 +133,12 @@
       "name": "subtask 4",
       "description": "st 4 descr",
       "technology": "JS"
+    },
+    {
+      "id": 5,
+      "name": "subtask 4.1",
+      "taskId": 4,
+      "technology": "ARS"
     }
   ],
   "estimations": [
