@@ -90,7 +90,7 @@
 		</b-col>
 
 		<b-col sm="12" md="12" lg="12" mx=auto>
-			<task :id="task.id" v-for="task in tasks" :key="task.id"></task>
+			<task :id="task.id" v-for="task in tasks" :key="task.id" @task-deleted="onTaskDeleted"></task>
 		</b-col>
 
 		<b-modal
@@ -272,6 +272,16 @@ export default {
 
 					this.$toaster.success('Change-request info updated')
 				})
+		},
+		onTaskDeleted(task) {
+			// eslint-disable-next-line
+			console.log("CR.onTaskDeleted. task", task)
+
+			const found = this.cr.tasks.find(el => el.id === task.id)
+
+			if (found) {
+				this.cr.tasks.splice(this.cr.tasks.indexOf(found), 1)
+			}
 		},
 		selectTask(item = null) {
 			if (item === null) {

@@ -2,6 +2,7 @@
 	<b-card no-body>
         <h4 slot="header">
 			{{ title }}
+
 			<b-button
 				size="md"
 				variant="warning"
@@ -9,6 +10,14 @@
 				v-b-modal="`task-editor-${id}`">
 				<font-awesome-icon icon="edit"/>
 				Edit
+			</b-button>
+
+			<b-button
+				size="md"
+				variant="danger"
+				v-b-modal="`task-delete-${id}`">
+				<font-awesome-icon icon="trash"/>
+				Delete
 			</b-button>
 		</h4>
 
@@ -40,12 +49,19 @@
 			:data="taskEditorData"
 			@task-saved="onTaskSaved">
 		</editor>
+
+		<deleter
+			:options="taskDeleteOptions"
+			:object="task"
+			@task-deleted="onTaskDeleted">
+		</deleter>
     </b-card>
 </template>
 
 <script>
 import Vue from "vue"
 import Editor from "@/components/editors/EditorModal"
+import Deleter from "@/components/editors/DeleteModal"
 import Subtask from "@/components/tasks/Subtask"
 import SubtasksService from "@/common/services/Subtasks"
 import TasksService from "@/common/services/Tasks"
@@ -79,6 +95,12 @@ export default {
 					}
 				]
 			},
+			taskDeleteOptions: {
+				modalId: `task-delete-${this.id}`,
+				title: 'Delete Task',
+				emitName: 'task-deleted',
+				service: require('@/common/services/Tasks').default
+			},
 			taskEditorData: null
 		};
 	},
@@ -99,6 +121,9 @@ export default {
 				})
 				.catch(() => this.$toaster.error('Error'))
 		},
+		onTaskDeleted(task) {
+			this.$emit('task-deleted', task)
+		},
 		selectTask(item = null) {
 			if (item === null) {
 				this.taskEditorData = {
@@ -111,7 +136,7 @@ export default {
 			// eslint-disable-next-line
 			console.log("selectTask. task", this.taskEditorData)
 
-			return this.taskEditorData
+			// return this.taskEditorData
 		}
 	},
 	mounted() {
@@ -136,7 +161,8 @@ export default {
 	},
 	components: {
 		Subtask,
-		Editor
+		Editor,
+		Deleter
 	}
 }
 </script>

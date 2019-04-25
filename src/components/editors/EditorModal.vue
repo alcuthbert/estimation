@@ -108,6 +108,8 @@ export default {
 					this.form[field.id] = this.data[field.id]
 				})
 
+				this.$validator.validate()
+
 				// eslint-disable-next-line
 				console.log("this.data !== null. form", this.form)
 			} else {
