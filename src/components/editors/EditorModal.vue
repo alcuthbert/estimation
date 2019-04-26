@@ -11,6 +11,7 @@
             <b-form-group
 					v-for="field in options.fields"
 					:key="field.id"
+					v-show="!field.hidden"
 					:label="field.id | ucfirst"
 					:label-for="field.id">
 				<b-form-select v-if="field.type && field.type === 'select'"

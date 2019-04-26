@@ -171,6 +171,26 @@
       "imp": "imp 3",
       "e_test": "e_test",
       "e_test_tech": "e_test_tech"
+    },
+    {
+      "subtaskId": 5,
+      "type": "first",
+      "estimator": 2,
+      "dvk": "111",
+      "imp": "222",
+      "e_test": "333",
+      "e_test_tech": "444",
+      "id": 4
+    },
+    {
+      "subtaskId": 5,
+      "type": "second",
+      "estimator": 2,
+      "dvk": "1111",
+      "imp": "2222",
+      "e_test": "333",
+      "e_test_tech": "444",
+      "id": 5
     }
   ]
 }

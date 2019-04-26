@@ -152,7 +152,8 @@ import { GET_MY_ROLE } from '@/store/getter-types'
 import { RIGHTS_CR_CLOSE } from '@/common/resources/rights'
 import { RIGHTS_CR_APPROVE } from '@/common/resources/rights'
 import { RIGHTS_CR_ASSIGN } from '@/common/resources/rights'
-import { RIGHTS_CR_CREATE } from '@/common/resources/rights'
+
+import { RIGHTS_TASK_CREATE } from '@/common/resources/rights'
 
 import { STATUS_MERGED } from '@/common/resources/statuses'
 import { STATUS_CLOSED } from '@/common/resources/statuses'
@@ -181,7 +182,7 @@ export default {
 						id: 'changeRequestId',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					}
 				]
 			},
@@ -307,7 +308,7 @@ export default {
 			return Rights.check(this.myRole, RIGHTS_CR_ASSIGN)
 		},
 		hasCreateTaskAccess() {
-			return Rights.check(this.myRole, RIGHTS_CR_CREATE)
+			return Rights.check(this.myRole, RIGHTS_TASK_CREATE)
 		},
 		tasks() {
 			return this.cr === null ? [] : this.cr.tasks

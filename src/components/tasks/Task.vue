@@ -6,6 +6,7 @@
 				<b-button
 					size="md"
 					variant="secondary"
+					v-if="hasCreateSubtaskAccess"
 					v-b-modal="`subtask-editor`">
 					<font-awesome-icon icon="plus-square"/>
 					Create subtask
@@ -14,6 +15,7 @@
 				<b-button
 					size="md"
 					variant="warning"
+					v-if="hasEditTaskAccess"
 					@click="selectTask(task)"
 					v-b-modal="`task-editor-${id}`">
 					<font-awesome-icon icon="edit"/>
@@ -23,6 +25,7 @@
 				<b-button
 					size="md"
 					variant="danger"
+					v-if="hasDeleteTaskAccess"
 					v-b-modal="`task-delete-${id}`">
 					<font-awesome-icon icon="trash"/>
 					Delete
@@ -70,6 +73,13 @@ import Deleter from "@/components/editors/DeleteModal"
 import Subtask from "@/components/tasks/Subtask"
 import SubtasksService from "@/common/services/Subtasks"
 import TasksService from "@/common/services/Tasks"
+import Rights from "@/common/services/Rights"
+import { mapGetters } from 'vuex'
+import { GET_MY_ROLE } from '@/store/getter-types'
+
+import { RIGHTS_SUBTASK_CREATE } from '@/common/resources/rights'
+import { RIGHTS_TASK_EDIT } from '@/common/resources/rights'
+import { RIGHTS_TASK_DELETE } from '@/common/resources/rights'
 
 export default {
 	data() {
@@ -86,7 +96,7 @@ export default {
 						id: 'id',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'name',
@@ -96,7 +106,7 @@ export default {
 						id: 'changeRequestId',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					}
 				]
 			},
@@ -110,7 +120,7 @@ export default {
 						id: 'id',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'name',
@@ -120,7 +130,7 @@ export default {
 						id: 'taskId',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'description',
@@ -214,7 +224,19 @@ export default {
 		},
 		taskId() {
 			return this.task !== null ? this.task.id : null
-		}
+		},
+		hasCreateSubtaskAccess() {
+			return Rights.check(this.myRole, RIGHTS_SUBTASK_CREATE)
+		},
+		hasEditTaskAccess() {
+			return Rights.check(this.myRole, RIGHTS_TASK_EDIT)
+		},
+		hasDeleteTaskAccess() {
+			return Rights.check(this.myRole, RIGHTS_TASK_DELETE)
+		},
+		...mapGetters({
+			myRole: GET_MY_ROLE
+		})
 	},
 	components: {
 		Subtask,

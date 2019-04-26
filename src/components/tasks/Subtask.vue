@@ -8,14 +8,15 @@
             Technology: {{model.technology}}
         </b-card-sub-title>
 
-        <b-card-text>
+        <b-card-text mb="2">
             {{model.description}}
         </b-card-text>
 
-        <b-button-group>
+        <b-button-group mb="2">
             <b-button
 				size="md"
 				variant="warning"
+				v-if="hasEditSubtaskAccess"
 				v-b-modal="`subtask-editor-${model.id}`">
 				<font-awesome-icon icon="edit"/>
 				Edit
@@ -24,6 +25,7 @@
 			<b-button
 				size="md"
 				variant="danger"
+				v-if="hasDeleteSubtaskAccess"
 				v-b-modal="`subtask-delete-${model.id}`">
 				<font-awesome-icon icon="trash"/>
 				Delete
@@ -34,9 +36,21 @@
             <estimation :model="estimation"></estimation>
         </div> -->
 
-        <estimations-table :items="model.estimations"></estimations-table>
+        <estimations-table
+			v-if="model.estimations.length"
+			:items="model.estimations"
+			class="my-2">
+		</estimations-table>
 
-		<b-button-group>
+		<b-alert
+			v-else
+			variant="warning"
+			show
+			class="my-2">
+			There are no estimations
+		</b-alert>
+
+		<b-button-group class="my-2">
             <b-button
 				size="md"
 				variant="secondary"
@@ -76,10 +90,18 @@ import EstimationsTable from "@/components/tasks/EstimationsTable"
 import Editor from "@/components/editors/EditorModal"
 import Deleter from "@/components/editors/DeleteModal"
 
+import Rights from "@/common/services/Rights"
+import { GET_MY_ROLE } from '@/store/getter-types'
+
+import { RIGHTS_SUBTASK_EDIT } from '@/common/resources/rights'
+import { RIGHTS_SUBTASK_DELETE } from '@/common/resources/rights'
+import { RIGHTS_ESTIMATION_CREATE } from '@/common/resources/rights'
+
 import { GET_IDENTITY } from '@/store/getter-types'
 import { GET_MY_ID } from '@/store/getter-types'
 
 import { ESTIMATION_FIRST } from '@/common/resources/estimation-types'
+import { ESTIMATION_SECOND } from '@/common/resources/estimation-types'
 
 import Technologies from '@/common/resources/technologies'
 
@@ -99,7 +121,7 @@ export default {
 						id: 'id',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'name',
@@ -109,7 +131,7 @@ export default {
 						id: 'taskId',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'description',
@@ -133,25 +155,25 @@ export default {
 						id: 'id',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'subtaskId',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'type',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'estimator',
 						validator: '',
 						disabled: true,
-						visible: false
+						hidden: true
 					},
 					{
 						id: 'dvk',
@@ -211,11 +233,28 @@ export default {
 	},
 	computed: {
 		estimationType() {
-			return ESTIMATION_FIRST
+			switch(this.model.estimations.length) {
+				case 0:
+					return ESTIMATION_FIRST
+				case 1:
+					return ESTIMATION_SECOND
+			}
+
+			return null
+		},
+		hasEditSubtaskAccess() {
+			return Rights.check(this.myRole, RIGHTS_SUBTASK_EDIT)
+		},
+		hasDeleteSubtaskAccess() {
+			return Rights.check(this.myRole, RIGHTS_SUBTASK_DELETE)
+		},
+		hasCreateEstimationAccess() {
+			return Rights.check(this.myRole, RIGHTS_ESTIMATION_CREATE)
 		},
 		...mapGetters({
 			identity: GET_IDENTITY,
-			estimator: GET_MY_ID
+			estimator: GET_MY_ID,
+			myRole: GET_MY_ROLE
 		})
 	}
 }
