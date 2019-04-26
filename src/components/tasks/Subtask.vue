@@ -54,6 +54,7 @@
             <b-button
 				size="md"
 				variant="secondary"
+				v-if="hasCreateEstimationAccess && model.estimations.length <= 2"
 				@click="selectEstimation()"
 				v-b-modal="`estimation-editor`">
 				Estimate
