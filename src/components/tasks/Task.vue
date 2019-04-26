@@ -2,38 +2,37 @@
 	<b-card no-body>
         <h4 slot="header">
 			{{ title }}
+			<b-button-group>
+				<b-button
+					size="md"
+					variant="secondary"
+					v-b-modal="`subtask-editor`">
+					<font-awesome-icon icon="plus-square"/>
+					Create subtask
+				</b-button>
 
-			<b-button
-				size="md"
-				variant="warning"
-				@click="selectTask(task)"
-				v-b-modal="`task-editor-${id}`">
-				<font-awesome-icon icon="edit"/>
-				Edit
-			</b-button>
+				<b-button
+					size="md"
+					variant="warning"
+					@click="selectTask(task)"
+					v-b-modal="`task-editor-${id}`">
+					<font-awesome-icon icon="edit"/>
+					Edit
+				</b-button>
 
-			<b-button
-				size="md"
-				variant="danger"
-				v-b-modal="`task-delete-${id}`">
-				<font-awesome-icon icon="trash"/>
-				Delete
-			</b-button>
+				<b-button
+					size="md"
+					variant="danger"
+					v-b-modal="`task-delete-${id}`">
+					<font-awesome-icon icon="trash"/>
+					Delete
+				</b-button>
+			</b-button-group>
 		</h4>
 
         <!-- <b-card-body v-for="subtask in subtasks" :key="subtask.id">
             <subtask :model="subtask"></subtask>
         </b-card-body> -->
-
-		<b-button-group>
-			<b-button
-				size="md"
-				variant="secondary"
-				v-b-modal="`subtask-editor`">
-				<font-awesome-icon icon="plus-square"/>
-				Create subtask
-			</b-button>
-		</b-button-group>
 
 		<subtask
 			:model="subtask"

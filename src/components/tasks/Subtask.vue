@@ -81,6 +81,8 @@ import { GET_MY_ID } from '@/store/getter-types'
 
 import { ESTIMATION_FIRST } from '@/common/resources/estimation-types'
 
+import Technologies from '@/common/resources/technologies'
+
 export default {
 	props: {
 		model: Object
@@ -115,7 +117,9 @@ export default {
 					},
 					{
 						id: 'technology',
-						validator: 'required'
+						validator: 'required',
+						type: 'select',
+						options: Technologies
 					}
 				]
 			},

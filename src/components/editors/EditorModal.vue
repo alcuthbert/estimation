@@ -13,7 +13,23 @@
 					:key="field.id"
 					:label="field.id | ucfirst"
 					:label-for="field.id">
-                <b-form-input 
+				<b-form-select v-if="field.type && field.type === 'select'"
+					:id="field.id"
+					:name="field.id"
+					type="select"
+					:options="field.options"
+					v-model="form[field.id]"
+					:disabled="field.disabled === true"
+					required
+					v-validate="field.validator"
+					:state="validateState(field.id)"
+					:aria-describedby="`${field.id}-error`">
+					<b-form-invalid-feedback :id="`${field.id}-error`">
+						{{ errors.first(field.id) }}
+					</b-form-invalid-feedback>
+				</b-form-select>
+
+                <b-form-input v-else
 					:id="field.id"
 					:name="field.id"
 					type="text"
@@ -22,10 +38,11 @@
 					required
 					v-validate="field.validator"
 					:state="validateState(field.id)"
-					:aria-describedby="`${field.id}-error`" />
-				<b-form-invalid-feedback :id="`${field.id}-error`">
-					{{ errors.first(field.id) }}
-				</b-form-invalid-feedback>
+					:aria-describedby="`${field.id}-error`" >
+					<b-form-invalid-feedback :id="`${field.id}-error`">
+						{{ errors.first(field.id) }}
+					</b-form-invalid-feedback>
+				</b-form-input>
             </b-form-group>
         </b-form>
     </b-modal>
