@@ -59,22 +59,28 @@ You can use following predefined user accounts
 ### Architect
 
 Login: architect
+
 Password: architect
 
 ### Manager
 
-Login: 
-Password: 
+Login: manager
+
+Password: manager
 
 ### Admin
 
 Login: aleksey
+
 Password: aleksey
 
 ### Estimators
 
 Login: estimator
+
 Password: estimator
 
 Login: estimator2 
+
 Password: estimator2
+
