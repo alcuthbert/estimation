@@ -81,6 +81,20 @@
       "created": "",
       "assignee_1": 3,
       "assignee_2": 6
+    },
+    {
+      "id": 3,
+      "name": "CR 1003",
+      "number": "CR1003",
+      "status": "assigned",
+      "jira_link": "",
+      "owner": 4,
+      "version": "2.3",
+      "project": "AS1313",
+      "created": "",
+      "assignee_1": 3,
+      "assignee_2": 6,
+      "tasks": []
     }
   ],
   "tasks": [
@@ -103,6 +117,11 @@
       "name": "Task 2.1",
       "changeRequestId": 2,
       "id": 4
+    },
+    {
+      "name": "1003: task 1",
+      "changeRequestId": 3,
+      "id": 5
     }
   ],
   "subtasks": [
@@ -139,6 +158,12 @@
       "name": "subtask 4.1",
       "taskId": 4,
       "technology": "Java"
+    },
+    {
+      "name": "task 1: sb 1",
+      "taskId": 5,
+      "technology": "ARS",
+      "id": 6
     }
   ],
   "estimations": [
@@ -191,6 +216,26 @@
       "e_test": "333",
       "e_test_tech": "444",
       "id": 5
+    },
+    {
+      "subtaskId": 6,
+      "type": "first",
+      "estimator": 3,
+      "dvk": "11",
+      "imp": "22",
+      "e_test": "33",
+      "e_test_tech": "44",
+      "id": 6
+    },
+    {
+      "subtaskId": 6,
+      "type": "second",
+      "estimator": 6,
+      "dvk": "55",
+      "imp": "66",
+      "e_test": "77",
+      "e_test_tech": "88",
+      "id": 7
     }
   ]
 }

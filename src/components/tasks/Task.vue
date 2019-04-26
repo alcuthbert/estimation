@@ -77,6 +77,8 @@ import Rights from "@/common/services/Rights"
 import { mapGetters } from 'vuex'
 import { GET_MY_ROLE } from '@/store/getter-types'
 
+import Technologies from '@/common/resources/technologies'
+
 import { RIGHTS_SUBTASK_CREATE } from '@/common/resources/rights'
 import { RIGHTS_TASK_EDIT } from '@/common/resources/rights'
 import { RIGHTS_TASK_DELETE } from '@/common/resources/rights'
@@ -112,7 +114,7 @@ export default {
 			},
 			subtaskEditorOptions: {
 				modalId: `subtask-editor`,
-				title: 'Subask Editor',
+				title: 'Subtask Editor',
 				emitName: 'subtask-saved',
 				service: require('@/common/services/Subtasks').default,
 				fields: [
@@ -138,7 +140,9 @@ export default {
 					},
 					{
 						id: 'technology',
-						validator: ''
+						validator: '',
+						type: 'select',
+						options: Technologies
 					}
 				]
 			},
