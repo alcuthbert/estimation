@@ -10,7 +10,7 @@
 
 <script>
 
-import Navi from './components/Navi.vue'
+import Navi from './components/helpers/Navi.vue'
 
 export default {
 	name: 'app',

@@ -184,7 +184,7 @@
 <script>
 import Vue from "vue"
 import { mapGetters } from "vuex"
-import CREditor from "@/components/CREditor"
+import CREditor from "@/components/editors/CREditor"
 import CRs from "@/common/services/ChangeRequests"
 import Rights from "@/common/services/Rights"
 import { STATUS_WAITING_FOR_APPROVE } from '@/common/resources/statuses'

@@ -21,7 +21,7 @@
 
 <script>
 
-import UserActions from './helpers/UserActions.vue'
+import UserActions from './UserActions.vue'
 import {IS_LOGGED_IN} from '@/store/getter-types'
 import { mapGetters } from 'vuex';
 
