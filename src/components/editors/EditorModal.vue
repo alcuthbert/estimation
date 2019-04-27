@@ -105,7 +105,9 @@ export default {
 					this.form[field.id] = this.data[field.id]
 				})
 
-				this.$validator.validate()
+				if (this.data.id) {
+					this.$validator.validate()
+				}
 			}
 		},
 	},

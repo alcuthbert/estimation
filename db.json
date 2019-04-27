@@ -86,7 +86,7 @@
       "id": 3,
       "name": "CR 1003",
       "number": "CR1003",
-      "status": "waiting_for_merge",
+      "status": "closed",
       "jira_link": "",
       "owner": 4,
       "version": "2.3",
@@ -237,6 +237,16 @@
       "e_test": "77",
       "e_test_tech": "88",
       "id": 7
+    },
+    {
+      "subtaskId": 6,
+      "type": "final",
+      "estimator": 2,
+      "dvk": "111",
+      "imp": "222",
+      "e_test": "333",
+      "e_test_tech": "444",
+      "id": 8
     }
   ]
 }

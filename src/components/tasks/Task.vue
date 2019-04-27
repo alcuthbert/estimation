@@ -6,7 +6,7 @@
 				<b-button
 					size="md"
 					variant="secondary"
-					v-if="hasCreateSubtaskAccess"
+					v-if="hasCreateSubtaskAccess && !isMerged && !isClosed"
 					v-b-modal="`subtask-editor`">
 					<font-awesome-icon icon="plus-square"/>
 					Create subtask
@@ -15,7 +15,7 @@
 				<b-button
 					size="md"
 					variant="warning"
-					v-if="hasEditTaskAccess"
+					v-if="hasEditTaskAccess && !isMerged && !isClosed"
 					@click="selectTask(task)"
 					v-b-modal="`task-editor-${id}`">
 					<font-awesome-icon icon="edit"/>
@@ -25,7 +25,7 @@
 				<b-button
 					size="md"
 					variant="danger"
-					v-if="hasDeleteTaskAccess"
+					v-if="hasDeleteTaskAccess && !isMerged && !isClosed"
 					v-b-modal="`task-delete-${id}`">
 					<font-awesome-icon icon="trash"/>
 					Delete
@@ -83,6 +83,9 @@ import Technologies from '@/common/resources/technologies'
 import { RIGHTS_SUBTASK_CREATE } from '@/common/resources/rights'
 import { RIGHTS_TASK_EDIT } from '@/common/resources/rights'
 import { RIGHTS_TASK_DELETE } from '@/common/resources/rights'
+
+import { STATUS_MERGED } from '@/common/resources/statuses'
+import { STATUS_CLOSED } from '@/common/resources/statuses'
 
 export default {
 	data() {
@@ -161,6 +164,14 @@ export default {
 		cr: Object
 	},
 	methods: {
+		refreshSubtasks() {
+			SubtasksService
+				.getByTaskId(this.id)
+				.then(response => {
+					this.subtasks = response.data
+				})
+				.catch(() => this.$toaster.error('Error'))
+		},
 		onTaskSaved() {
 			TasksService
 				.findById(this.id)
@@ -173,31 +184,13 @@ export default {
 			this.$emit('task-deleted', task)
 		},
 		onSubtaskSaved() {
-			SubtasksService
-				.getByTaskId(this.id)
-				.then(response => {
-					this.subtasks = response.data
-				})
-				.catch(() => this.$toaster.error('Error'))
+			this.refreshSubtasks()
 		},
 		onSubtaskDeleted() {
-			SubtasksService
-				.getByTaskId(this.id)
-				.then(response => {
-					this.subtasks = response.data
-				})
-				.catch(() => this.$toaster.error('Error'))
+			this.refreshSubtasks()
 		},
-		onEstimationSaved(obj) {
-			// eslint-disable-next-line
-			console.log("Task. onEstimationSaved", obj)
-
-			SubtasksService
-				.getByTaskId(this.id)
-				.then(response => {
-					this.subtasks = response.data
-				})
-				.catch(() => this.$toaster.error('Error'))
+		onEstimationSaved() {
+			this.refreshSubtasks()
 		},
 		selectTask(item = null) {
 			if (item === null) {
@@ -239,6 +232,12 @@ export default {
 		},
 		hasDeleteTaskAccess() {
 			return Rights.check(this.myRole, RIGHTS_TASK_DELETE)
+		},
+		isClosed() {
+			return this.cr !== null ? this.cr.status === STATUS_CLOSED : false
+		},
+		isMerged() {
+			return this.cr !== null ? this.cr.status === STATUS_MERGED : false
 		},
 		...mapGetters({
 			myRole: GET_MY_ROLE

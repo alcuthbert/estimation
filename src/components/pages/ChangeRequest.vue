@@ -70,7 +70,7 @@
 							<b-button
 								size="lg"
 								variant="secondary"
-								v-if="hasCreateTaskAccess"
+								v-if="hasCreateTaskAccess && !isMerged && !isClosed"
 								@click="selectTask()"
 								v-b-modal.task-editor>
 								<font-awesome-icon icon="plus"/>
@@ -80,7 +80,7 @@
 							<b-button
 								size="lg"
 								variant="warning"
-								v-if="hasMergeAccess && isAssigned"
+								v-if="hasMergeAccess && isAssigned && !isMerged && !isClosed"
 								@click="merge()">
 								<font-awesome-icon icon="clone"/>
 								Merge
@@ -355,6 +355,9 @@ export default {
 		// 		changeRequestId: this.cr === null ? '' : this.cr.id
 		// 	}
 		// },
+		isClosed() {
+			return this.cr.status === STATUS_CLOSED
+		},
 		isMerged() {
 			return this.cr.status === STATUS_MERGED
 		},

@@ -16,7 +16,7 @@
             <b-button
 				size="md"
 				variant="warning"
-				v-if="hasEditSubtaskAccess"
+				v-if="hasEditSubtaskAccess && !isMerged && !isClosed"
 				v-b-modal="`subtask-editor-${model.id}`">
 				<font-awesome-icon icon="edit"/>
 				Edit
@@ -25,7 +25,7 @@
 			<b-button
 				size="md"
 				variant="danger"
-				v-if="hasDeleteSubtaskAccess"
+				v-if="hasDeleteSubtaskAccess && !isMerged && !isClosed"
 				v-b-modal="`subtask-delete-${model.id}`">
 				<font-awesome-icon icon="trash"/>
 				Delete
@@ -63,7 +63,9 @@
 			<b-button
 				size="md"
 				variant="warning"
-				v-if="hasMergeAccess && isWaitingForMerge && model.estimations.length === 2">
+				v-if="hasMergeAccess && isWaitingForMerge && model.estimations.length === 2"
+				@click="selectFinalEstimation()"
+				v-b-modal="`final-estimation-editor`">
 				<font-awesome-icon icon="clone"/>
 				Merge
 			</b-button>
@@ -79,6 +81,12 @@
 			:options="subtaskEditorOptions"
 			:data="model"
 			@subtask-saved="onSubtaskSaved">
+		</editor>
+
+		<editor
+			:options="finalEstimationEditorOptions"
+			:data="finalEstimationEditorData"
+			@final-estimation-saved="onFinalEstimationSaved">
 		</editor>
 
 		<deleter
@@ -102,6 +110,7 @@ import Editor from "@/components/editors/EditorModal"
 import Deleter from "@/components/editors/DeleteModal"
 
 import Rights from "@/common/services/Rights"
+// import Estimations from '@/common/services/Estimations'
 import { GET_MY_ROLE } from '@/store/getter-types'
 
 import { RIGHTS_SUBTASK_EDIT } from '@/common/resources/rights'
@@ -114,9 +123,12 @@ import { GET_MY_ID } from '@/store/getter-types'
 
 import { STATUS_ASSIGNED } from '@/common/resources/statuses'
 import { STATUS_WAITING_FOR_MERGE } from '@/common/resources/statuses'
+import { STATUS_MERGED } from '@/common/resources/statuses'
+import { STATUS_CLOSED } from '@/common/resources/statuses'
 
 import { ESTIMATION_FIRST } from '@/common/resources/estimation-types'
 import { ESTIMATION_SECOND } from '@/common/resources/estimation-types'
+import { ESTIMATION_FINAL } from '@/common/resources/estimation-types'
 
 import Technologies from '@/common/resources/technologies'
 
@@ -209,7 +221,56 @@ export default {
 					}
 				]
 			},
+			finalEstimationEditorOptions: {
+				modalId: `final-estimation-editor`,
+				title: 'Final Estimation',
+				emitName: 'final-estimation-saved',
+				service: require('@/common/services/Estimations').default,
+				fields: [
+					{
+						id: 'id',
+						validator: '',
+						disabled: true,
+						hidden: true
+					},
+					{
+						id: 'subtaskId',
+						validator: '',
+						disabled: true,
+						hidden: true
+					},
+					{
+						id: 'type',
+						validator: '',
+						disabled: true,
+						hidden: true
+					},
+					{
+						id: 'estimator',
+						validator: '',
+						disabled: true,
+						hidden: true
+					},
+					{
+						id: 'dvk',
+						validator: 'required'
+					},
+					{
+						id: 'imp',
+						validator: 'required'
+					},
+					{
+						id: 'e_test',
+						validator: 'required'
+					},
+					{
+						id: 'e_test_tech',
+						validator: 'required'
+					}
+				]
+			},
 			estimationEditorData: null,
+			finalEstimationEditorData: null,
 			subtaskDeleteOptions: {
 				modalId: `subtask-delete-${this.model.id}`,
 				title: 'Delete Subtask',
@@ -227,9 +288,14 @@ export default {
 		},
 		onEstimationSaved(obj) {
 			this.$emit('estimation-saved', obj)
-
+		},
+		onFinalEstimationSaved(obj) {
 			// eslint-disable-next-line
-			console.log("Subtask. onEstimationSaved", obj)
+			console.log("Subtask.onFinalEstimationSaved", this.model.estimations)
+
+			this.$toaster.success('Estimations merged successfully')
+
+			this.$emit('estimation-saved', obj)
 		},
 		selectEstimation(item = null) {
 			if (item === null) {
@@ -240,6 +306,15 @@ export default {
 				}
 			}
 		},
+		selectFinalEstimation(item = null) {
+			if (item === null) {
+				this.finalEstimationEditorData = {
+					subtaskId: this.model.id,
+					estimator: this.estimator,
+					type: ESTIMATION_FINAL
+				}
+			}
+		}
     },
     components: {
         // Estimation,
@@ -278,6 +353,12 @@ export default {
 		},
 		isWaitingForMerge() {
 			return this.cr !== null ? this.cr.status === STATUS_WAITING_FOR_MERGE : false
+		},
+		isClosed() {
+			return this.cr !== null ? this.cr.status === STATUS_CLOSED : false
+		},
+		isMerged() {
+			return this.cr !== null ? this.cr.status === STATUS_MERGED : false
 		},
 		...mapGetters({
 			identity: GET_IDENTITY,
