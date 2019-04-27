@@ -9,6 +9,7 @@ import {RIGHTS_CR_DELETE} from '@/common/resources/rights.js'
 import {RIGHTS_CR_APPROVE} from '@/common/resources/rights.js'
 import {RIGHTS_CR_ASSIGN} from '@/common/resources/rights.js'
 import {RIGHTS_CR_CLOSE} from '@/common/resources/rights'
+import {RIGHTS_CR_MERGE} from '@/common/resources/rights'
 
 import {RIGHTS_TASK_CREATE} from '@/common/resources/rights'
 import {RIGHTS_TASK_EDIT} from '@/common/resources/rights'
@@ -39,6 +40,8 @@ export default {
                 return this.changeRequestAssign(role)
             case RIGHTS_CR_CLOSE:
                 return this.changeRequestClose(role)
+            case RIGHTS_CR_MERGE:
+                return (role === ROLE_ADMIN || role === ROLE_MANAGER) ? true : false
             case RIGHTS_TASK_CREATE:
                 return (role === ROLE_ADMIN || role === ROLE_MANAGER) ? true : false
             case RIGHTS_TASK_EDIT:

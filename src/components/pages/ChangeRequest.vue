@@ -73,8 +73,18 @@
 								v-if="hasCreateTaskAccess"
 								@click="selectTask()"
 								v-b-modal.task-editor>
-								<font-awesome-icon icon="plus-square"/>
+								<font-awesome-icon icon="plus"/>
 								Create task
+							</b-button>
+
+							<b-button
+								href="#"
+								:to="{name: $routeNames.merge}"
+								size="lg"
+								variant="warning"
+								v-if="hasMergeAccess">
+								<font-awesome-icon icon="clone"/>
+								Merge
 							</b-button>
 						</b-col>
 					</b-row>
@@ -152,6 +162,7 @@ import { GET_MY_ROLE } from '@/store/getter-types'
 import { RIGHTS_CR_CLOSE } from '@/common/resources/rights'
 import { RIGHTS_CR_APPROVE } from '@/common/resources/rights'
 import { RIGHTS_CR_ASSIGN } from '@/common/resources/rights'
+import { RIGHTS_CR_MERGE } from '@/common/resources/rights'
 
 import { RIGHTS_TASK_CREATE } from '@/common/resources/rights'
 
@@ -309,6 +320,9 @@ export default {
 		},
 		hasCreateTaskAccess() {
 			return Rights.check(this.myRole, RIGHTS_TASK_CREATE)
+		},
+		hasMergeAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_MERGE)
 		},
 		tasks() {
 			return this.cr === null ? [] : this.cr.tasks

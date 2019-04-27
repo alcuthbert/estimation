@@ -6,7 +6,8 @@ const routeNames = {
     notFound: 'not-found',
     profile: 'profile',
     users: 'users',
-    signup: 'signup'
+    signup: 'signup',
+    merge: 'merge'
 }
 
 export default routeNames;

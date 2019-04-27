@@ -37,13 +37,13 @@
         </div> -->
 
         <estimations-table
-			v-if="model.estimations.length"
+			v-if="isMerge && model.estimations.length"
 			:items="model.estimations"
 			class="my-2">
 		</estimations-table>
 
 		<b-alert
-			v-else
+			v-else-if="isMerge"
 			variant="warning"
 			show
 			class="my-2">
@@ -84,6 +84,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
+import RouteNames from '@/routeNames.js'
 
 // import Estimation from "@/components/tasks/Estimation"
 import EstimationsTable from "@/components/tasks/EstimationsTable"
@@ -252,11 +254,18 @@ export default {
 		hasCreateEstimationAccess() {
 			return Rights.check(this.myRole, RIGHTS_ESTIMATION_CREATE)
 		},
+		isMerge() {
+			return this.$route.name === RouteNames.merge
+		},
 		...mapGetters({
 			identity: GET_IDENTITY,
 			estimator: GET_MY_ID,
 			myRole: GET_MY_ROLE
 		})
+	},
+	mounted() {
+		// eslint-disable-next-line
+		console.log(this.$route)
 	}
 }
 </script>

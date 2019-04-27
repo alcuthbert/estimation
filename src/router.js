@@ -51,6 +51,17 @@ const router = new VueRouter({
         }
       },
       {
+        path: '/change-requests/:crId/merge',
+        name: RouteNames.merge,
+        component: ChangeRequest,
+        props: true,
+        query : { foo: "bar"},
+        meta: {
+            requiresAuth: true,
+            bar: 'baz'
+        }
+      },
+      {
         path: '/not-found',
         name: RouteNames.notFound,
         component: NotFound

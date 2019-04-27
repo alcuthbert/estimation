@@ -4,6 +4,7 @@ export const RIGHTS_CR_DELETE = 'cr::delete'
 export const RIGHTS_CR_APPROVE = 'cr::approve'
 export const RIGHTS_CR_ASSIGN = 'cr::assign'
 export const RIGHTS_CR_CLOSE = 'cr::close'
+export const RIGHTS_CR_MERGE = 'cr::close'
 
 export const RIGHTS_TASK_CREATE = 'task::create'
 export const RIGHTS_TASK_EDIT = 'task::edit'
