@@ -67,7 +67,7 @@ export default {
 			this.$root.$emit('bv::hide::modal', this.options.modalId)
 		},
 		onSubmit(e) {
-			e.preventDefault();
+			e.preventDefault()
 
 			this.$validator.validate().then(valid => {
 				if (!valid) {
@@ -109,7 +109,7 @@ export default {
 					this.$validator.validate()
 				}
 			}
-		},
+		}
 	},
 	computed: {
 		validationFailed() {

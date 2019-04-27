@@ -1,6 +1,14 @@
 <template>
-	<div>
-		<b-form @submit="onSubmit" @reset="onReset">
+	<b-modal
+		:id="modalId"
+		:ref="modalId"
+		header-bg-variant="default"
+		title="Change-Request Editor"
+		scrollable
+		@shown="onShown"
+		@cancel="onCancel"
+		@ok="onSubmit">
+		<b-form>
 			<b-form-group :label="$t('message.name') | ucfirst" label-for="name">
 				<b-form-input 
 					id="name"
@@ -93,7 +101,7 @@
 				</b-button>
 			</b-button-group>
 		</b-form>
-	</div>
+	</b-modal>
 </template>
 
 <script>
@@ -123,6 +131,7 @@ export default {
 		}
 	},
 	props: {
+		modalId: String,
 		inputItem: Object
 	},
 	computed: {
@@ -137,15 +146,18 @@ export default {
 		})
 	},
 	methods: {
-		onReset() {
+		onCancel() {
 			this.formToDefaults()
 
-			this.$root.$emit('bv::hide::modal', 'cr-editor')
+			this.$root.$emit('bv::hide::modal', this.modalId)
 		},
 		onSubmit(e) {
 			e.preventDefault();
 
-			// this.form.created = Vue.moment("YYYY-MM-DD HH:mm:ss")
+			this.$validator.validate().then(valid => {
+				if (!valid) {
+					return false;
+				}
 
 			CRService
 				.save(this.form)
@@ -174,7 +186,26 @@ export default {
 					this.formToDefaults()
 				})
 
-			this.$root.$emit('bv::hide::modal', 'cr-editor')
+				this.$root.$emit('bv::hide::modal', this.modalId)
+			})
+		},
+		onShown(e) {
+			if (this.inputItem !== null && this.inputItem !== undefined && e.modalId === this.modalId) {
+				Vue.util.extend(this.form, this.inputItem)
+
+				// eslint-disable-next-line
+				// console.log('this.inputItem !== null', this.inputItem)
+
+				if (this.inputItem.id) {
+					CRService
+						.getTasks(this.inputItem.id)
+						.then(res => this.tasks = res.data)
+
+					this.$validator.validate()
+				}
+			} else {
+				this.formToDefaults()
+			}
 		},
 		addTask() {
 			this.tasks.push({
@@ -208,22 +239,22 @@ export default {
 			this.tasks = []
 		}
 	},
-	mounted() {
-		this.formToDefaults()
+	// mounted() {
+	// 	this.formToDefaults()
 
-		this.$root.$on('bv::modal::show', () => {
-			if (this.inputItem !== null) {
-				Vue.util.extend(this.form, this.inputItem)
+	// 	this.$root.$on('bv::modal::show', () => {
+	// 		if (this.inputItem !== null) {
+	// 			Vue.util.extend(this.form, this.inputItem)
 
-				if (this.inputItem.id !== null) {
-					CRService
-						.getTasks(this.inputItem.id)
-						.then(res => this.tasks = res.data)
-				}
-			} else {
-				this.formToDefaults()
-			}
-		})
-	}
+	// 			if (this.inputItem.id !== null) {
+	// 				CRService
+	// 					.getTasks(this.inputItem.id)
+	// 					.then(res => this.tasks = res.data)
+	// 			}
+	// 		} else {
+	// 			this.formToDefaults()
+	// 		}
+	// 	})
+	// }
 }
 </script>

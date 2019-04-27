@@ -160,7 +160,7 @@
 			</b-card>
 		</b-col>
 
-		<b-modal
+		<!-- <b-modal
 			id="cr-editor"
 			ref="cr-editor"
 			header-bg-variant="default"
@@ -169,7 +169,13 @@
 			hide-footer
 		>
 			<c-r-editor :inputItem="selectedItem" @cr-saved="onCrSaved"/>
-		</b-modal>
+		</b-modal> -->
+
+		<c-r-editor
+			modalId="cr-editor"
+			:inputItem="selectedItem"
+			@cr-saved="onCrSaved">
+		</c-r-editor>
 
 		<b-modal
 				id="delete-modal"
