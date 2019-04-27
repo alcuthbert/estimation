@@ -43,11 +43,11 @@
 							</b-form-invalid-feedback>
 						</b-form-group>
 
-						<b-form-group>
+						<!-- <b-form-group>
 							<b-link href="#foo">
 								{{ $t('message.forgot_password') | ucfirst }}
 							</b-link>
-						</b-form-group>
+						</b-form-group> -->
 
 						<b-button type="submit" variant="primary" :disabled="validationFailed">
 							{{ $t('message.submit') | ucfirst }}

@@ -66,7 +66,7 @@
 							</b-list-group>
 						</b-col>
 
-						<b-col sm="4">
+						<b-col sm="6">
 							<b-button
 								size="lg"
 								variant="secondary"
@@ -78,13 +78,21 @@
 							</b-button>
 
 							<b-button
-								href="#"
-								:to="{name: $routeNames.merge}"
 								size="lg"
 								variant="warning"
-								v-if="hasMergeAccess">
+								v-if="hasMergeAccess && isAssigned"
+								@click="merge()">
 								<font-awesome-icon icon="clone"/>
 								Merge
+							</b-button>
+
+							<b-button
+								size="lg"
+								variant="secondary"
+								v-if="hasMergeAccess && isWaitingForMerge"
+								@click="mergeCompleted()">
+								<font-awesome-icon icon="check"/>
+								Complete Merge
 							</b-button>
 						</b-col>
 					</b-row>
@@ -101,7 +109,14 @@
 		</b-col>
 
 		<b-col sm="12" md="12" lg="12" mx=auto>
-			<task :id="task.id" v-for="task in tasks" :key="task.id" @task-deleted="onTaskDeleted"></task>
+			<task
+				:id="task.id"
+				:cr="cr"
+				v-for="task in tasks"
+				:key="task.id"
+				@task-deleted="onTaskDeleted"
+				>
+			</task>
 		</b-col>
 
 		<b-modal
@@ -156,6 +171,8 @@ import Editor from "@/components/editors/EditorModal"
 import ChangeRequests from '@/common/services/ChangeRequests'
 import Rights from "@/common/services/Rights"
 import Users from "@/common/services/Users"
+
+// import RouteNames from '@/routeNames.js'
 import { mapGetters } from 'vuex'
 import { GET_MY_ROLE } from '@/store/getter-types'
 
@@ -171,6 +188,7 @@ import { STATUS_CLOSED } from '@/common/resources/statuses'
 import { STATUS_APPROVED } from '@/common/resources/statuses'
 import { STATUS_WAITING_FOR_APPROVE } from '@/common/resources/statuses'
 import { STATUS_ASSIGNED } from '@/common/resources/statuses'
+import { STATUS_WAITING_FOR_MERGE } from '@/common/resources/statuses'
 
 export default {
 	data() {
@@ -202,6 +220,15 @@ export default {
 	},
 	props: ['crId'],
 	methods: {
+		refresh() {
+			ChangeRequests
+				.getById(this.crId)
+				.then(response => {
+					this.cr = response.data
+
+					this.$toaster.success('Change-request info updated')
+				})
+		},
 		close() {
 			this.cr.status = STATUS_CLOSED
 
@@ -212,6 +239,32 @@ export default {
 				})
 				.catch(() => {
 					this.$toaster.error('Error on close')
+				})
+		},
+		merge() {
+			this.cr.status = STATUS_WAITING_FOR_MERGE
+
+			ChangeRequests
+				.save(this.cr)
+				.then(() => {
+					this.$toaster.success('Change-request is now ready for merge')
+					this.refresh()
+				})
+				.catch(() => {
+					this.$toaster.error('Error on merge')
+				})
+		},
+		mergeCompleted() {
+			this.cr.status = STATUS_MERGED
+
+			ChangeRequests
+				.save(this.cr)
+				.then(() => {
+					this.$toaster.success('Merge completed')
+					this.refresh()
+				})
+				.catch(() => {
+					this.$toaster.error('Error on merge complete')
 				})
 		},
 		approve() {
@@ -264,13 +317,15 @@ export default {
 			return found ? found.text : 'none'
 		},
 		onTaskSaved() {
-			ChangeRequests
-				.getById(this.crId)
-				.then(response => {
-					this.cr = response.data
+			// ChangeRequests
+			// 	.getById(this.crId)
+			// 	.then(response => {
+			// 		this.cr = response.data
 
-					this.$toaster.success('Change-request info updated')
-				})
+			// 		this.$toaster.success('Change-request info updated')
+			// 	})
+			
+			this.refresh()
 		},
 		onTaskDeleted(task) {
 			const found = this.cr.tasks.find(el => el.id === task.id)
@@ -303,11 +358,17 @@ export default {
 		isMerged() {
 			return this.cr.status === STATUS_MERGED
 		},
+		isAssigned() {
+			return this.cr.status === STATUS_ASSIGNED
+		},
 		isApproved() {
 			return this.cr.status === STATUS_APPROVED
 		},
 		isWaitingForApprove() {
 			return this.cr.status === STATUS_WAITING_FOR_APPROVE
+		},
+		isWaitingForMerge() {
+			return this.cr.status === STATUS_WAITING_FOR_MERGE
 		},
 		hasCloseAccess() {
 			return Rights.check(this.myRole, RIGHTS_CR_CLOSE)
@@ -340,6 +401,9 @@ export default {
 				return estimator
 			})
 		},
+		// isMerge() {
+		// 	return this.$route.name === RouteNames.merge
+		// },
 		...mapGetters({
 			myRole: GET_MY_ROLE
 		})
@@ -350,6 +414,7 @@ export default {
 			.then(response => {
 				this.cr = response.data
 			})
+
 		Users
 			.findEstimators()
 			.then(response => {

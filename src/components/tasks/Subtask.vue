@@ -37,14 +37,14 @@
         </div> -->
 
         <estimations-table
-			v-if="isMerge && model.estimations.length"
+			v-if="model.estimations.length"
 			:items="model.estimations"
 			class="my-2">
 		</estimations-table>
 
 		<b-alert
-			v-else-if="isMerge"
-			variant="warning"
+			v-else-if="!model.estimations.length"
+			variant="info"
 			show
 			class="my-2">
 			There are no estimations
@@ -54,10 +54,18 @@
             <b-button
 				size="md"
 				variant="secondary"
-				v-if="hasCreateEstimationAccess && model.estimations.length <= 1"
+				v-if="hasCreateEstimationAccess && model.estimations.length <= 1 && isAssigned"
 				@click="selectEstimation()"
 				v-b-modal="`estimation-editor`">
 				Estimate
+			</b-button>
+
+			<b-button
+				size="md"
+				variant="warning"
+				v-if="hasMergeAccess && isWaitingForMerge && model.estimations.length === 2">
+				<font-awesome-icon icon="clone"/>
+				Merge
 			</b-button>
         </b-button-group>
 
@@ -85,7 +93,7 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import RouteNames from '@/routeNames.js'
+// import RouteNames from '@/routeNames.js'
 
 // import Estimation from "@/components/tasks/Estimation"
 import EstimationsTable from "@/components/tasks/EstimationsTable"
@@ -99,9 +107,13 @@ import { GET_MY_ROLE } from '@/store/getter-types'
 import { RIGHTS_SUBTASK_EDIT } from '@/common/resources/rights'
 import { RIGHTS_SUBTASK_DELETE } from '@/common/resources/rights'
 import { RIGHTS_ESTIMATION_CREATE } from '@/common/resources/rights'
+import { RIGHTS_CR_MERGE } from '@/common/resources/rights'
 
 import { GET_IDENTITY } from '@/store/getter-types'
 import { GET_MY_ID } from '@/store/getter-types'
+
+import { STATUS_ASSIGNED } from '@/common/resources/statuses'
+import { STATUS_WAITING_FOR_MERGE } from '@/common/resources/statuses'
 
 import { ESTIMATION_FIRST } from '@/common/resources/estimation-types'
 import { ESTIMATION_SECOND } from '@/common/resources/estimation-types'
@@ -110,7 +122,8 @@ import Technologies from '@/common/resources/technologies'
 
 export default {
 	props: {
-		model: Object
+		model: Object,
+		cr: Object
     },
 	data() {
 		return {
@@ -254,8 +267,17 @@ export default {
 		hasCreateEstimationAccess() {
 			return Rights.check(this.myRole, RIGHTS_ESTIMATION_CREATE)
 		},
-		isMerge() {
-			return this.$route.name === RouteNames.merge
+		hasMergeAccess() {
+			return Rights.check(this.myRole, RIGHTS_CR_MERGE)
+		},
+		// isMerge() {
+		// 	return this.$route.name === RouteNames.merge
+		// },
+		isAssigned() {
+			return this.cr !== null ? this.cr.status === STATUS_ASSIGNED : false
+		},
+		isWaitingForMerge() {
+			return this.cr !== null ? this.cr.status === STATUS_WAITING_FOR_MERGE : false
 		},
 		...mapGetters({
 			identity: GET_IDENTITY,
@@ -265,7 +287,7 @@ export default {
 	},
 	mounted() {
 		// eslint-disable-next-line
-		console.log(this.$route)
+		// console.log(this.$route)
 	}
 }
 </script>

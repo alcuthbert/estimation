@@ -86,7 +86,7 @@
       "id": 3,
       "name": "CR 1003",
       "number": "CR1003",
-      "status": "assigned",
+      "status": "waiting_for_merge",
       "jira_link": "",
       "owner": 4,
       "version": "2.3",
@@ -94,7 +94,13 @@
       "created": "",
       "assignee_1": 3,
       "assignee_2": 6,
-      "tasks": []
+      "tasks": [
+        {
+          "name": "1003: task 1",
+          "changeRequestId": 3,
+          "id": 5
+        }
+      ]
     }
   ],
   "tasks": [
@@ -107,11 +113,6 @@
       "id": 2,
       "changeRequestId": 1,
       "name": "task 2"
-    },
-    {
-      "id": 3,
-      "name": "task 3",
-      "changeRequestId": 1
     },
     {
       "name": "Task 2.1",

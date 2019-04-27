@@ -1,5 +1,5 @@
 <template>
-	<b-card no-body>
+	<b-card no-body class="my-2">
         <h4 slot="header">
 			{{ title }}
 			<b-button-group>
@@ -38,6 +38,7 @@
         </b-card-body> -->
 
 		<subtask
+			:cr="cr"
 			:model="subtask"
 			v-for="subtask in subtasks"
 			:key="subtask.id"
@@ -156,7 +157,8 @@ export default {
 		};
 	},
 	props: {
-		id: Number
+		id: Number,
+		cr: Object
 	},
 	methods: {
 		onTaskSaved() {
