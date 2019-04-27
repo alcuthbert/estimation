@@ -5,6 +5,7 @@
         selectable
         select-mode="single"
         selectedVariant="warning"
+        :tbody-tr-class="rowClass"
         :items="items"
         :fields="fields"
         >
@@ -16,7 +17,7 @@ export default {
     data() {
         return {
             fields: [
-                "id",
+                {key: 'id', label: 'Id'},
                 "subtaskId",
                 "type",
                 "estimator",
@@ -27,6 +28,17 @@ export default {
             ]
         }
     },
-    props: ['items']
+    props: ['items'],
+    methods: {
+        rowClass(item) {
+            if (!item) {
+                return
+            }
+
+            if (item.type === 'final') {
+                return 'table-success'
+            }
+        }
+    }
 }
 </script>
