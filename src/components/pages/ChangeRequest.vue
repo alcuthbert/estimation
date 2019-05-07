@@ -3,13 +3,17 @@
 		<b-col sm="12" md="12" lg="12" mx=auto>
 			<b-card no-body my="4" v-if="cr">
 				<b-card-header>
-					<h4 slot="header">{{ '#' + cr.id + ': ' + cr.name }}</h4>
+					<h4 slot="header">
+						{{ 'Change request: ' + cr.name }}
+					</h4>
+
 					<b-button
 							variant="primary"
 							@click="approve()"
 							v-if="hasApproveAccess && isWaitingForApprove">
 						Approve
 					</b-button>
+
 					<b-button
 							variant="primary"
 							@click="close()"
@@ -67,33 +71,35 @@
 						</b-col>
 
 						<b-col sm="6">
-							<b-button
-								size="lg"
-								variant="secondary"
-								v-if="hasCreateTaskAccess && !isMerged && !isClosed"
-								@click="selectTask()"
-								v-b-modal.task-editor>
-								<font-awesome-icon icon="plus"/>
-								Create task
-							</b-button>
+							<b-button-group>
+								<b-button
+									size="lg"
+									variant="secondary"
+									v-if="hasCreateTaskAccess && !isMerged && !isClosed"
+									@click="selectTask()"
+									v-b-modal.task-editor>
+									<font-awesome-icon icon="plus"/>
+									Create task
+								</b-button>
 
-							<b-button
-								size="lg"
-								variant="warning"
-								v-if="hasMergeAccess && isAssigned && !isMerged && !isClosed"
-								@click="merge()">
-								<font-awesome-icon icon="clone"/>
-								Merge
-							</b-button>
+								<b-button
+									size="lg"
+									variant="warning"
+									v-if="hasMergeAccess && isAssigned && !isMerged && !isClosed"
+									@click="merge()">
+									<font-awesome-icon icon="clone"/>
+									Merge
+								</b-button>
 
-							<b-button
-								size="lg"
-								variant="secondary"
-								v-if="hasMergeAccess && isWaitingForMerge"
-								@click="mergeCompleted()">
-								<font-awesome-icon icon="check"/>
-								Complete Merge
-							</b-button>
+								<b-button
+									size="lg"
+									variant="secondary"
+									v-if="hasMergeAccess && isWaitingForMerge"
+									@click="mergeCompleted()">
+									<font-awesome-icon icon="check"/>
+									Complete Merge
+								</b-button>
+							</b-button-group>
 						</b-col>
 					</b-row>
 				</b-card-body>

@@ -1,7 +1,7 @@
 <template>
     <b-card-body>
         <b-card-title>
-            {{ '#' + model.id + ': ' + model.name }}
+            {{ 'Subtask: ' + model.name }}
         </b-card-title>
 
         <b-card-sub-title mb="2">

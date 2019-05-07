@@ -8,7 +8,7 @@
 					variant="secondary"
 					v-if="hasCreateSubtaskAccess && !isMerged && !isClosed"
 					v-b-modal="`subtask-editor`">
-					<font-awesome-icon icon="plus-square"/>
+					<font-awesome-icon icon="plus"/>
 					Create subtask
 				</b-button>
 
@@ -32,10 +32,6 @@
 				</b-button>
 			</b-button-group>
 		</h4>
-
-        <!-- <b-card-body v-for="subtask in subtasks" :key="subtask.id">
-            <subtask :model="subtask"></subtask>
-        </b-card-body> -->
 
 		<subtask
 			:cr="cr"
@@ -219,7 +215,7 @@ export default {
 	},
 	computed: {
 		title() {
-			return this.task !== null ? '#' + this.task.id + ': ' + this.task.name : ''
+			return this.task !== null ? 'Task: ' + this.task.name : ''
 		},
 		taskId() {
 			return this.task !== null ? this.task.id : null
