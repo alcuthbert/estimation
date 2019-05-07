@@ -32,6 +32,7 @@ export default {
 			closed: 'closed',
 			approved: 'approved',
 			number: 'number',
+			back: 'back',
 		}
 	},
 	ru: {
@@ -66,7 +67,8 @@ export default {
 			open: 'открыто',
 			closed: 'закрыто',
 			approved: 'подтверждено',
-			number: 'номер'
+			number: 'номер',
+			back: 'назад',
 		}
 	}
 }

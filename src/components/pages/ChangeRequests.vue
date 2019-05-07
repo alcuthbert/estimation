@@ -24,7 +24,7 @@
 
 					<b-row>
 						<b-col md="4">
-							<b-form-group label="Filter">
+							<b-form-group :label="$t('message.filter') | ucfirst">
 								<b-input-group>
 									<b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
 									<b-input-group-append>
@@ -159,17 +159,6 @@
 				</b-card-body>
 			</b-card>
 		</b-col>
-
-		<!-- <b-modal
-			id="cr-editor"
-			ref="cr-editor"
-			header-bg-variant="default"
-			title="CR Editor"
-			scrollable
-			hide-footer
-		>
-			<c-r-editor :inputItem="selectedItem" @cr-saved="onCrSaved"/>
-		</b-modal> -->
 
 		<c-r-editor
 			modalId="cr-editor"

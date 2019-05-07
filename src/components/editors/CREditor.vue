@@ -91,15 +91,6 @@
 					<b-form-input v-model="task.name" />
 				</b-form-group>
 			</b-form-fieldset>
-
-			<b-button-group>
-				<b-button type="submit" variant="primary" :disabled="validationFailed">
-					{{ $t("message.submit") | ucfirst }}
-					</b-button>
-				<b-button type="reset" variant="secondary">
-					{{ $t("message.cancel") | ucfirst }}
-				</b-button>
-			</b-button-group>
 		</b-form>
 	</b-modal>
 </template>
@@ -159,32 +150,32 @@ export default {
 					return false;
 				}
 
-			CRService
-				.save(this.form)
-				.then((response) => {
-					this.form.id = response.data.id
+				CRService
+					.save(this.form)
+					.then((response) => {
+						this.form.id = response.data.id
 
-					this.tasks.forEach(task => {
-						task.changeRequestId = this.form.id
+						this.tasks.forEach(task => {
+							task.changeRequestId = this.form.id
+						})
+						
+						return CRService.saveTasks(this.form.id, this.tasks)
 					})
-					
-					return CRService.saveTasks(this.form.id, this.tasks)
-				})
-				.then(() => {
-					this.$emit('cr-saved', this.form)
+					.then(() => {
+						this.$emit('cr-saved', this.form)
 
-					this.$toaster.success(`Record(s) saved successfully`)
+						this.$toaster.success(`Record(s) saved successfully`)
 
-					this.formToDefaults()
-				})
-				.catch((error) => {
-					// eslint-disable-next-line
-					console.log('cr save error', error)
+						this.formToDefaults()
+					})
+					.catch((error) => {
+						// eslint-disable-next-line
+						console.log('cr save error', error)
 
-					this.$toaster.error('Error while saving')
+						this.$toaster.error('Error while saving')
 
-					this.formToDefaults()
-				})
+						this.formToDefaults()
+					})
 
 				this.$root.$emit('bv::hide::modal', this.modalId)
 			})
@@ -238,23 +229,6 @@ export default {
 
 			this.tasks = []
 		}
-	},
-	// mounted() {
-	// 	this.formToDefaults()
-
-	// 	this.$root.$on('bv::modal::show', () => {
-	// 		if (this.inputItem !== null) {
-	// 			Vue.util.extend(this.form, this.inputItem)
-
-	// 			if (this.inputItem.id !== null) {
-	// 				CRService
-	// 					.getTasks(this.inputItem.id)
-	// 					.then(res => this.tasks = res.data)
-	// 			}
-	// 		} else {
-	// 			this.formToDefaults()
-	// 		}
-	// 	})
-	// }
+	}
 }
 </script>
