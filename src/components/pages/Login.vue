@@ -52,7 +52,8 @@
 						<b-button type="submit" variant="primary" :disabled="validationFailed">
 							{{ $t('message.submit') | ucfirst }}
 						</b-button>
-						<b-button type="button" variant="secondary" :to="{name: $routeNames.signup}">
+
+						<b-button type="button" variant="default" :to="{name: $routeNames.signup}">
 							{{ $t('message.sign_up') | ucfirst }}
 						</b-button>
 					</b-form>
