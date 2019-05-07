@@ -230,7 +230,7 @@ export default {
 			filter: null
 		}
 	},
-	mounted() {
+	beforeMount() {
 		this.getItems()
 	},
 	methods: {

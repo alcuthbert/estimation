@@ -417,7 +417,7 @@ export default {
 			myRole: GET_MY_ROLE
 		})
 	},
-	mounted() {
+	beforeMount() {
 		ChangeRequests
 			.getById(this.crId)
 			.then(response => {

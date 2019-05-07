@@ -38,7 +38,7 @@ export default {
 	props: {
 		crId: Number
 	},
-	mounted() {
+	beforeMount() {
 		TasksService
 			.findByCrId(this.crId)
 			.then(response => {

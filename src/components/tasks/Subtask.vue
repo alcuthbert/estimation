@@ -365,10 +365,6 @@ export default {
 			estimator: GET_MY_ID,
 			myRole: GET_MY_ROLE
 		})
-	},
-	mounted() {
-		// eslint-disable-next-line
-		// console.log(this.$route)
 	}
 }
 </script>

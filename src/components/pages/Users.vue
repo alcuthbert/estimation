@@ -18,7 +18,7 @@ export default {
 			fields: ['id', 'name', 'email', 'role']
 		}
 	},
-	mounted() {
+	beforeMount() {
 		Users
 			.find()
 			.then(response => {

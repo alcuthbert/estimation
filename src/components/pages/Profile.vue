@@ -54,7 +54,7 @@ export default {
 			user: null
 		}
 	},
-	mounted() {
+	beforeMount() {
 		axios
 			.get('/api/users')
 			.then(response => (

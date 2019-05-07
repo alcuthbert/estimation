@@ -198,7 +198,7 @@ export default {
 			}
 		}
 	},
-	mounted() {
+	beforeMount() {
 		TasksService
 			.findById(this.id)
 			.then(response => {
