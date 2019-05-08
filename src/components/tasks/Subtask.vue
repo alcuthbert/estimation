@@ -132,7 +132,7 @@ export default {
 		return {
 			subtaskEditorOptions: {
 				modalId: `subtask-editor-${this.model.id}`,
-				title: 'Subtask Editor',
+				title: 'subtask_editor',
 				emitName: 'subtask-saved',
 				service: require('@/common/services/Subtasks').default,
 				fields: [
@@ -166,7 +166,7 @@ export default {
 			},
 			estimationEditorOptions: {
 				modalId: `estimation-editor`,
-				title: 'Estimation Editor',
+				title: 'estimation_editor',
 				emitName: 'estimation-saved',
 				service: require('@/common/services/Estimations').default,
 				fields: [
@@ -214,7 +214,7 @@ export default {
 			},
 			finalEstimationEditorOptions: {
 				modalId: `final-estimation-editor`,
-				title: 'Final Estimation',
+				title: 'final_estimation',
 				emitName: 'final-estimation-saved',
 				service: require('@/common/services/Estimations').default,
 				fields: [

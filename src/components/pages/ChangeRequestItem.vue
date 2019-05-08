@@ -219,7 +219,7 @@ export default {
 			assignee_2: null,
 			taskEditorOptions: {
 				modalId: 'task-editor',
-				title: 'Task Editor',
+				title: 'task_editor',
 				emitName: 'task-saved',
 				service: require('@/common/services/Tasks').default,
 				fields: [

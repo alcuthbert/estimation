@@ -2,7 +2,7 @@
     <b-modal
 			:id="options.modalId"
 			:ref="options.modalId"
-			:title="options.title | ucfirst"
+			:title="$t('message.' + options.title) | ucfirst"
 			@ok="onSubmit"
 			@cancel="onReset"
 			@shown="onShown"
@@ -12,7 +12,7 @@
 					v-for="field in options.fields"
 					:key="field.id"
 					v-show="!field.hidden"
-					:label="field.id | ucfirst"
+					:label="$t('message.' + field.id) | ucfirst"
 					:label-for="field.id">
 				<b-form-select v-if="field.type && field.type === 'select'"
 					:id="field.id"

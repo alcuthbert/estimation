@@ -90,7 +90,7 @@ export default {
 			subtasks: [],
 			taskEditorOptions: {
 				modalId: `task-editor-${this.id}`,
-				title: 'Task Editor',
+				title: 'task_editor',
 				emitName: 'task-saved',
 				service: require('@/common/services/Tasks').default,
 				fields: [
@@ -114,7 +114,7 @@ export default {
 			},
 			subtaskEditorOptions: {
 				modalId: `subtask-editor`,
-				title: 'Subtask Editor',
+				title: 'subtask_editor',
 				emitName: 'subtask-saved',
 				service: require('@/common/services/Subtasks').default,
 				fields: [
