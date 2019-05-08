@@ -59,7 +59,7 @@
 						<b-col sm="4">
 							<b-list-group flush>
 								<b-list-group-item>
-									{{ $t('message.assignee') | ucfirst }} 1: {{cr.assignee_1 ? getAssigneeName(cr.assignee_1) : 'none'}}
+									{{ $t('message.assignee') | ucfirst }} 1: {{cr.assignee_1 ? getAssigneeName(cr.assignee_1) : $t('message.none') | ucfirst }}
 									<b-button
 										size="sm"
 										variant="secondary"
@@ -70,7 +70,7 @@
 								</b-list-group-item>
 
 								<b-list-group-item>
-									{{ $t('message.assignee') | ucfirst }} 2: {{cr.assignee_2 ? getAssigneeName(cr.assignee_2) : 'none'}}
+									{{ $t('message.assignee') | ucfirst }} 2: {{cr.assignee_2 ? getAssigneeName(cr.assignee_2) : $t('message.none') | ucfirst }}
 									<b-button
 										size="sm"
 										variant="secondary"
@@ -334,7 +334,7 @@ export default {
 		getAssigneeName(id) {
 			const found = this.estimators.find(estimator => estimator.value === id)
 
-			return found ? found.text : 'none'
+			return found ? found.text : this.$t('message.none')
 		},
 		onTaskSaved() {
 			this.refresh()
