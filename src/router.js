@@ -4,8 +4,8 @@ import RouteNames from './routeNames.js'
 import AuthService from './common/services/AuthService.js'
 
 import Home from './components/pages/Home.vue'
-import ChangeRequests from './components/pages/ChangeRequests.vue'
-import ChangeRequest from './components/pages/ChangeRequest.vue'
+import ChangeRequestList from './components/pages/ChangeRequestList.vue'
+import ChangeRequestItem from './components/pages/ChangeRequestItem.vue'
 import NotFound from './components/pages/NotFound.vue'
 import Profile from './components/pages/Profile.vue'
 import Login from './components/pages/Login.vue'
@@ -36,7 +36,7 @@ const router = new VueRouter({
       {
         path: '/change-requests',
         name: RouteNames.changeRequests,
-        component: ChangeRequests,
+        component: ChangeRequestList,
         meta: {
             requiresAuth: true
         }
@@ -44,7 +44,7 @@ const router = new VueRouter({
       {
         path: '/change-requests/:crId',
         name: RouteNames.changeRequest,
-        component: ChangeRequest,
+        component: ChangeRequestItem,
         props: true,
         meta: {
             requiresAuth: true
@@ -53,7 +53,7 @@ const router = new VueRouter({
       {
         path: '/change-requests/:crId/merge',
         name: RouteNames.merge,
-        component: ChangeRequest,
+        component: ChangeRequestItem,
         props: true,
         query : { foo: "bar"},
         meta: {
