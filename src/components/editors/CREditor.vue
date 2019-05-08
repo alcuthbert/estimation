@@ -3,7 +3,7 @@
 		:id="modalId"
 		:ref="modalId"
 		header-bg-variant="default"
-		title="Change-Request Editor"
+		:title="$t('message.editor') | ucfirst"
 		scrollable
 		@shown="onShown"
 		@cancel="onCancel"
@@ -82,9 +82,9 @@
 				</b-form-invalid-feedback>
 			</b-form-group>
 
-			<b-form-fieldset label="Tasks">
+			<b-form-fieldset :label="$t('message.tasks') | ucfirst">
 				<b-button variant="secondary" @click="addTask">
-					Add
+					{{ $t('message.add') | ucfirst }}
 				</b-button>
 
 				<b-form-group v-for="task in tasks" :key="task.id">
@@ -183,9 +183,6 @@ export default {
 		onShown(e) {
 			if (this.inputItem !== null && this.inputItem !== undefined && e.modalId === this.modalId) {
 				Vue.util.extend(this.form, this.inputItem)
-
-				// eslint-disable-next-line
-				// console.log('this.inputItem !== null', this.inputItem)
 
 				if (this.inputItem.id) {
 					CRService

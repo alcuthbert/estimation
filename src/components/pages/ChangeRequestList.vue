@@ -26,7 +26,11 @@
 						<b-col md="4">
 							<b-form-group :label="$t('message.filter') | ucfirst">
 								<b-input-group>
-									<b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
+									<b-form-input
+										v-model="filter"
+										:placeholder="$t('message.type_to_search') | ucfirst"
+										>
+									</b-form-input>
 									<b-input-group-append>
 										<b-button
 											variant="primary"
@@ -43,8 +47,8 @@
 								<b-input-group>
 									<b-form-select v-model="sortBy" :options="sortOptions"></b-form-select>
 									<b-form-select v-model="sortDesc">
-										<option :value="false">Asc</option>
-										<option :value="true">Desc</option>
+										<option :value="false">{{$t('message.asc') | ucfirst}}</option>
+										<option :value="true">{{$t('message.desc') | ucfirst}}</option>
 									</b-form-select>
 								</b-input-group>
 							</b-form-group>
@@ -201,9 +205,9 @@ export default {
 				// { key: "details", title: "details", sortable: false },
 				{ key: "show", title: "show", sortable: false },
 				{ key: "id", title: "id", sortable: true },
-				{ key: "name", title: "name", sortable: true },
+				{ key: "name", title: "Name", sortable: true },
 				{ key: "number", title: "number", sortable: true },
-				{ key: "status", title: "status", sortable: true },
+				{ key: "status", title: this.$t('message.status'), sortable: true },
 				{ key: "jira_link", title: "jira_link", sortable: false },
 				{ key: "owner", title: "owner", sortable: true },
 				{ key: "version", title: "version", sortable: true },
@@ -217,13 +221,13 @@ export default {
 			sortBy: "id",
 			sortOptions: [
 				"id",
-				"name",
-				"number",
-				"status",
-				"owner",
-				"version",
-				"created",
-				"project"
+				this.$t('message.name'),
+				this.$t('message.number'),
+				this.$t('message.status'),
+				this.$t('message.owner'),
+				this.$t('message.version'),
+				this.$t('message.created'),
+				this.$t('message.project')
 			],
 			sortDesc: false,
 			totalRows: 0,

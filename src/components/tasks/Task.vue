@@ -9,7 +9,7 @@
 					v-if="hasCreateSubtaskAccess && !isMerged && !isClosed"
 					v-b-modal="`subtask-editor`">
 					<font-awesome-icon icon="plus"/>
-					Create subtask
+					{{ $t('message.create_subtask') | ucfirst }}
 				</b-button>
 
 				<b-button
@@ -19,7 +19,7 @@
 					@click="selectTask(task)"
 					v-b-modal="`task-editor-${id}`">
 					<font-awesome-icon icon="edit"/>
-					Edit
+					{{ $t('message.edit') | ucfirst }}
 				</b-button>
 
 				<b-button
@@ -28,7 +28,7 @@
 					v-if="hasDeleteTaskAccess && !isMerged && !isClosed"
 					v-b-modal="`task-delete-${id}`">
 					<font-awesome-icon icon="trash"/>
-					Delete
+					{{ $t('message.delete') | ucfirst }}
 				</b-button>
 			</b-button-group>
 		</h4>

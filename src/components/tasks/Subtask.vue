@@ -1,11 +1,11 @@
 <template>
     <b-card-body>
         <b-card-title>
-            {{ 'Subtask: ' + model.name }}
+            {{ $t('message.subtask') | ucfirst }}: {{ model.name }}
         </b-card-title>
 
         <b-card-sub-title mb="2">
-            Technology: {{model.technology}}
+            {{ $t('message.technology') | ucfirst }}: {{model.technology}}
         </b-card-sub-title>
 
         <b-card-text mb="2">
@@ -19,7 +19,7 @@
 				v-if="hasEditSubtaskAccess && !isMerged && !isClosed"
 				v-b-modal="`subtask-editor-${model.id}`">
 				<font-awesome-icon icon="edit"/>
-				Edit
+				{{ $t('message.edit') | ucfirst }}
 			</b-button>
 
 			<b-button
@@ -28,13 +28,9 @@
 				v-if="hasDeleteSubtaskAccess && !isMerged && !isClosed"
 				v-b-modal="`subtask-delete-${model.id}`">
 				<font-awesome-icon icon="trash"/>
-				Delete
+				{{ $t('message.delete') | ucfirst }}
 			</b-button>
         </b-button-group>
-
-        <!-- <div v-for="estimation in model.estimations" :key="estimation.id">
-            <estimation :model="estimation"></estimation>
-        </div> -->
 
         <estimations-table
 			v-if="model.estimations.length"
@@ -47,7 +43,7 @@
 			variant="info"
 			show
 			class="my-2">
-			There are no estimations
+			{{ $t('message.no_estimations') | ucfirst }}
 		</b-alert>
 
 		<b-button-group class="my-2">
@@ -57,7 +53,7 @@
 				v-if="hasCreateEstimationAccess && model.estimations.length <= 1 && isAssigned"
 				@click="selectEstimation()"
 				v-b-modal="`estimation-editor`">
-				Estimate
+				{{ $t('message.estimate') | ucfirst }}
 			</b-button>
 
 			<b-button
@@ -67,7 +63,7 @@
 				@click="selectFinalEstimation()"
 				v-b-modal="`final-estimation-editor`">
 				<font-awesome-icon icon="clone"/>
-				Merge
+				{{ $t('message.merge') | ucfirst }}
 			</b-button>
         </b-button-group>
 
@@ -100,17 +96,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
-// import RouteNames from '@/routeNames.js'
-
-// import Estimation from "@/components/tasks/Estimation"
 import EstimationsTable from "@/components/tasks/EstimationsTable"
 
 import Editor from "@/components/editors/EditorModal"
 import Deleter from "@/components/editors/DeleteModal"
 
 import Rights from "@/common/services/Rights"
-// import Estimations from '@/common/services/Estimations'
 import { GET_MY_ROLE } from '@/store/getter-types'
 
 import { RIGHTS_SUBTASK_EDIT } from '@/common/resources/rights'
@@ -317,7 +308,6 @@ export default {
 		}
     },
     components: {
-        // Estimation,
         EstimationsTable,
         Deleter,
         Editor
@@ -345,9 +335,6 @@ export default {
 		hasMergeAccess() {
 			return Rights.check(this.myRole, RIGHTS_CR_MERGE)
 		},
-		// isMerge() {
-		// 	return this.$route.name === RouteNames.merge
-		// },
 		isAssigned() {
 			return this.cr !== null ? this.cr.status === STATUS_ASSIGNED : false
 		},

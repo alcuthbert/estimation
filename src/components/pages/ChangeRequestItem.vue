@@ -4,27 +4,31 @@
 			<b-card no-body my="4" v-if="cr">
 				<b-card-header>
 					<h4 slot="header">
-						{{ 'Change request: ' + cr.name }}
+						{{ $t('message.change_request') | ucfirst }}: {{ cr.name }}
 					</h4>
 
 					<b-button
 							variant="primary"
 							@click="approve()"
 							v-if="hasApproveAccess && isWaitingForApprove">
-						Approve
+						{{ $t('message.approve') | ucfirst }}
 					</b-button>
 
 					<b-button
 							variant="primary"
 							@click="close()"
 							v-if="hasCloseAccess && isMerged">
-						Close
+						{{ $t('message.close') | ucfirst }}
 					</b-button>
 				</b-card-header>
 
 				<b-card-body>
-					<b-card-title>Status: {{cr.status}}</b-card-title>
-					<b-card-sub-title class="mb-3">{{cr.project}}</b-card-sub-title>
+					<b-card-title>
+						{{$t('message.status') | ucfirst}}: {{cr.status}}
+					</b-card-title>
+					<b-card-sub-title class="mb-3">
+						{{ $t('message.project') | ucfirst }}: {{cr.project}}
+					</b-card-sub-title>
 					<b-card-sub-title class="mb-2">
 						<a href="#" class="card-link">{{cr.jira_link}}</a>
 					</b-card-sub-title>
@@ -32,39 +36,47 @@
 					<b-row>
 						<b-col sm="4">
 							<b-list-group flush>
-								<b-list-group-item>Version: {{cr.version}}</b-list-group-item>
-								<b-list-group-item>Owner: {{cr.owner}}</b-list-group-item>
-							</b-list-group>
-						</b-col>
-
-						<b-col sm="4">
-							<b-list-group flush>
-								<b-list-group-item>Created: {{cr.created}}</b-list-group-item>
-								<b-list-group-item>Project: {{cr.project}}</b-list-group-item>
+								<b-list-group-item>
+									{{ $t('message.version') | ucfirst }}: {{cr.version}}
+								</b-list-group-item>
+								<b-list-group-item>
+									{{ $t('message.owner') | ucfirst }}: {{cr.owner}}
+								</b-list-group-item>
 							</b-list-group>
 						</b-col>
 
 						<b-col sm="4">
 							<b-list-group flush>
 								<b-list-group-item>
-									Assignee 1: {{cr.assignee_1 ? getAssigneeName(cr.assignee_1) : 'none'}}
+									{{ $t('message.created') | ucfirst }}: {{cr.created}}
+									</b-list-group-item>
+								<b-list-group-item>
+									{{ $t('message.project') | ucfirst }}: {{cr.project}}
+								</b-list-group-item>
+							</b-list-group>
+						</b-col>
+
+						<b-col sm="4">
+							<b-list-group flush>
+								<b-list-group-item>
+									{{ $t('message.assignee') | ucfirst }} 1: {{cr.assignee_1 ? getAssigneeName(cr.assignee_1) : 'none'}}
 									<b-button
 										size="sm"
 										variant="secondary"
 										v-if="hasAssignAccess && isApproved"
 										v-b-modal.assign-1>
-										Assign 1
+										{{ $t('message.assign') | ucfirst }} 1
 									</b-button>
 								</b-list-group-item>
 
 								<b-list-group-item>
-									Assignee 2: {{cr.assignee_2 ? getAssigneeName(cr.assignee_2) : 'none'}}
+									{{ $t('message.assignee') | ucfirst }} 2: {{cr.assignee_2 ? getAssigneeName(cr.assignee_2) : 'none'}}
 									<b-button
 										size="sm"
 										variant="secondary"
 										v-if="hasAssignAccess && isApproved"
 										v-b-modal.assign-2>
-										Assign 2
+										{{ $t('message.assign') | ucfirst }} 2
 									</b-button>
 								</b-list-group-item>
 							</b-list-group>
@@ -79,7 +91,7 @@
 									@click="selectTask()"
 									v-b-modal.task-editor>
 									<font-awesome-icon icon="plus"/>
-									Create task
+									{{ $t('message.create_task') | ucfirst }}
 								</b-button>
 
 								<b-button
@@ -88,7 +100,7 @@
 									v-if="hasMergeAccess && isAssigned && !isMerged && !isClosed"
 									@click="merge()">
 									<font-awesome-icon icon="clone"/>
-									Merge
+									{{ $t('message.merge') | ucfirst }}
 								</b-button>
 
 								<b-button
@@ -97,7 +109,7 @@
 									v-if="hasMergeAccess && isWaitingForMerge"
 									@click="mergeCompleted()">
 									<font-awesome-icon icon="check"/>
-									Complete Merge
+									{{ $t('message.complete_merge') | ucfirst }}
 								</b-button>
 							</b-button-group>
 						</b-col>
@@ -109,7 +121,9 @@
 				<h4 slot="header">CR Card</h4>
 
 				<b-card-body>
-					<b-card-text>There is no info</b-card-text>
+					<b-card-text>
+						{{ $t('message.no_info') | ucfirst }}
+					</b-card-text>
 				</b-card-body>
 			</b-card>
 		</b-col>
@@ -323,14 +337,6 @@ export default {
 			return found ? found.text : 'none'
 		},
 		onTaskSaved() {
-			// ChangeRequests
-			// 	.getById(this.crId)
-			// 	.then(response => {
-			// 		this.cr = response.data
-
-			// 		this.$toaster.success('Change-request info updated')
-			// 	})
-			
 			this.refresh()
 		},
 		onTaskDeleted(task) {
@@ -355,12 +361,6 @@ export default {
 		changeRequestName() {
 			return this.cr === null ? null : this.cr.name
 		},
-		// taskEditorData() {
-		// 	return {
-		// 		name: this.cr === null ? '' : this.cr.name,
-		// 		changeRequestId: this.cr === null ? '' : this.cr.id
-		// 	}
-		// },
 		isClosed() {
 			return this.cr.status === STATUS_CLOSED
 		},
@@ -410,9 +410,6 @@ export default {
 				return estimator
 			})
 		},
-		// isMerge() {
-		// 	return this.$route.name === RouteNames.merge
-		// },
 		...mapGetters({
 			myRole: GET_MY_ROLE
 		})
