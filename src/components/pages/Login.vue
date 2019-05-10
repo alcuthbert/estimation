@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
 		<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-			<div class="card my-3">
+			<div class="card my-3" bg-variant="primary">
 				<h5 class="card-header">
 					{{ $t('message.signin') | ucfirst }}
 					<lang></lang>
@@ -43,17 +43,11 @@
 							</b-form-invalid-feedback>
 						</b-form-group>
 
-						<!-- <b-form-group>
-							<b-link href="#foo">
-								{{ $t('message.forgot_password') | ucfirst }}
-							</b-link>
-						</b-form-group> -->
-
-						<b-button type="submit" variant="primary" :disabled="validationFailed">
+						<b-button type="submit" variant="primary" :disabled="validationFailed" class="mr-2">
 							{{ $t('message.submit') | ucfirst }}
 						</b-button>
 
-						<b-button type="button" variant="default" :to="{name: $routeNames.signup}">
+						<b-button type="button" variant="outline-success" :to="{name: $routeNames.signup}">
 							{{ $t('message.sign_up') | ucfirst }}
 						</b-button>
 					</b-form>

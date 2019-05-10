@@ -1,15 +1,12 @@
 <template>
 	<b-row class="">
 		<b-col class="mx-auto" sm="9" md="7" lg="5">
-			<!-- <b-card-header>
-				{{ $t('message.sign_up') | ucfirst }}
-				<lang></lang>
-			</b-card-header> -->
-			<b-card no-body class="my-3">
+			<b-card no-body class="my-3" bg-variant="dark" text-variant="white">
 				<b-card-header>
 					{{ $t('message.sign_up') | ucfirst }}
 					<lang></lang>
 				</b-card-header>
+
 				<b-card-body>
 					<b-form @submit="onSubmit">
 						<b-form-group :label="$t('message.username') | ucfirst" label-for="username">
@@ -56,11 +53,11 @@
 							</b-form-invalid-feedback>
 						</b-form-group>
 
-						<b-button type="submit" variant="primary" :disabled="errors.any()">
+						<b-button type="submit" variant="primary" :disabled="errors.any()" class="mr-2">
 							{{ $t('message.submit') | ucfirst }}
 						</b-button>
 
-						<b-button variant="default" :to="{name: $routeNames.login}">
+						<b-button variant="light" :to="{name: $routeNames.login}">
 							{{ $t('message.back') | ucfirst }}
 						</b-button>
 					</b-form>
