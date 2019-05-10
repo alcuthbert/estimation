@@ -57,7 +57,7 @@
 							{{ $t('message.submit') | ucfirst }}
 						</b-button>
 
-						<b-button variant="light" :to="{name: $routeNames.login}">
+						<b-button variant="outline-success" :to="{name: $routeNames.login}">
 							{{ $t('message.back') | ucfirst }}
 						</b-button>
 					</b-form>
