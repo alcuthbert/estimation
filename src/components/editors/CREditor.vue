@@ -7,7 +7,7 @@
 		scrollable
 		@shown="onShown"
 		@cancel="onCancel"
-		@ok="onSubmit">
+		@ok="onOk">
 		<b-form>
 			<b-form-group :label="$t('message.name') | ucfirst" label-for="name">
 				<b-form-input 
@@ -142,7 +142,7 @@ export default {
 
 			this.$root.$emit('bv::hide::modal', this.modalId)
 		},
-		onSubmit(e) {
+		onOk(e) {
 			e.preventDefault();
 
 			this.$validator.validate().then(valid => {
@@ -225,6 +225,13 @@ export default {
 			}
 
 			this.tasks = []
+
+			Object.keys(this.form).forEach(fieldName => {
+				this.$validator.flag(fieldName, {
+					dirty: false,
+					validated: false
+				})
+			})
 		}
 	}
 }

@@ -3,8 +3,8 @@
 			:id="options.modalId"
 			:ref="options.modalId"
 			:title="$t('message.' + options.title) | ucfirst"
-			@ok="onSubmit"
-			@cancel="onReset"
+			@ok="onOk"
+			@cancel="onCancel"
 			@shown="onShown"
 			scrollable>
         <b-form>
@@ -61,12 +61,12 @@ export default {
 		}
 	},
     methods: {
-        onReset() {
-			this.form = {}
+        onCancel() {
+			this.formToDefaults()
 
 			this.$root.$emit('bv::hide::modal', this.options.modalId)
 		},
-		onSubmit(e) {
+		onOk(e) {
 			e.preventDefault()
 
 			this.$validator.validate().then(valid => {
@@ -81,12 +81,12 @@ export default {
 
 						this.$toaster.success(`Record(s) saved successfully`)
 
-						this.form = {}
+						this.formToDefaults()
 					})
 					.catch(() => {
 						this.$toaster.error('Error')
 
-						this.form = {}
+						this.formToDefaults()
 					})
 
 				this.$root.$emit('bv::hide::modal', this.options.modalId)
@@ -109,6 +109,9 @@ export default {
 					this.$validator.validate()
 				}
 			}
+		},
+		formToDefaults() {
+			this.form = {}
 		}
 	},
 	computed: {
