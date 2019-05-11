@@ -7,7 +7,7 @@
 					size="md"
 					variant="secondary"
 					v-if="hasCreateSubtaskAccess && !isMerged && !isClosed"
-					v-b-modal="`subtask-editor`">
+					v-b-modal="`task-${id}-subtask-editor`">
 					<font-awesome-icon icon="plus"/>
 					{{ $t('message.create_subtask') | ucfirst }}
 				</b-button>
@@ -113,7 +113,7 @@ export default {
 				]
 			},
 			subtaskEditorOptions: {
-				modalId: `subtask-editor`,
+				modalId: `task-${this.id}-subtask-editor`,
 				title: 'subtask_editor',
 				emitName: 'subtask-saved',
 				service: require('@/common/services/Subtasks').default,
