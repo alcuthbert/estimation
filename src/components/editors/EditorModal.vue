@@ -25,9 +25,6 @@
 					v-validate="field.validator"
 					:state="validateState(field.id)"
 					:aria-describedby="`${field.id}-error`">
-					<b-form-invalid-feedback :id="`${field.id}-error`">
-						{{ errors.first(field.id) }}
-					</b-form-invalid-feedback>
 				</b-form-select>
 
                 <b-form-input v-else
@@ -40,10 +37,11 @@
 					v-validate="field.validator"
 					:state="validateState(field.id)"
 					:aria-describedby="`${field.id}-error`" >
-					<b-form-invalid-feedback :id="`${field.id}-error`">
-						{{ errors.first(field.id) }}
-					</b-form-invalid-feedback>
 				</b-form-input>
+				
+				<b-form-invalid-feedback :id="`${field.id}-error`">
+					{{ errors.first(field.id) }}
+				</b-form-invalid-feedback>
             </b-form-group>
         </b-form>
     </b-modal>
@@ -111,6 +109,13 @@ export default {
 			}
 		},
 		formToDefaults() {
+			Object.keys(this.form).forEach(fieldName => {
+				this.$validator.flag(fieldName, {
+					dirty: false,
+					validated: false
+				})
+			})
+
 			this.form = {}
 		}
 	},
